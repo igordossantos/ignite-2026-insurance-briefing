@@ -1,5 +1,19 @@
 export const STATUSES = ["GA", "Mixed availability", "Public preview", "Private preview", "Preview", "Frontier", "Rolling out", "Preview coming soon", "Coming soon", "Not specified"];
 
+export function readThemeLink(search, themes) {
+  const params = new URLSearchParams(search), warnings = [];
+  let palette = params.get("theme"), topic = params.get("topic") || "";
+  if (palette !== null && !["blue", "pink"].includes(palette)) {
+    warnings.push("Unknown color theme in the link. Using the saved or default color theme.");
+    palette = null;
+  }
+  if (topic && !themes.some(theme => theme.id === topic)) {
+    warnings.push("Unknown announcement theme in the link. Showing all announcement themes.");
+    topic = "";
+  }
+  return { palette, topic, warnings };
+}
+
 export function validateData(data) {
   const fail = message => { throw new Error(`Invalid catalog: ${message}`); };
   if (!data?.meta || !Array.isArray(data.announcements)) fail("metadata and announcements are required");

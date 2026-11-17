@@ -30,16 +30,26 @@ The video is an external link, not an embedded player. Earlier background articl
 - **Select all shown** selects only the intersection of the current search, theme, story and availability filters.
 - Use **Keep selected only**, individual checkboxes, clear and undo to refine the discussion.
 - Switch between **Claims & service**, **Risk & governance**, or both insurance perspectives.
-- Choose **Pink** or **Blue & white** in the header instead of light/dark mode. The choice is remembered in this browser, defaults to Pink and is independent of perspective filters, selected announcements and notes.
+- Choose **Pink theme** or **Blue theme** in the header instead of light/dark mode. The choice is remembered in this browser, defaults to Pink and is independent of perspective filters, selected announcements and notes. An explicit URL color theme overrides the saved preference.
 - The page has no customer branding, logos or company imagery. Palettes and relevance labels are industry-neutral, including in the embedded catalog and exports.
-- Use cards or a comparison table, local notes, Markdown/CSV downloads, ID-only share links, presenter view and printing.
+- Use cards or a comparison table, local notes, Markdown/CSV downloads, theme/selection share links, presenter view and printing.
 - Expand card details to read subfeatures, availability/caveats and add notes. Expand/collapse-all controls apply to shown cards; a floating selection bar opens selected-only mode or discussion/export tools.
-- Share links restore the selected-only view. Unknown IDs are omitted with a visible warning.
+- **Copy theme link** works without selecting announcements and shares the current color and technology theme only. The address bar also tracks both choices, preserving unrelated query parameters and section anchors. Copied links omit unrelated parameters, other filters and notes.
+- **Copy share link** adds the selected announcement IDs and restores the selected-only view intersected with the linked technology theme. Unknown IDs are omitted with a visible warning.
 - Exports include all selected items, even if current filters hide some; customer perspective follows the audience control.
 - Both export formats retain subfeature highlights, availability evidence and source caveats.
 - Selections/notes are browser-local. Downloads contain notes; share links do not. Storage failures are reported. Do not enter sensitive information.
 
 The theme/story labels and potential customer perspectives are editorial lenses, not claims about Microsoft announcements or either customer's strategy, deployments or results. Availability must be recorded conservatively, with evidence. No savings, performance or compliance claims are made.
+
+### Shareable theme URLs
+
+- [Blue theme](https://igordossantos.github.io/ignite-2026-insurance-briefing/?theme=blue)
+- [Pink theme](https://igordossantos.github.io/ignite-2026-insurance-briefing/?theme=pink)
+- [Blue theme, Copilot announcements](https://igordossantos.github.io/ignite-2026-insurance-briefing/?theme=blue&topic=copilot#catalog)
+- [Pink theme, Fabric announcements](https://igordossantos.github.io/ignite-2026-insurance-briefing/?theme=pink&topic=fabric#catalog)
+
+`theme` accepts `blue` or `pink`; optional `topic` accepts a technology-theme ID from the catalog. Without `topic`, all technology themes are shown. Invalid values produce a visible warning and fall back to the saved/default color or all announcement themes. Existing `#selected=...` discussion links remain supported; notes never enter shared URLs.
 
 ## Build and preview
 

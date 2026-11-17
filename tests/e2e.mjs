@@ -24,7 +24,7 @@ try {
   assert.doesNotMatch(await page.content(), /\b(?:farmers|zurich)\b/i);
   assert.equal(await page.locator("img").count(), 0);
   assert.equal(await page.locator("#theme").inputValue(), "pink");
-  assert.deepEqual(await page.locator("#theme option").allTextContents(), ["Pink", "Blue & white"]);
+  assert.deepEqual(await page.locator("#theme option").allTextContents(), ["Pink theme", "Blue theme"]);
   assert.deepEqual(await page.locator("#audience option").allTextContents(), ["Both perspectives", "Claims & service", "Risk & governance"]);
   for (const paletteName of ["pink", "blue"]) {
     await page.locator("#theme").selectOption(paletteName);
@@ -55,7 +55,7 @@ try {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
     await page.setViewportSize({ width: 1440, height: 1000 });
   }
-  await page.reload();
+  await page.goto(baseUrl);
   assert.equal(await page.locator("#theme").inputValue(), "blue");
   assert.equal(await page.locator(".announcement").count(), actual.announcements.length);
   console.log("PASS no company names or artwork, neutral palettes/perspectives, AA text contrast, mobile layout and remembered palette");
@@ -164,9 +164,63 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
   console.log("PASS all 59 real entries, exact Copilot/Fabric bulk membership, detailed search, workload, expand/collapse and mobile layout");
 
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  const linkedUrl = new URL(baseUrl);
+  linkedUrl.search = "?theme=pink&topic=copilot&tracking=not-shared";
+  linkedUrl.hash = "catalog";
+  await page.goto(linkedUrl.href);
+  assert.equal(await page.locator("#theme").inputValue(), "pink", "URL palette must override saved blue");
+  assert.equal(await page.locator("#selection-count").innerText(), "(0)");
+  assert.equal(await page.locator("#share-theme").isEnabled(), true);
+  assert.deepEqual(await page.locator(".announcement").evaluateAll(cards => cards.map(card => card.id)),
+    actual.announcements.filter(item => item.themes.includes("copilot")).map(item => item.id));
+  await page.locator("#share-theme").click();
+  const themeShare = new URL(await page.evaluate(() => navigator.clipboard.readText()));
+  assert.equal(themeShare.search, "?theme=pink&topic=copilot");
+  assert.equal(themeShare.hash, "#catalog");
+  const recipientContext = await browser.newContext({ reducedMotion: "reduce" });
+  recipientContext.setDefaultTimeout(30_000);
+  const recipient = await recipientContext.newPage();
+  recipient.on("pageerror", error => errors.push(error.message));
+  try {
+    await recipient.goto(themeShare.href);
+    assert.equal(await recipient.locator("#theme").inputValue(), "pink");
+    assert.equal(await recipient.locator("#selected-only").getAttribute("aria-pressed"), "false");
+    assert.equal(await recipient.locator("#selection-count").innerText(), "(0)");
+    assert.deepEqual(await recipient.locator(".announcement").evaluateAll(cards => cards.map(card => card.id)),
+      actual.announcements.filter(item => item.themes.includes("copilot")).map(item => item.id));
+    await recipient.locator('nav a[href="#sources"]').click();
+    await recipient.locator("#theme").selectOption("blue");
+    await recipient.locator('button[data-theme="fabric"]').click();
+    assert.equal(new URL(recipient.url()).search, "?theme=blue&topic=fabric");
+    assert.equal(new URL(recipient.url()).hash, "#sources");
+    await recipient.goBack();
+    assert.equal(await recipient.locator("#theme").inputValue(), "pink");
+    assert.equal(await recipient.locator('button[data-theme="copilot"]').getAttribute("aria-pressed"), "true");
+    await recipient.goForward();
+    assert.equal(await recipient.locator("#theme").inputValue(), "blue");
+    assert.deepEqual(await recipient.locator(".announcement").evaluateAll(cards => cards.map(card => card.id)),
+      actual.announcements.filter(item => item.themes.includes("fabric")).map(item => item.id));
+    await recipient.getByRole("button", { name: "Reset filters", exact: true }).click();
+    assert.equal(new URL(recipient.url()).search, "?theme=blue");
+    assert.equal(await recipient.locator(".announcement").count(), actual.announcements.length);
+    await recipient.goto(new URL("?theme=unknown&topic=unknown", baseUrl).href);
+    assert.equal(await recipient.locator("#theme").inputValue(), "blue");
+    assert.equal(await recipient.locator(".announcement").count(), actual.announcements.length);
+    assert.match(await recipient.locator("#message").innerText(), /Unknown color theme.*Unknown announcement theme/);
+  } finally {
+    await recipientContext.close();
+  }
+  await page.locator("#theme").selectOption("blue");
+  await page.getByRole("button", { name: "Reset filters", exact: true }).click();
+  assert.equal(new URL(page.url()).searchParams.get("tracking"), "not-shared");
+  assert.equal(new URL(page.url()).hash, "#catalog");
+  console.log("PASS fresh-recipient theme links, URL precedence, exact topic membership, clean copied URLs, history, reset and invalid-value warnings");
+
   const synthetic = html.replace(/(<script type="application\/json" id="catalog-data">)[\s\S]*?(<\/script>)/,
     (_, open, close) => open + JSON.stringify(fixture()).replaceAll("<", "\\u003c") + close);
-  await page.route(baseUrl, route => route.fulfill({ contentType: "text/html", body: synthetic }));
+  const briefingUrl = url => url.origin === new URL(baseUrl).origin && url.pathname === new URL(baseUrl).pathname;
+  await page.route(briefingUrl, route => route.fulfill({ contentType: "text/html", body: synthetic }));
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.reload();
   assert.equal(await page.locator(".announcement").count(), 3);
@@ -221,12 +275,13 @@ try {
   assert.match(csv, /Private test note/);
   assert.match(csv, /Synthetic test alpha/);
   assert.ok(!csv.includes("Synthetic test gamma"));
-  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.locator('button[data-theme="copilot"]').click();
   await page.locator("#share").click();
   const share = await page.evaluate(() => navigator.clipboard.readText());
   assert.ok(!share.includes("Private"));
   assert.match(share, /selected=alpha%2Cbeta/);
-  await page.unroute(baseUrl);
+  assert.equal(new URL(share).search, "?theme=pink&topic=copilot");
+  await page.unroute(briefingUrl);
   await page.route("**/*", route => {
     if (new URL(route.request().url()).origin === new URL(baseUrl).origin) return route.fulfill({ contentType: "text/html", body: synthetic });
     return route.continue();
@@ -236,11 +291,29 @@ try {
   assert.equal(await page.locator(".announcement").count(), 2);
   assert.equal(await page.locator("#selected-only").getAttribute("aria-pressed"), "true");
   assert.equal(await page.locator("#selection-dock").isVisible(), true);
+  assert.equal(await page.locator("#theme").inputValue(), "pink");
+  assert.equal(await page.locator('button[data-theme="copilot"]').getAttribute("aria-pressed"), "true");
+  await page.evaluate(() => new Promise(resolve => {
+    window.addEventListener("hashchange", () => resolve(), { once: true });
+    location.hash = "selected=alpha%2Cbeta%2Calpha";
+  }));
+  assert.equal(await page.locator('button[data-theme="copilot"]').getAttribute("aria-pressed"), "true");
+  assert.equal(await page.locator(".announcement").count(), 2);
+  await page.locator('button[data-theme=""]').click();
   await page.locator("#dock-selected").click();
   assert.equal(await page.locator(".announcement").count(), 3);
   await page.locator("#dock-selected").click();
   assert.equal(await page.locator(".announcement").count(), 2);
-  console.log("PASS CSV download contents, ID-only share link and restored selected-only view");
+  const intersectedShare = new URL(share);
+  intersectedShare.searchParams.set("topic", "fabric");
+  await page.goto(intersectedShare.href);
+  assert.deepEqual(await page.locator(".announcement").evaluateAll(cards => cards.map(card => card.id)), ["beta"]);
+  assert.equal(await page.locator("#selection-count").innerText(), "(2)");
+  await page.goto(new URL("#selected=alpha%2Cbeta", baseUrl).href);
+  assert.equal(await page.locator(".announcement").count(), 2);
+  assert.equal(await page.locator('button[data-theme=""]').getAttribute("aria-pressed"), "true");
+  assert.equal(await page.locator("#selected-only").getAttribute("aria-pressed"), "true");
+  console.log("PASS CSV download contents, private-note-free theme/selection links and restored selected-only view");
 
   const openBeforePrint = await page.locator(".announcement details[open]").count();
   await page.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
@@ -257,8 +330,22 @@ try {
   assert.equal(await page.locator("html").getAttribute("data-palette"), "blue");
   await page.locator("#present").click();
   assert.equal(await page.locator("#overview").isVisible(), false);
+  const offlineContext = await browser.newContext({ offline: true });
+  const offlinePage = await offlineContext.newPage();
+  offlinePage.on("pageerror", error => errors.push(error.message));
+  try {
+    const fileUrl = new URL("../index.html", import.meta.url);
+    fileUrl.search = "?theme=blue&topic=fabric";
+    await offlinePage.goto(fileUrl.href);
+    assert.equal(await offlinePage.locator("#theme").inputValue(), "blue");
+    assert.equal(await offlinePage.locator(".announcement").count(), actual.announcements.filter(item => item.themes.includes("fabric")).length);
+    await offlinePage.locator("#theme").selectOption("pink");
+    assert.equal(new URL(offlinePage.url()).searchParams.get("theme"), "pink");
+  } finally {
+    await offlineContext.close();
+  }
   assert.deepEqual(errors, []);
-  console.log("PASS print notes, populated mobile layout, theme/presenter controls and no browser errors");
+  console.log("PASS print notes, populated mobile layout, theme/presenter controls, offline file URLs and no browser errors");
 } finally {
   await browser.close();
 }

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { validateData, filterItems, selectGroup, restoreSelection, exportCsv, exportMarkdown } from "../src/logic.mjs";
+import { readThemeLink, validateData, filterItems, selectGroup, restoreSelection, exportCsv, exportMarkdown } from "../src/logic.mjs";
 import { sourceState } from "../tools/check-source.mjs";
 import { fixture } from "./fixtures.mjs";
 
@@ -61,6 +61,22 @@ test("share selections are deduplicated and reject unknown IDs or malformed save
   const { announcements } = fixture();
   assert.deepEqual([...restoreSelection(["beta", "beta", "absent"], announcements)], ["beta"]);
   assert.equal(restoreSelection("alpha", announcements).size, 0);
+});
+test("theme links distinguish color palettes from validated announcement topics", () => {
+  const { themes } = fixture();
+  assert.deepEqual(readThemeLink("", themes), { palette: null, topic: "", warnings: [] });
+  assert.deepEqual(readThemeLink("?theme=blue&topic=copilot", themes), { palette: "blue", topic: "copilot", warnings: [] });
+  assert.deepEqual(readThemeLink("?theme=pink&topic=fabric", themes), { palette: "pink", topic: "fabric", warnings: [] });
+  assert.deepEqual(readThemeLink("?theme=blue", themes), { palette: "blue", topic: "", warnings: [] });
+  assert.deepEqual(readThemeLink("?topic=agents", themes), { palette: null, topic: "agents", warnings: [] });
+  const invalidPalette = readThemeLink("?theme=unknown&topic=copilot", themes);
+  assert.equal(invalidPalette.palette, null);
+  assert.equal(invalidPalette.topic, "copilot");
+  assert.match(invalidPalette.warnings[0], /Unknown color theme/);
+  const invalidTopic = readThemeLink("?theme=pink&topic=unknown", themes);
+  assert.equal(invalidTopic.palette, "pink");
+  assert.equal(invalidTopic.topic, "");
+  assert.match(invalidTopic.warnings[0], /Unknown announcement theme/);
 });
 test("CSV escapes quotes, multiline notes and spreadsheet formula injection", () => {
   const { announcements } = fixture();

@@ -21,7 +21,7 @@
   <header>
     <a class="brand" href="#top"><span class="mark">I26</span> Ignite / Insurance briefing</a>
     <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Priorities & catalog</a><a href="#matters">Where it may matter</a><a id="keynote-nav" href="#keynote" hidden>Keynote & links</a><a href="#sources">Sources & method</a></nav>
-    <div class="actions"><label class="palette-control" for="theme">Color palette<select id="theme"><option value="pink">Pink</option><option value="blue">Blue & white</option></select></label><button id="present" aria-pressed="false">Presenter view</button><button id="print">Print</button></div>
+    <div class="actions"><label class="palette-control" for="theme">Color theme<select id="theme"><option value="pink">Pink theme</option><option value="blue">Blue theme</option></select></label><button id="present" aria-pressed="false">Presenter view</button><button id="print">Print</button></div>
   </header>
   <main id="main">
     <section class="hero" id="top"><div class="wrap">
@@ -52,6 +52,7 @@
         <div class="section-heading"><div><p class="eyebrow">02 / BUILD YOUR BRIEFING</p><h2>Priorities & announcement catalog</h2></div><p class="muted">Theme + story filters intersect. Bulk theme selection includes every matching catalog item, regardless of other filters.</p></div>
         <p class="intro">Select <strong>Copilot</strong> or <strong>Fabric</strong>, then <strong>Select entire theme</strong> to add all its announcements. Or start with a business story. Selections are deduplicated and can be exported with your discussion notes.</p>
         <fieldset class="theme-field"><legend>Technology theme</legend><div class="theme-row" id="themes"></div></fieldset>
+        <p class="theme-sharing"><button id="share-theme">Copy theme link</button> <span class="muted">Share the color and technology theme without selections, notes or other filters.</span></p>
         <form id="filters" class="toolbar" role="search">
           <label class="search">Search announcements<input id="query" type="search" placeholder="Search news, products or insurance use cases" autocomplete="off"></label>
           <label>Business story<select id="story"><option value="">All stories</option></select></label>
@@ -73,7 +74,7 @@
         <div id="cards" class="cards"></div>
         <div id="table" class="table-wrap" role="region" aria-label="Announcement comparison" tabindex="0" hidden></div>
         <section class="discussion" id="discussion" aria-labelledby="discussion-title">
-          <div><h3 id="discussion-title">Your discussion list <span id="selection-count"></span></h3><p class="muted">Selections and notes stay in this browser. Shared links contain IDs only, never notes.</p></div>
+          <div><h3 id="discussion-title">Your discussion list <span id="selection-count"></span></h3><p class="muted">Selections and notes stay in this browser. Shared discussion links contain theme choices and announcement IDs, never notes.</p></div>
           <div class="actions"><button id="selected-only" aria-pressed="false">Keep selected only</button><button id="clear">Clear selection</button><button id="undo" disabled>Undo</button><button id="export-md">Download Markdown</button><button id="export-csv">Download CSV</button><button id="share">Copy share link</button></div>
         </section>
       </div>

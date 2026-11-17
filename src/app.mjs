@@ -1,4 +1,4 @@
-import { STATUSES, validateData, filterItems, selectGroup, restoreSelection, exportCsv, exportMarkdown } from "./logic.mjs";
+import { STATUSES, readThemeLink, validateData, filterItems, selectGroup, restoreSelection, exportCsv, exportMarkdown } from "./logic.mjs";
 
 const $ = id => document.getElementById(id);
 const storageKey = "ignite-2026-insurance-discussion-v1";
@@ -28,27 +28,59 @@ function button(text, action) {
   return element;
 }
 function main() {
+  const data = validateData(JSON.parse($("catalog-data").textContent));
+  const items = data.announcements;
+  const linkedThemes = readThemeLink(location.search, data.themes);
   function applyPalette(palette) {
     document.documentElement.dataset.palette = palette;
     document.documentElement.dataset.theme = "light";
     $("theme").value = palette;
   }
   applyPalette("pink");
-  try {
-    const savedTheme = localStorage.getItem(themeStorageKey);
-    if (savedTheme !== null) {
-      if (!["pink", "blue"].includes(savedTheme)) throw new Error("Unrecognized saved color palette");
-      applyPalette(savedTheme);
+  if (linkedThemes.palette) applyPalette(linkedThemes.palette);
+  else {
+    try {
+      const savedTheme = localStorage.getItem(themeStorageKey);
+      if (savedTheme !== null) {
+        if (!["pink", "blue"].includes(savedTheme)) throw new Error("Unrecognized saved color palette");
+        applyPalette(savedTheme);
+      }
+    } catch (error) {
+      console.error("Could not restore color palette", error);
+      notify("Your color palette could not be restored. Pink is shown; choose a palette above.");
     }
-  } catch (error) {
-    console.error("Could not restore color palette", error);
-    notify("Your color palette could not be restored. Pink is shown; choose a palette above.");
   }
-  const data = validateData(JSON.parse($("catalog-data").textContent));
-  const items = data.announcements;
+  if (linkedThemes.warnings.length) notify(linkedThemes.warnings.join(" "));
   let selected = new Set(), notes = {}, undo = null, view = "cards";
   const expanded = new Set();
-  const filters = { query: "", theme: "", story: "", workload: "", status: "", audience: "both", sort: "source", selectedOnly: false };
+  const filters = { query: "", theme: linkedThemes.topic, story: "", workload: "", status: "", audience: "both", sort: "source", selectedOnly: false };
+  function syncThemeUrl() {
+    const url = new URL(location.href);
+    url.searchParams.set("theme", $("theme").value);
+    if (filters.theme) url.searchParams.set("topic", filters.theme);
+    else url.searchParams.delete("topic");
+    if (url.href !== location.href) {
+      try { history.replaceState(history.state, "", url); }
+      catch (error) {
+        console.error("Could not update theme URL", error);
+        notify("The address bar could not be updated. Use Copy theme link to share your theme choices.");
+      }
+    }
+  }
+  function themeLink() {
+    const url = new URL(location.href);
+    url.search = ""; url.hash = "";
+    url.searchParams.set("theme", $("theme").value);
+    if (filters.theme) url.searchParams.set("topic", filters.theme);
+    return url;
+  }
+  window.addEventListener("popstate", () => {
+    const incoming = readThemeLink(location.search, data.themes);
+    applyPalette(incoming.palette || "pink");
+    filters.theme = incoming.topic;
+    if (incoming.warnings.length) notify(incoming.warnings.join(" "));
+    render();
+  });
   function persist() {
     try { localStorage.setItem(storageKey, JSON.stringify({ selected: [...selected], notes })); }
     catch (error) { console.error("Could not save discussion", error); notify("Browser storage is unavailable or full. Changes are not saved; download your discussion list before leaving."); }
@@ -69,9 +101,9 @@ function main() {
     if (new Set(incoming).size !== selected.size) notify("Some shared announcements are not in this catalog and were omitted.");
     persist();
     if (updateView) {
-      Object.assign(filters, { query: "", theme: "", story: "", workload: "", status: "", audience: "both", sort: "source" });
+      const topic = readThemeLink(location.search, data.themes).topic;
       $("filters").reset();
-      filters.selectedOnly = true;
+      filters.theme = topic; filters.selectedOnly = true;
       view = "cards"; undo = null; render();
     }
   }
@@ -247,6 +279,7 @@ function main() {
     table.append(body); $("table").replaceChildren(table);
   }
   function render() {
+    syncThemeUrl();
     const focusedId = document.activeElement.id;
     const shown = visible();
     for (const [id, control] of themeButtons) control.setAttribute("aria-pressed", String(filters.theme === id));
@@ -307,13 +340,21 @@ function main() {
   }
   $("export-md").addEventListener("click", () => download("md", "text/markdown;charset=utf-8", exportMarkdown(selectedItems(), notes, filters.audience)));
   $("export-csv").addEventListener("click", () => download("csv", "text/csv;charset=utf-8", "\uFEFF" + exportCsv(selectedItems(), notes, filters.audience)));
-  $("share").addEventListener("click", async () => {
-    const url = new URL(location.href); url.hash = new URLSearchParams({ selected: [...selected].join(",") }).toString();
-    try { await navigator.clipboard.writeText(url.href); notify("Share link copied. Only announcement IDs are included, never notes."); }
+  async function copyLink(url, message) {
+    try { await navigator.clipboard.writeText(url.href); notify(message); }
     catch (error) { console.error("Could not copy link", error); download("txt", "text/plain", url.href); notify("Clipboard access failed. The share link has been downloaded instead; notes are not included."); }
+  }
+  $("share-theme").addEventListener("click", () => {
+    const url = themeLink(); url.hash = "catalog";
+    return copyLink(url, "Theme link copied. Color and announcement themes are included; other filters, selections and notes are not.");
+  });
+  $("share").addEventListener("click", () => {
+    const url = themeLink(); url.hash = new URLSearchParams({ selected: [...selected].join(",") }).toString();
+    return copyLink(url, "Share link copied. Theme choices and announcement IDs are included, never notes.");
   });
   $("theme").addEventListener("change", event => {
     applyPalette(event.target.value);
+    syncThemeUrl();
     try { localStorage.setItem(themeStorageKey, event.target.value); }
     catch (error) {
       console.error("Could not save color palette", error);
