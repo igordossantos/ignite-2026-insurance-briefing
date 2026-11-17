@@ -4,7 +4,7 @@ export function fixture() {
     details: ["Synthetic detailed feature for testing."],
     workload: "Test workload", section: `1.1.${id}`, themes, stories,
     status: "Not specified", availabilityEvidence: "The test source does not specify availability.",
-    relevance: { farmers: "Consider a test claims discussion.", zurich: "Consider a test risk discussion." },
+    relevance: { operations: "Consider a test claims discussion.", risk: "Consider a test risk discussion." },
     nextStep: "Validate the test scenario.",
     sources: [{ label: "Synthetic section link", url: `https://news.microsoft.com/events/ignite/2026/book-of-news/#${id}` }]
   });

@@ -1,6 +1,6 @@
 # Ignite 2026 | Insurance briefing
 
-A static, self-contained GitHub Pages briefing for Farmers Insurance and Zurich Insurance Group, following the FabCon briefing's overview, catalog, customer relevance, discussion-list and source-methodology format.
+A static, self-contained GitHub Pages briefing for the insurance industry, following the FabCon briefing's overview, catalog, insurance relevance, discussion-list and source-methodology format.
 
 ## Published source coverage
 
@@ -29,9 +29,9 @@ The video is an external link, not an embedded player. Earlier background articl
 - **Select entire theme/story** adds every matching catalog announcement, independent of other active filters. Existing selections are kept and overlapping groups are deduplicated.
 - **Select all shown** selects only the intersection of the current search, theme, story and availability filters.
 - Use **Keep selected only**, individual checkboxes, clear and undo to refine the discussion.
-- Switch between both organizations' perspectives or either customer individually.
-- Choose **Farmers theme** (pink) or **Zurich theme** (blue and white) in the header instead of light/dark mode. The choice is remembered in this browser, defaults to Farmers and is independent of audience filters, selected announcements and notes.
-- Company artwork comes from the supplied project images: the Farmers group/sign image and Zurich logo. Copies in `assets/` are embedded by the build, so switching palettes works offline and makes no external image requests. These are discussion-page palettes, not a claim of official brand certification.
+- Switch between **Claims & service**, **Risk & governance**, or both insurance perspectives.
+- Choose **Pink** or **Blue & white** in the header instead of light/dark mode. The choice is remembered in this browser, defaults to Pink and is independent of perspective filters, selected announcements and notes.
+- The page has no customer branding, logos or company imagery. Palettes and relevance labels are industry-neutral, including in the embedded catalog and exports.
 - Use cards or a comparison table, local notes, Markdown/CSV downloads, ID-only share links, presenter view and printing.
 - Expand card details to read subfeatures, availability/caveats and add notes. Expand/collapse-all controls apply to shown cards; a floating selection bar opens selected-only mode or discussion/export tools.
 - Share links restore the selected-only view. Unknown IDs are omitted with a visible warning.
@@ -55,7 +55,7 @@ npm run source:check
 
 For the optional browser tests, run `npm ci` on a fresh checkout, start the local preview, then `npm run test:e2e`. These use `playwright-core` with an installed Chrome (`CHROME_PATH` overrides the Windows default); no browser is downloaded. Tests verify all real entries, exact Copilot/Fabric selection membership, detailed search, workload filtering, expansion and mobile layout. Additional edge-case tests inject synthetic data into browser responses only, never the published catalog. Set `BASE_URL` to test the deployed page.
 
-`src/page.html`, `src/styles.css`, `src/logic.mjs`, `src/app.mjs`, `data/announcements.json`, `data/blog.json` and the company artwork in `assets/` generate `index.html`. The generated file has everything inlined, works offline (including by double-clicking), and is the only file deployed to Pages. Do not edit it manually.
+`src/page.html`, `src/styles.css`, `src/logic.mjs`, `src/app.mjs`, `data/announcements.json` and `data/blog.json` generate `index.html`. The generated file has everything inlined, works offline (including by double-clicking), and is the only file deployed to Pages. Do not edit it manually.
 
 ## Updating the compilation
 
@@ -70,7 +70,7 @@ For the optional browser tests, run `npm ci` on a fresh checkout, start the loca
    - `themes`, `stories`: arrays of IDs from the existing taxonomies; multiple memberships are allowed.
    - `status`: `GA`, `Mixed availability`, `Public preview`, `Private preview`, `Preview`, `Frontier`, `Rolling out`, `Preview coming soon`, `Coming soon`, or `Not specified`. Do not infer public preview from unspecified "preview".
    - `availabilityEvidence`: describe what the source states and what remains unspecified. Do not invent dates, prerequisites or licenses.
-   - `relevance`: `farmers` and `zurich` strings describing suggested, hypothetical use cases.
+   - `relevance`: `operations` and `risk` strings describing suggested, hypothetical use cases for the two insurance perspectives.
    - `nextStep`: an editorial validation/discussion step.
    - `sources`: an array of `{ "label": "...", "url": "https://..." }`. At least one exact Book of News URL with a section fragment is required.
 5. Keep one card per numbered source item, in source order. Verify catalog IDs, titles and exact fragment URLs against the independent inventory and numbered contents. Update the audited test count if the source genuinely adds/removes an item. Set `complete` only after this audit; a live recheck is needed to detect source changes outside the committed snapshot.

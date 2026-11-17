@@ -168,8 +168,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Consider controlled recovery exercises for a customer-facing claims service.",
-        "zurich": "Consider repeatable resilience evidence for critical applications across operating environments."
+        "operations": "Consider controlled recovery exercises for a customer-facing claims service.",
+        "risk": "Consider repeatable resilience evidence for critical applications across operating environments."
       },
       "nextStep": "Choose a non-production service, define recovery objectives and approve a bounded failure experiment.",
       "sources": [
@@ -207,8 +207,8 @@
         "data"
       ],
       "relevance": {
-        "farmers": "Explore whether confidential analytics could support sensitive claims-data collaboration.",
-        "zurich": "Explore controlled collaboration on risk data while validating residency and trust boundaries."
+        "operations": "Explore whether confidential analytics could support sensitive claims-data collaboration.",
+        "risk": "Explore controlled collaboration on risk data while validating residency and trust boundaries."
       },
       "nextStep": "Validate preview access, attestation, supported hardware and data-handling requirements before a pilot.",
       "sources": [
@@ -243,8 +243,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Consider benchmarking Arm-compatible services around claims or assistance applications.",
-        "zurich": "Consider workload-specific architecture choices for regional application platforms."
+        "operations": "Consider benchmarking Arm-compatible services around claims or assistance applications.",
+        "risk": "Consider workload-specific architecture choices for regional application platforms."
       },
       "nextStep": "Check application and dependency compatibility, then benchmark the actual workload without assuming advertised gains.",
       "sources": [
@@ -283,8 +283,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Discuss business-impact-based triage for customer-service application incidents.",
-        "zurich": "Discuss consistent incident context and approval boundaries across complex application estates."
+        "operations": "Discuss business-impact-based triage for customer-service application incidents.",
+        "risk": "Discuss consistent incident context and approval boundaries across complex application estates."
       },
       "nextStep": "Map one service's dependencies and define which operational actions must remain approval-gated.",
       "sources": [
@@ -322,8 +322,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore infrastructure boundaries for agent-generated code before expanding automation.",
-        "zurich": "Explore agent placement choices against regional infrastructure and data-control requirements."
+        "operations": "Explore infrastructure boundaries for agent-generated code before expanding automation.",
+        "risk": "Explore agent placement choices against regional infrastructure and data-control requirements."
       },
       "nextStep": "Compare managed Foundry and AKS responsibilities, isolation, networking and regional capacity.",
       "sources": [
@@ -361,8 +361,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Consider assessing a bounded legacy workflow before choosing migration or redesign.",
-        "zurich": "Consider a shared assessment method for application, database and infrastructure dependencies."
+        "operations": "Consider assessing a bounded legacy workflow before choosing migration or redesign.",
+        "risk": "Consider a shared assessment method for application, database and infrastructure dependencies."
       },
       "nextStep": "Inventory one application's dependencies and compare modernization options with engineering review.",
       "sources": [
@@ -400,8 +400,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Discuss a lab-based compatibility assessment for retained Windows workloads.",
-        "zurich": "Discuss hybrid inference options where application location and control requirements matter."
+        "operations": "Discuss a lab-based compatibility assessment for retained Windows workloads.",
+        "risk": "Discuss hybrid inference options where application location and control requirements matter."
       },
       "nextStep": "Separate OS evaluation from restricted AI early access and document supported hardware.",
       "sources": [
@@ -440,8 +440,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Consider retrieval quality and recoverability for a document-backed service application.",
-        "zurich": "Consider developer consistency and independent backup controls for distributed data applications."
+        "operations": "Consider retrieval quality and recoverability for a document-backed service application.",
+        "risk": "Consider developer consistency and independent backup controls for distributed data applications."
       },
       "nextStep": "Evaluate retrieval relevance on representative non-sensitive queries and test backup recovery separately.",
       "sources": [
@@ -479,8 +479,8 @@
         "data"
       ],
       "relevance": {
-        "farmers": "Explore narrower permissions for teams working with document-based applications.",
-        "zurich": "Explore hybrid document-store placement against sovereignty and operational requirements."
+        "operations": "Explore narrower permissions for teams working with document-based applications.",
+        "risk": "Explore hybrid document-store placement against sovereignty and operational requirements."
       },
       "nextStep": "Confirm API compatibility, supported topology and least-privilege requirements before considering migration.",
       "sources": [
@@ -519,8 +519,8 @@
         "underwriting"
       ],
       "relevance": {
-        "farmers": "Consider operational-to-analytical patterns for a carefully scoped claims-data application.",
-        "zurich": "Consider PostgreSQL platform options and governed analytical access to transactional data."
+        "operations": "Consider operational-to-analytical patterns for a carefully scoped claims-data application.",
+        "risk": "Consider PostgreSQL platform options and governed analytical access to transactional data."
       },
       "nextStep": "Distinguish Azure HorizonDB from the separate Fabric HorizonDB preview and validate service requirements.",
       "sources": [
@@ -557,8 +557,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore caching or session-context patterns with clear retention boundaries.",
-        "zurich": "Explore consistent cache configuration checks across application teams."
+        "operations": "Explore caching or session-context patterns with clear retention boundaries.",
+        "risk": "Explore consistent cache configuration checks across application teams."
       },
       "nextStep": "Test cache invalidation, sensitive-data retention and connection behavior in a non-production pilot.",
       "sources": [
@@ -596,8 +596,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Discuss recovery and integration-testing options for SQL-backed insurance applications.",
-        "zurich": "Discuss phased database modernization with explicit cutover and recovery criteria."
+        "operations": "Discuss recovery and integration-testing options for SQL-backed insurance applications.",
+        "risk": "Discuss phased database modernization with explicit cutover and recovery criteria."
       },
       "nextStep": "Check tier/region prerequisites and exercise a representative migration or local integration test.",
       "sources": [
@@ -635,8 +635,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Consider a consolidated view of databases supporting claims and service workloads.",
-        "zurich": "Consider consistent health investigations across a distributed database estate."
+        "operations": "Consider a consolidated view of databases supporting claims and service workloads.",
+        "risk": "Consider consistent health investigations across a distributed database estate."
       },
       "nextStep": "Inventory supported databases and test an approval-gated performance investigation.",
       "sources": [
@@ -674,8 +674,8 @@
         "underwriting"
       ],
       "relevance": {
-        "farmers": "Explore a governed claims-workflow prototype that combines records and analytical context.",
-        "zurich": "Explore a risk-review application using shared analytical and transactional data."
+        "operations": "Explore a governed claims-workflow prototype that combines records and analytical context.",
+        "risk": "Explore a risk-review application using shared analytical and transactional data."
       },
       "nextStep": "Validate preview limits, transaction semantics, security boundaries and capacity behavior.",
       "sources": [
@@ -713,8 +713,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Consider assessing migration effort and backup protection for PostgreSQL candidates.",
-        "zurich": "Consider workload-specific PostgreSQL architecture, resilience and data-in-use controls."
+        "operations": "Consider assessing migration effort and backup protection for PostgreSQL candidates.",
+        "risk": "Consider workload-specific PostgreSQL architecture, resilience and data-in-use controls."
       },
       "nextStep": "Choose one migration scenario and validate compatibility, online synchronization and restore behavior.",
       "sources": [
@@ -753,8 +753,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore a claims exception tracker or approval prototype on governed measures.",
-        "zurich": "Explore a portfolio-review workflow that combines analysis and controlled updates."
+        "operations": "Explore a claims exception tracker or approval prototype on governed measures.",
+        "risk": "Explore a portfolio-review workflow that combines analysis and controlled updates."
       },
       "nextStep": "Prototype with non-sensitive data and validate write-back authorization, audit and licensing details.",
       "sources": [
@@ -792,8 +792,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Discuss a managed backend for an internal claims or service application.",
-        "zurich": "Discuss reusing governed business definitions in applications rather than duplicating them."
+        "operations": "Discuss a managed backend for an internal claims or service application.",
+        "risk": "Discuss reusing governed business definitions in applications rather than duplicating them."
       },
       "nextStep": "Compare supported GA app paths and separately evaluate any preview database or authoring dependencies.",
       "sources": [
@@ -831,8 +831,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Consider measuring a service-assistant conversation against expert-reviewed examples.",
-        "zurich": "Consider controlled model and agent changes against risk-domain quality criteria."
+        "operations": "Consider measuring a service-assistant conversation against expert-reviewed examples.",
+        "risk": "Consider controlled model and agent changes against risk-domain quality criteria."
       },
       "nextStep": "Define a verified evaluation set and approval gate before enabling optimization or training.",
       "sources": [
@@ -870,8 +870,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore low-risk work-queue routing with human escalation for uncertain cases.",
-        "zurich": "Explore document categorization or workflow routing, not autonomous underwriting decisions."
+        "operations": "Explore low-risk work-queue routing with human escalation for uncertain cases.",
+        "risk": "Explore document categorization or workflow routing, not autonomous underwriting decisions."
       },
       "nextStep": "Evaluate class balance, calibration, permitted actions and human escalation on representative data.",
       "sources": [
@@ -909,8 +909,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Consider task-based model evaluation for developer and internal-assistance scenarios.",
-        "zurich": "Consider model/host choice against data controls, cost and approved use cases."
+        "operations": "Consider task-based model evaluation for developer and internal-assistance scenarios.",
+        "risk": "Consider model/host choice against data controls, cost and approved use cases."
       },
       "nextStep": "Compare eligible deployments using the same quality, latency, cost and data-handling criteria.",
       "sources": [
@@ -948,8 +948,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore embedding a bounded assistant into an internal service application.",
-        "zurich": "Explore consistent agent integration patterns across independently managed applications."
+        "operations": "Explore embedding a bounded assistant into an internal service application.",
+        "risk": "Explore consistent agent integration patterns across independently managed applications."
       },
       "nextStep": "Validate supported languages, tenant isolation, tool permissions and application-level evaluation.",
       "sources": [
@@ -987,8 +987,8 @@
         "data"
       ],
       "relevance": {
-        "farmers": "Discuss cost visibility for a bounded assistance pilot before broader use.",
-        "zurich": "Discuss accountable AI usage reporting and chargeback across organizational units."
+        "operations": "Discuss cost visibility for a bounded assistance pilot before broader use.",
+        "risk": "Discuss accountable AI usage reporting and chargeback across organizational units."
       },
       "nextStep": "Confirm eligibility and licensing, then define spend guardrails and measurable task outcomes.",
       "sources": [
@@ -1029,8 +1029,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore follow-up preparation and recurring internal tasks with explicit supervision.",
-        "zurich": "Explore persistent assistance while separating personal authority from agent identity."
+        "operations": "Explore follow-up preparation and recurring internal tasks with explicit supervision.",
+        "risk": "Explore persistent assistance while separating personal authority from agent identity."
       },
       "nextStep": "Check Frontier eligibility and define permitted tools, retention, ownership and escalation rules.",
       "sources": [
@@ -1069,8 +1069,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Discuss a governed hosting route for an internal workflow app.",
-        "zurich": "Discuss application lifecycle controls across business-built and developer-built experiences."
+        "operations": "Discuss a governed hosting route for an internal workflow app.",
+        "risk": "Discuss application lifecycle controls across business-built and developer-built experiences."
       },
       "nextStep": "Validate the supported publishing path and backend status for a specific application design.",
       "sources": [
@@ -1107,8 +1107,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Explore a shared internal workspace for preparing a complex service review.",
-        "zurich": "Explore coordinated workstream context across a project team with controlled access."
+        "operations": "Explore a shared internal workspace for preparing a complex service review.",
+        "risk": "Explore coordinated workstream context across a project team with controlled access."
       },
       "nextStep": "Test membership, document permissions and handoff behavior before broadening a workspace pilot.",
       "sources": [
@@ -1145,8 +1145,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Consider assisted procurement or meeting preparation if the relevant Dynamics apps are in scope.",
-        "zurich": "Consider finance/operations assistance with existing business permissions and approvals."
+        "operations": "Consider assisted procurement or meeting preparation if the relevant Dynamics apps are in scope.",
+        "risk": "Consider finance/operations assistance with existing business permissions and approvals."
       },
       "nextStep": "Confirm application licensing, supported actions and approval requirements rather than assuming deployment fit.",
       "sources": [
@@ -1184,8 +1184,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore an internal tracking app without using production claims data.",
-        "zurich": "Explore business-led prototyping within approved publishing and sandbox boundaries."
+        "operations": "Explore an internal tracking app without using production claims data.",
+        "risk": "Explore business-led prototyping within approved publishing and sandbox boundaries."
       },
       "nextStep": "Evaluate tenant governance, sandbox permissions and supported app publishing before sharing a prototype.",
       "sources": [
@@ -1222,8 +1222,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Discuss the transition from quick assistance to reviewed document-based work.",
-        "zurich": "Discuss permissions-aware collaboration while evaluating advanced Cowork features separately."
+        "operations": "Discuss the transition from quick assistance to reviewed document-based work.",
+        "risk": "Discuss permissions-aware collaboration while evaluating advanced Cowork features separately."
       },
       "nextStep": "Verify tenant rollout and distinguish licensed GA Office workflows from restricted agent previews.",
       "sources": [
@@ -1264,8 +1264,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Consider an ERP migration assessment only if such a platform evaluation is relevant.",
-        "zurich": "Consider structured evaluation of customization and integration complexity before migration decisions."
+        "operations": "Consider an ERP migration assessment only if such a platform evaluation is relevant.",
+        "risk": "Consider structured evaluation of customization and integration complexity before migration decisions."
       },
       "nextStep": "Confirm actual scenario eligibility and require business/implementation review of discovery findings.",
       "sources": [
@@ -1304,8 +1304,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Explore CRM/work-context assistance if Salesforce is part of the relevant workflow.",
-        "zurich": "Explore governed sharing of analytical context without assuming every integration direction is available."
+        "operations": "Explore CRM/work-context assistance if Salesforce is part of the relevant workflow.",
+        "risk": "Explore governed sharing of analytical context without assuming every integration direction is available."
       },
       "nextStep": "Validate supported data direction, permissions, source-system fit and pilot/preview access separately.",
       "sources": [
@@ -1341,8 +1341,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore daily work prioritization without including sensitive case content in an initial pilot.",
-        "zurich": "Explore reviewed follow-up preparation and the cost implications of recurring refreshes."
+        "operations": "Explore daily work prioritization without including sensitive case content in an initial pilot.",
+        "risk": "Explore reviewed follow-up preparation and the cost implications of recurring refreshes."
       },
       "nextStep": "Confirm preview access, approval behavior and credit consumption before selecting pilot users.",
       "sources": [
@@ -1381,8 +1381,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Explore repeatable browser tasks with clear boundaries around customer data.",
-        "zurich": "Explore agent browser identity, extension risk and centralized security-event visibility."
+        "operations": "Explore repeatable browser tasks with clear boundaries around customer data.",
+        "risk": "Explore agent browser identity, extension risk and centralized security-event visibility."
       },
       "nextStep": "Test one recorded task and review browser, extension and network policies before broader use.",
       "sources": [
@@ -1421,8 +1421,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Discuss a reusable context foundation for consistent service-assistant answers.",
-        "zurich": "Discuss preserving business definitions and evaluations across AI applications and model changes."
+        "operations": "Discuss a reusable context foundation for consistent service-assistant answers.",
+        "risk": "Discuss preserving business definitions and evaluations across AI applications and model changes."
       },
       "nextStep": "Map context ownership, authoritative sources and underlying service/license dependencies.",
       "sources": [
@@ -1462,8 +1462,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore curated service guidance that preserves approved claims terminology.",
-        "zurich": "Explore shared risk-domain guidance with controlled business-unit-specific extensions."
+        "operations": "Explore curated service guidance that preserves approved claims terminology.",
+        "risk": "Explore shared risk-domain guidance with controlled business-unit-specific extensions."
       },
       "nextStep": "Identify domain owners and test instruction inheritance, authoritative sourcing and change control.",
       "sources": [
@@ -1503,8 +1503,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore cited retrieval across approved policy and service documents.",
-        "zurich": "Explore relationships across risk guidance, contracts and supporting evidence."
+        "operations": "Explore cited retrieval across approved policy and service documents.",
+        "risk": "Explore relationships across risk guidance, contracts and supporting evidence."
       },
       "nextStep": "Measure citation quality and permission enforcement on a curated document collection.",
       "sources": [
@@ -1544,8 +1544,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Explore consistent claims measures in conversational and app experiences.",
-        "zurich": "Explore reusable portfolio definitions across analytics and assistant tools."
+        "operations": "Explore consistent claims measures in conversational and app experiences.",
+        "risk": "Explore reusable portfolio definitions across analytics and assistant tools."
       },
       "nextStep": "Choose a governed semantic model and validate measure consistency, permissions and integration eligibility.",
       "sources": [
@@ -1583,8 +1583,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore cited weather context for operational planning, not automatic claim determinations.",
-        "zurich": "Explore controlled external context for risk research with explicit source restrictions."
+        "operations": "Explore cited weather context for operational planning, not automatic claim determinations.",
+        "risk": "Explore controlled external context for risk research with explicit source restrictions."
       },
       "nextStep": "Validate data rights, geographic coverage, freshness, citation quality and permitted-source policies.",
       "sources": [
@@ -1624,8 +1624,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore assistance grounded in authorized work content with bounded actions.",
-        "zurich": "Explore context reuse while separating available controls from planned integrations."
+        "operations": "Explore assistance grounded in authorized work content with bounded actions.",
+        "risk": "Explore context reuse while separating available controls from planned integrations."
       },
       "nextStep": "Test identity boundaries, event scopes, memory retention and required human approvals.",
       "sources": [
@@ -1663,8 +1663,8 @@
         "data"
       ],
       "relevance": {
-        "farmers": "Consider a repeatable, expert-reviewed improvement process for an internal assistant.",
-        "zurich": "Consider evaluation assets that remain useful as agent configurations or models change."
+        "operations": "Consider a repeatable, expert-reviewed improvement process for an internal assistant.",
+        "risk": "Consider evaluation assets that remain useful as agent configurations or models change."
       },
       "nextStep": "Set a baseline and regression gates; keep both source entries without counting them as unrelated product releases.",
       "sources": [
@@ -1700,8 +1700,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Discuss prioritizing agents with access to sensitive service information.",
-        "zurich": "Discuss risk signals and ownership across a broader agent estate."
+        "operations": "Discuss prioritizing agents with access to sensitive service information.",
+        "risk": "Discuss risk signals and ownership across a broader agent estate."
       },
       "nextStep": "Validate discovered-agent coverage, contributing evidence and escalation/containment responsibilities.",
       "sources": [
@@ -1739,8 +1739,8 @@
         "data"
       ],
       "relevance": {
-        "farmers": "Consider using foundational activity evidence before widening an agent pilot.",
-        "zurich": "Consider a consistent agent-usage baseline while validating advanced licensing needs."
+        "operations": "Consider using foundational activity evidence before widening an agent pilot.",
+        "risk": "Consider a consistent agent-usage baseline while validating advanced licensing needs."
       },
       "nextStep": "Confirm tenant eligibility, available metrics and separate basic visibility from premium governance.",
       "sources": [
@@ -1777,8 +1777,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Discuss ownership and allowed tools for service-assistance agents.",
-        "zurich": "Discuss lifecycle cleanup and consistent MCP governance across agent builders."
+        "operations": "Discuss ownership and allowed tools for service-assistance agents.",
+        "risk": "Discuss lifecycle cleanup and consistent MCP governance across agent builders."
       },
       "nextStep": "Create an agent/tool ownership inventory and test the impact of disabling a dependent MCP service.",
       "sources": [
@@ -1816,8 +1816,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Consider measuring assistance quality and spend together for a pilot.",
-        "zurich": "Consider consistent outcome definitions before comparing AI investments across teams."
+        "operations": "Consider measuring assistance quality and spend together for a pilot.",
+        "risk": "Consider consistent outcome definitions before comparing AI investments across teams."
       },
       "nextStep": "Define measurable outcomes and validate cost attribution and license prerequisites.",
       "sources": [
@@ -1854,8 +1854,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Consider authorized review of an internal application with a defined remediation owner.",
-        "zurich": "Consider integrating validated code findings into existing engineering/security workflows."
+        "operations": "Consider authorized review of an internal application with a defined remediation owner.",
+        "risk": "Consider integrating validated code findings into existing engineering/security workflows."
       },
       "nextStep": "Confirm eligibility and authorization, then evaluate finding quality on an approved repository.",
       "sources": [
@@ -1891,8 +1891,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Discuss incident context and temporary protection for business-critical endpoints.",
-        "zurich": "Discuss integrated SOC operating models without assuming every SIEM function is GA."
+        "operations": "Discuss incident context and temporary protection for business-critical endpoints.",
+        "risk": "Discuss integrated SOC operating models without assuming every SIEM function is GA."
       },
       "nextStep": "Validate feature coverage, retention terms, shielding approvals and permanent-patching workflows.",
       "sources": [
@@ -1930,8 +1930,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Consider an audit-first view of local agents that can access service documents.",
-        "zurich": "Consider consistent protection coverage across approved desktop and developer agent tools."
+        "operations": "Consider an audit-first view of local agents that can access service documents.",
+        "risk": "Consider consistent protection coverage across approved desktop and developer agent tools."
       },
       "nextStep": "Check the supported-agent matrix and licenses, then assess Audit-mode results before blocking.",
       "sources": [
@@ -1967,8 +1967,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Discuss faster prioritization of threats relevant to service operations.",
-        "zurich": "Discuss a shared evidence trail for region- and industry-specific threat response."
+        "operations": "Discuss faster prioritization of threats relevant to service operations.",
+        "risk": "Discuss a shared evidence trail for region- and industry-specific threat response."
       },
       "nextStep": "Evaluate relevance, notification ownership and detection-review steps in the existing SOC process.",
       "sources": [
@@ -2005,8 +2005,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Consider a supported-version and recovery review for any retained collaboration servers.",
-        "zurich": "Consider risk-based decisions about retained systems and eligible cloud migration paths."
+        "operations": "Consider a supported-version and recovery review for any retained collaboration servers.",
+        "risk": "Consider risk-based decisions about retained systems and eligible cloud migration paths."
       },
       "nextStep": "Inventory applicable systems, apply existing guidance and verify recovery before planning future features.",
       "sources": [
@@ -2044,8 +2044,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Explore agent-versus-human identity separation and least-privilege access.",
-        "zurich": "Explore cross-tenant configuration consistency and controlled agent/tool connectivity."
+        "operations": "Explore agent-versus-human identity separation and least-privilege access.",
+        "risk": "Explore cross-tenant configuration consistency and controlled agent/tool connectivity."
       },
       "nextStep": "Map agent identities and network paths, then test selected controls without assuming universal coverage.",
       "sources": [
@@ -2081,8 +2081,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Discuss evidence-based preparation priorities before expanding agent use.",
-        "zurich": "Discuss shared security-foundation milestones across organizational environments."
+        "operations": "Discuss evidence-based preparation priorities before expanding agent use.",
+        "risk": "Discuss shared security-foundation milestones across organizational environments."
       },
       "nextStep": "Review current Secure Now priorities and prepare ownership while awaiting the stated preview.",
       "sources": [
@@ -2119,8 +2119,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore controls for endpoint agents handling internal service information.",
-        "zurich": "Explore coordinated device, identity and network enforcement for approved agents."
+        "operations": "Explore controls for endpoint agents handling internal service information.",
+        "risk": "Explore coordinated device, identity and network enforcement for approved agents."
       },
       "nextStep": "Define approved agents and test compliance policies in a staged, recoverable deployment.",
       "sources": [
@@ -2158,8 +2158,8 @@
         "modernization"
       ],
       "relevance": {
-        "farmers": "Discuss a bounded SOC triage workflow with auditable analyst approval.",
-        "zurich": "Discuss integrating multicloud evidence and playbooks into existing response processes."
+        "operations": "Discuss a bounded SOC triage workflow with auditable analyst approval.",
+        "risk": "Discuss integrating multicloud evidence and playbooks into existing response processes."
       },
       "nextStep": "Verify per-playbook availability, permissions, costs and approval gates before an authorized pilot.",
       "sources": [
@@ -2198,8 +2198,8 @@
         "claims"
       ],
       "relevance": {
-        "farmers": "Explore protection of personal and financial information in assistance workflows.",
-        "zurich": "Explore consistent classification and agent-data controls across governed work content."
+        "operations": "Explore protection of personal and financial information in assistance workflows.",
+        "risk": "Explore consistent classification and agent-data controls across governed work content."
       },
       "nextStep": "Use representative synthetic sensitive data to test labeling, grounding restrictions and prompt protections.",
       "sources": [
@@ -2236,8 +2236,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore approved desktop assistance while protecting customer-related files.",
-        "zurich": "Explore policy-managed support and file-workflow assistance for a controlled user group."
+        "operations": "Explore approved desktop assistance while protecting customer-related files.",
+        "risk": "Explore policy-managed support and file-workflow assistance for a controlled user group."
       },
       "nextStep": "Review file access and opt-in policies, then test reversible operations on non-sensitive documents.",
       "sources": [
@@ -2275,8 +2275,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Discuss reliable remote service work with trust-based clipboard/drive restrictions.",
-        "zurich": "Discuss Cloud PC operations and connection-specific controls for distributed teams."
+        "operations": "Discuss reliable remote service work with trust-based clipboard/drive restrictions.",
+        "risk": "Discuss Cloud PC operations and connection-specific controls for distributed teams."
       },
       "nextStep": "Validate connection trust policies, user experience and per-region preview eligibility.",
       "sources": [
@@ -2314,8 +2314,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore safer endpoint-change rollout for teams supporting customer operations.",
-        "zurich": "Explore consistent desired-state management and staged evaluation of new Windows experiences."
+        "operations": "Explore safer endpoint-change rollout for teams supporting customer operations.",
+        "risk": "Explore consistent desired-state management and staged evaluation of new Windows experiences."
       },
       "nextStep": "Separate immediately usable platform changes from gated previews and validate recovery procedures.",
       "sources": [
@@ -2354,8 +2354,8 @@
         "trust"
       ],
       "relevance": {
-        "farmers": "Explore supervised automation of a legacy internal workflow without an API.",
-        "zurich": "Explore controlled agent workspaces for long-running business processes."
+        "operations": "Explore supervised automation of a legacy internal workflow without an API.",
+        "risk": "Explore controlled agent workspaces for long-running business processes."
       },
       "nextStep": "Confirm the exact harness path, supported identity flow, persistence controls and consumption costs.",
       "sources": [
@@ -2394,8 +2394,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore an approved development environment for local-model experimentation.",
-        "zurich": "Explore AI placement choices where direct environment control is a requirement."
+        "operations": "Explore an approved development environment for local-model experimentation.",
+        "risk": "Explore AI placement choices where direct environment control is a requirement."
       },
       "nextStep": "Check compatible models, sizing, data placement and support boundaries before comparing deployment options.",
       "sources": [
@@ -2433,8 +2433,8 @@
         "productivity"
       ],
       "relevance": {
-        "farmers": "Explore least-privilege execution boundaries for local assistance tools.",
-        "zurich": "Explore consistent endpoint-agent policies with an observation period before enforcement."
+        "operations": "Explore least-privilege execution boundaries for local assistance tools.",
+        "risk": "Explore consistent endpoint-agent policies with an observation period before enforcement."
       },
       "nextStep": "Observe required communications, define least-privilege rules and test application compatibility before blocking.",
       "sources": [

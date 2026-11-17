@@ -64,16 +64,16 @@ test("share selections are deduplicated and reject unknown IDs or malformed save
 });
 test("CSV escapes quotes, multiline notes and spreadsheet formula injection", () => {
   const { announcements } = fixture();
-  const csv = exportCsv([announcements[0]], { alpha: '=HYPERLINK("https://example.org")\nsecond line' }, "farmers");
+  const csv = exportCsv([announcements[0]], { alpha: '=HYPERLINK("https://example.org")\nsecond line' }, "operations");
   assert.ok(csv.includes(`"'=HYPERLINK(""https://example.org"")\nsecond line"`));
-  assert.ok(csv.includes("Potential relevance: Farmers Insurance"));
-  assert.ok(!csv.includes("Potential relevance: Zurich Insurance Group"));
+  assert.ok(csv.includes("Potential relevance: Claims & service"));
+  assert.ok(!csv.includes("Potential relevance: Risk & governance"));
 });
 test("Markdown exports chosen customer, evidence links and notes only for selected entries", () => {
   const { announcements } = fixture();
-  const text = exportMarkdown([announcements[1]], { beta: "Review this", alpha: "Never export" }, "zurich");
-  assert.ok(text.includes("Potential relevance for Zurich Insurance Group"));
-  assert.ok(!text.includes("Potential relevance for Farmers Insurance"));
+  const text = exportMarkdown([announcements[1]], { beta: "Review this", alpha: "Never export" }, "risk");
+  assert.ok(text.includes("Potential relevance for Risk & governance"));
+  assert.ok(!text.includes("Potential relevance for Claims & service"));
   assert.ok(text.includes("#beta"));
   assert.ok(text.includes("Review this"));
   assert.ok(!text.includes("Never export"));
@@ -98,7 +98,7 @@ test("invalid sources, missing customer perspective, and unknown tags fail valid
   assert.throws(() => validateData(data), /sources/);
   const noSection = fixture(); noSection.announcements[0].sources[0].url = noSection.meta.sourceUrl;
   assert.throws(() => validateData(noSection), /section link/);
-  const noCustomer = fixture(); delete noCustomer.announcements[0].relevance.zurich;
+  const noCustomer = fixture(); delete noCustomer.announcements[0].relevance.risk;
   assert.throws(() => validateData(noCustomer), /perspectives/);
   const noTheme = fixture(); noTheme.announcements[0].themes = ["unmapped"];
   assert.throws(() => validateData(noTheme), /themes/);
@@ -126,7 +126,7 @@ test("blog context validates existing section mappings and rejects unsafe or inc
     [copy => { copy.links[0].url = "javascript:alert(1)"; }, /blog resource/],
     [copy => { copy.topics[0].sections.push("unverified"); }, /source section/],
     [copy => { copy.topics.push(copy.topics[0]); }, /blog topic/],
-    [copy => { delete copy.topics[0].relevance.zurich; }, /both customer/]
+    [copy => { delete copy.topics[0].relevance.risk; }, /both insurance/]
   ]) {
     const copy = structuredClone(blog); change(copy);
     assert.throws(() => validateData({ ...data, blog: copy }), error);
@@ -136,12 +136,8 @@ test("built artifact is self-contained, embeds the real dataset, uses safe DOM r
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
   assert.ok(!html.includes("/*__"));
   assert.ok(!/<script[^>]+src=|<link[^>]+stylesheet/i.test(html));
-  assert.ok(!/<img[^>]+src="(?!data:)/i.test(html));
-  for (const [mime, file] of [["jpeg", "farmers-insurance.jpg"], ["png", "zurich-insurance.png"]]) {
-    const embedded = html.match(new RegExp(`src="data:image/${mime};base64,([^"]+)"`));
-    assert.ok(embedded, `Missing inline ${file}`);
-    assert.deepEqual(Buffer.from(embedded[1], "base64"), await readFile(new URL(`../assets/${file}`, import.meta.url)));
-  }
+  assert.doesNotMatch(html, /\b(?:farmers|zurich)\b/i);
+  assert.doesNotMatch(html, /<img\b|data:image\//i);
   assert.ok(html.includes('id="catalog-data"'));
   assert.ok(!html.includes("Synthetic test"));
   assert.ok(!html.includes(".innerHTML"));
@@ -164,4 +160,10 @@ test("built artifact is self-contained, embeds the real dataset, uses safe DOM r
     if (mappedSections.has(item.section)) item.sources.push({ label: "Ignite 2026 keynote blog", url: blog.url });
   }
   assert.deepEqual(actual, expected);
+  for (const audience of ["both", "operations", "risk"]) {
+    for (const output of [exportCsv(actual.announcements, {}, audience), exportMarkdown(actual.announcements, {}, audience)]) {
+      assert.doesNotMatch(output, /\b(?:farmers|zurich)\b/i);
+      assert.ok(output.includes(actual.announcements[0].sources[0].url));
+    }
+  }
 });

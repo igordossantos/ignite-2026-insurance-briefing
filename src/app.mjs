@@ -2,8 +2,8 @@ import { STATUSES, validateData, filterItems, selectGroup, restoreSelection, exp
 
 const $ = id => document.getElementById(id);
 const storageKey = "ignite-2026-insurance-discussion-v1";
-const themeStorageKey = "ignite-2026-company-theme-v1";
-const customerNames = { farmers: "Farmers Insurance", zurich: "Zurich Insurance Group" };
+const themeStorageKey = "ignite-2026-color-theme-v1";
+const perspectiveNames = { operations: "Claims & service", risk: "Risk & governance" };
 let messageTimer;
 function notify(text) {
   $("message").textContent = text;
@@ -28,21 +28,21 @@ function button(text, action) {
   return element;
 }
 function main() {
-  function applyCompanyTheme(brand) {
-    document.documentElement.dataset.brand = brand;
+  function applyPalette(palette) {
+    document.documentElement.dataset.palette = palette;
     document.documentElement.dataset.theme = "light";
-    $("theme").value = brand;
+    $("theme").value = palette;
   }
-  applyCompanyTheme("farmers");
+  applyPalette("pink");
   try {
     const savedTheme = localStorage.getItem(themeStorageKey);
     if (savedTheme !== null) {
-      if (!["farmers", "zurich"].includes(savedTheme)) throw new Error("Unrecognized saved company theme");
-      applyCompanyTheme(savedTheme);
+      if (!["pink", "blue"].includes(savedTheme)) throw new Error("Unrecognized saved color palette");
+      applyPalette(savedTheme);
     }
   } catch (error) {
-    console.error("Could not restore company theme", error);
-    notify("Your company theme could not be restored. Farmers theme is shown; choose a theme above.");
+    console.error("Could not restore color palette", error);
+    notify("Your color palette could not be restored. Pink is shown; choose a palette above.");
   }
   const data = validateData(JSON.parse($("catalog-data").textContent));
   const items = data.announcements;
@@ -177,10 +177,10 @@ function main() {
   }
   function relevance(item) {
     const section = node("div", undefined, "relevance");
-    for (const key of ["farmers", "zurich"]) {
+    for (const key of ["operations", "risk"]) {
       if (filters.audience !== "both" && filters.audience !== key) continue;
       const paragraph = node("p");
-      paragraph.append(node("strong", `Potential relevance for ${customerNames[key]}: `), document.createTextNode(item.relevance[key]));
+      paragraph.append(node("strong", `Potential relevance for ${perspectiveNames[key]}: `), document.createTextNode(item.relevance[key]));
       section.append(paragraph);
     }
     return section;
@@ -313,11 +313,11 @@ function main() {
     catch (error) { console.error("Could not copy link", error); download("txt", "text/plain", url.href); notify("Clipboard access failed. The share link has been downloaded instead; notes are not included."); }
   });
   $("theme").addEventListener("change", event => {
-    applyCompanyTheme(event.target.value);
+    applyPalette(event.target.value);
     try { localStorage.setItem(themeStorageKey, event.target.value); }
     catch (error) {
-      console.error("Could not save company theme", error);
-      notify("Your company theme changed, but browser storage is unavailable. It will not be remembered after leaving.");
+      console.error("Could not save color palette", error);
+      notify("Your color palette changed, but browser storage is unavailable. It will not be remembered after leaving.");
     }
   });
   $("present").addEventListener("click", event => { const active = document.documentElement.classList.toggle("present"); event.target.setAttribute("aria-pressed", String(active)); });

@@ -33,7 +33,7 @@ export function validateData(data) {
     for (const [field, values] of [["themes", themes], ["stories", stories]]) {
       if (!Array.isArray(item[field]) || !item[field].length || item[field].some(id => !values.has(id))) fail(`${item.id}: invalid ${field}`);
     }
-    if (!item.relevance || ["farmers", "zurich"].some(key => typeof item.relevance[key] !== "string" || !item.relevance[key].trim())) fail(`${item.id}: both customer perspectives are required`);
+    if (!item.relevance || ["operations", "risk"].some(key => typeof item.relevance[key] !== "string" || !item.relevance[key].trim())) fail(`${item.id}: both insurance perspectives are required`);
     if (!Array.isArray(item.sources) || !item.sources.length || item.sources.some(source => !source.label || !safeUrl(source.url))) fail(`${item.id}: valid sources are required`);
     if (!item.sources.some(source => {
       const url = new URL(source.url), book = new URL(data.meta.sourceUrl);
@@ -58,7 +58,7 @@ export function validateData(data) {
       topicIds.add(topic.id);
       if (!Array.isArray(topic.sections) || !topic.sections.length || new Set(topic.sections).size !== topic.sections.length ||
         topic.sections.some(section => !sections.has(section))) fail("blog topic references an unknown or duplicate source section");
-      if (!requiredText(topic.relevance, ["farmers", "zurich"])) fail("blog topic requires both customer perspectives");
+      if (!requiredText(topic.relevance, ["operations", "risk"])) fail("blog topic requires both insurance perspectives");
       if (topic.caveat !== undefined && !requiredText(topic, ["caveat"])) fail("invalid blog caveat");
     }
     const urls = new Set();
@@ -80,7 +80,7 @@ export function filterItems(items, filters, selected = new Set()) {
     (!filters.status || item.status === filters.status) &&
     (!filters.selectedOnly || selected.has(item.id)) &&
     (!query || [item.title, item.summary, ...item.details, item.availabilityEvidence, item.discrepancy || "", item.nextStep, item.workload, item.section, ...item.themes, ...item.stories,
-      item.relevance.farmers, item.relevance.zurich].join(" ").toLocaleLowerCase().includes(query))
+      item.relevance.operations, item.relevance.risk].join(" ").toLocaleLowerCase().includes(query))
   ).sort((a, b) => filters.sort === "title" ? a.title.localeCompare(b.title) :
     filters.sort === "workload" ? a.workload.localeCompare(b.workload) || a.title.localeCompare(b.title) : 0);
 }
@@ -102,26 +102,26 @@ export function csvCell(value) {
 }
 
 export function exportCsv(items, notes, audience) {
-  const customers = audience === "both" ? ["farmers", "zurich"] : [audience];
+  const perspectives = audience === "both" ? ["operations", "risk"] : [audience];
   const rows = [["Source section", "Title", "Workload", "Themes", "Stories", "Availability", "Availability evidence", "Source caveat", "Summary", "Highlights",
-    ...customers.map(key => key === "farmers" ? "Potential relevance: Farmers Insurance" : "Potential relevance: Zurich Insurance Group"), "Next step", "Sources", "Notes"]];
+    ...perspectives.map(key => key === "operations" ? "Potential relevance: Claims & service" : "Potential relevance: Risk & governance"), "Next step", "Sources", "Notes"]];
   for (const item of items) rows.push([item.section, item.title, item.workload, item.themes.join("; "), item.stories.join("; "), item.status,
-    item.availabilityEvidence, item.discrepancy || "", item.summary, item.details.join("\n"), ...customers.map(key => item.relevance[key]), item.nextStep, item.sources.map(s => s.url).join("; "), notes[item.id] || ""]);
+    item.availabilityEvidence, item.discrepancy || "", item.summary, item.details.join("\n"), ...perspectives.map(key => item.relevance[key]), item.nextStep, item.sources.map(s => s.url).join("; "), notes[item.id] || ""]);
   return rows.map(row => row.map(csvCell).join(",")).join("\r\n");
 }
 
 export function exportMarkdown(items, notes, audience) {
   const plain = value => String(value).replace(/[\\`*_[\]<>#|]/g, "\\$&");
   const lines = ["# Microsoft Ignite 2026 | Insurance discussion list", "",
-    "Suggested use cases only; not statements about either organization's environment.", ""];
+    "Suggested use cases only; not statements about any organization's environment.", ""];
   for (const item of items) {
     lines.push(`## ${plain(item.title)}`, "", `${plain(item.workload)} | ${plain(item.status)}`,
       "", `Book of News section: ${plain(item.section)}`, "", plain(item.summary), "",
       ...item.details.map(detail => `- ${plain(detail)}`), "", `Availability evidence: ${plain(item.availabilityEvidence)}`, "");
     if (item.discrepancy) lines.push(`Source caveat: ${plain(item.discrepancy)}`, "");
     lines.push(`Themes: ${item.themes.map(plain).join(", ")}`, `Stories: ${item.stories.map(plain).join(", ")}`, "");
-    if (audience !== "zurich") lines.push(`Potential relevance for Farmers Insurance: ${plain(item.relevance.farmers)}`, "");
-    if (audience !== "farmers") lines.push(`Potential relevance for Zurich Insurance Group: ${plain(item.relevance.zurich)}`, "");
+    if (audience !== "risk") lines.push(`Potential relevance for Claims & service: ${plain(item.relevance.operations)}`, "");
+    if (audience !== "operations") lines.push(`Potential relevance for Risk & governance: ${plain(item.relevance.risk)}`, "");
     lines.push(`Suggested next step: ${plain(item.nextStep)}`, "", ...item.sources.map(s => `Source: ${s.url}`), "");
     if (notes[item.id]) lines.push(`Discussion notes: ${plain(notes[item.id])}`, "");
   }

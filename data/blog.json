@@ -13,8 +13,8 @@
       "summary": "The keynote brings Chat, Cowork, Code and Autopilot into one work experience, with Home as an entry point and Work IQ providing organizational context. It highlights role-based extensions, Dynamics 365 and Salesforce integrations, and Workspaces for collaboration among people and agents.",
       "sections": ["4.1.2", "4.1.4", "4.1.5", "4.1.6", "4.1.7", "4.1.9", "6.6.1"],
       "relevance": {
-        "farmers": "Explore shared claims-service work with explicit ownership, human review and access to approved knowledge.",
-        "zurich": "Explore reusable role-specific workspaces across markets while validating data access and local operating requirements."
+        "operations": "Explore shared claims-service work with explicit ownership, human review and access to approved knowledge.",
+        "risk": "Explore reusable role-specific workspaces across markets while validating data access and local operating requirements."
       }
     },
     {
@@ -23,8 +23,8 @@
       "summary": "Microsoft describes an enterprise context platform spanning Fabric, Foundry, Microsoft 365 and third-party systems. Connectors and reusable business plugins are intended to carry business context across agents while organizations retain control of their intelligence.",
       "sections": ["6.1.1", "6.2.1", "6.3.1", "6.4.1", "6.6.1", "6.7.1"],
       "relevance": {
-        "farmers": "Discuss authoritative policy, claims and service definitions before connecting additional assistants.",
-        "zurich": "Discuss ownership and reuse of underwriting and risk context across applications, models and organizational boundaries."
+        "operations": "Discuss authoritative policy, claims and service definitions before connecting additional assistants.",
+        "risk": "Discuss ownership and reuse of underwriting and risk context across applications, models and organizational boundaries."
       }
     },
     {
@@ -34,8 +34,8 @@
       "caveat": "The keynote broadly says the Code models are available in Foundry. Book of News section 2.2.2 specifically places Code-2-Flash in Foundry private preview and Cyber-2-Flash in preview inside MDASH. Those narrower restrictions remain in the catalog; the keynote does not establish unrestricted GA access.",
       "sections": ["2.2.1", "2.2.2"],
       "relevance": {
-        "farmers": "Compare approved model options on representative internal tasks rather than transferring vendor benchmark claims to claims outcomes.",
-        "zurich": "Review host, access, licensing and data-handling constraints separately from model capability or weight-access announcements."
+        "operations": "Compare approved model options on representative internal tasks rather than transferring vendor benchmark claims to claims outcomes.",
+        "risk": "Review host, access, licensing and data-handling constraints separately from model capability or weight-access announcements."
       }
     },
     {
@@ -44,8 +44,8 @@
       "summary": "Agent 365 is positioned as a control plane connecting agent observability with existing identity, security and management systems. Business Analytics adds a way to relate AI usage and spend to measured business outcomes; its detailed access stages remain those stated in the numbered announcements.",
       "sections": ["4.1.1", "7.1.3", "7.1.4"],
       "relevance": {
-        "farmers": "Define an accountable owner, spend limit and measurable service-quality criteria for each pilot.",
-        "zurich": "Discuss consistent inventory, oversight and allocation of AI costs across business units without assuming a return on investment."
+        "operations": "Define an accountable owner, spend limit and measurable service-quality criteria for each pilot.",
+        "risk": "Discuss consistent inventory, oversight and allocation of AI costs across business units without assuming a return on investment."
       }
     },
     {
@@ -55,8 +55,8 @@
       "caveat": "Perception's platform GA does not make every new playbook GA. The AI Transparency Initiative is a separate keynote initiative, not the January AI Readiness Initiatives preview in Book of News section 7.4.2, and is not a compliance certification.",
       "sections": ["7.6.1"],
       "relevance": {
-        "farmers": "Discuss auditable evidence, bounded permissions and analyst approval before automating security actions.",
-        "zurich": "Discuss independently verifiable agent activity and cross-provider governance; validate standards maturity and jurisdictional obligations separately."
+        "operations": "Discuss auditable evidence, bounded permissions and analyst approval before automating security actions.",
+        "risk": "Discuss independently verifiable agent activity and cross-provider governance; validate standards maturity and jurisdictional obligations separately."
       }
     },
     {
@@ -65,8 +65,8 @@
       "summary": "Microsoft announces GA Cobalt 200 virtual machines as part of a heterogeneous infrastructure strategy. The keynote also references previously announced Maia 300 silicon, Azure Boost and Azure Integrated HSM; those references are not additional numbered releases in this briefing.",
       "sections": ["1.1.3"],
       "relevance": {
-        "farmers": "Benchmark compatible workloads before deciding whether an infrastructure change supports service objectives.",
-        "zurich": "Evaluate regional availability, application compatibility and resilience requirements alongside measured workload economics."
+        "operations": "Benchmark compatible workloads before deciding whether an infrastructure change supports service objectives.",
+        "risk": "Evaluate regional availability, application compatibility and resilience requirements alongside measured workload economics."
       }
     }
   ],
@@ -101,7 +101,7 @@
       "title": "The platform approach to becoming Frontier",
       "publishedAt": "2026-10-27",
       "url": "https://blogs.microsoft.com/blog/2026/10/27/the-platform-approach-to-becoming-frontier/",
-      "summary": "Judson Althoff connects Copilot, Microsoft IQ and Agent 365 through customer examples, including Manulife and other regulated organizations. These are earlier, attributed examples, not statements about Farmers Insurance or Zurich, and not new Ignite releases."
+      "summary": "Judson Althoff connects Copilot, Microsoft IQ and Agent 365 through customer examples, including Manulife and other regulated organizations. These are earlier, attributed examples, not claims about other insurers and not new Ignite releases."
     }
   ]
 }
