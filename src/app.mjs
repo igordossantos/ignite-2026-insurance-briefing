@@ -140,7 +140,10 @@ function main() {
     meta.append(node("span", `${item.section} / ${item.workload}`, "tag"), status);
     if (item.discrepancy) meta.append(node("span", "Source caveat", "tag caveat-flag"));
     for (const id of item.themes) meta.append(node("span", nameOf("themes", id), "tag"));
-    article.append(meta, node("h3", item.title), node("p", item.summary), link(item.sources[0]), relevance(item));
+    const heading = node("h3");
+    heading.append(link({ label: item.title, url: item.sources[0].url }));
+    const announcementLink = link({ label: "Read announcement (opens in new tab)", url: item.sources[0].url });
+    article.append(meta, heading, node("p", item.summary), announcementLink, relevance(item));
     const next = node("p"); next.append(node("strong", "Suggested next step: "), document.createTextNode(item.nextStep)); article.append(next);
     const details = node("details");
     details.open = expanded.has(item.id);
@@ -178,7 +181,9 @@ function main() {
     const body = node("tbody");
     for (const item of shown) {
       const tr = node("tr"), title = node("td"), tags = node("td"), status = node("td", `${item.status}: ${item.availabilityEvidence}`), potential = node("td"), sources = node("td");
-      title.append(node("span", `${item.section} / ${item.workload}`, "tag"), node("p", item.title), node("p", item.summary), checkbox(item));
+      const heading = node("p");
+      heading.append(link({ label: item.title, url: item.sources[0].url }));
+      title.append(node("span", `${item.section} / ${item.workload}`, "tag"), heading, node("p", item.summary), checkbox(item));
       if (item.discrepancy) status.append(node("p", `Source caveat: ${item.discrepancy}`, "caveat"));
       tags.textContent = [...item.themes.map(id => nameOf("themes", id)), ...item.stories.map(id => nameOf("stories", id))].join("; ");
       potential.append(relevance(item), node("p", item.nextStep));

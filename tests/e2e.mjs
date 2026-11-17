@@ -15,6 +15,25 @@ try {
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(baseUrl);
   assert.equal(await page.locator(".announcement").count(), actual.announcements.length);
+  const announcementLinks = await page.locator(".announcement").evaluateAll(cards => cards.map(card => {
+    const title = card.querySelector("h3 a"), announcement = card.querySelector(":scope > a");
+    return {
+      title: title?.getAttribute("href"), announcement: announcement?.getAttribute("href"),
+      label: announcement?.textContent, target: announcement?.target, rel: announcement?.rel,
+      visible: Boolean(announcement?.getClientRects().length)
+    };
+  }));
+  assert.deepEqual(announcementLinks, actual.announcements.map(item => ({
+    title: item.sources[0].url, announcement: item.sources[0].url,
+    label: "Read announcement (opens in new tab)", target: "_blank", rel: "noopener noreferrer", visible: true
+  })));
+  const [announcementPage] = await Promise.all([
+    context.waitForEvent("page"),
+    page.locator(".announcement > a").first().click()
+  ]);
+  await announcementPage.waitForURL(url => url.hash === new URL(actual.announcements[0].sources[0].url).hash);
+  await announcementPage.close();
+  console.log("PASS all 59 tiles have visible exact announcement links and open details in a new tab");
   assert.match(await page.locator("#source-notice").innerText(), /59\/59 numbered/);
   assert.equal(await page.locator("#select-shown").isDisabled(), false);
   await page.locator('button[data-theme="copilot"]').click();

@@ -15,6 +15,7 @@ Availability is conservative: multi-feature items use **Mixed availability**, Fr
 ## Discussion workflow
 
 - Browse by technology theme (including Copilot and Fabric) or insurance business story.
+- Click any announcement title or its visible **Read announcement** link to open that item's exact Book of News section in a new tab. Source links remain available inside expanded details and in table view.
 - Filter by workload, availability and audience; search includes detailed subfeatures and availability evidence.
 - **Select entire theme/story** adds every matching catalog announcement, independent of other active filters. Existing selections are kept and overlapping groups are deduplicated.
 - **Select all shown** selects only the intersection of the current search, theme, story and availability filters.
