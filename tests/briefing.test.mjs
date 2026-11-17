@@ -110,6 +110,28 @@ test("source check recognizes the holding page but never equates missing holding
   assert.equal(sourceState("<h1>Microsoft Ignite 2026 Book of News</h1><h2>News</h2>"), "review-required");
   assert.throws(() => sourceState("<h1>Access denied</h1>"), /expected/);
 });
+test("blog context validates existing section mappings and rejects unsafe or incomplete supplementary sources", async () => {
+  const data = JSON.parse(await readFile(new URL("../data/announcements.json", import.meta.url), "utf8"));
+  const blog = JSON.parse(await readFile(new URL("../data/blog.json", import.meta.url), "utf8"));
+  assert.ok(validateData({ ...data, blog }));
+  assert.equal(blog.topics.length, 6);
+  assert.deepEqual(blog.links.map(link => link.url), [
+    "https://ignite.microsoft.com/en-US/",
+    "https://www.youtube-nocookie.com/embed/Jwp2aZDSVss?feature=oembed",
+    data.meta.sourceUrl,
+    "https://blogs.microsoft.com/blog/2026/11/12/scaling-ai-value-without-losing-control-lessons-from-frontier-firms/",
+    "https://blogs.microsoft.com/blog/2026/10/27/the-platform-approach-to-becoming-frontier/"
+  ]);
+  for (const [change, error] of [
+    [copy => { copy.links[0].url = "javascript:alert(1)"; }, /blog resource/],
+    [copy => { copy.topics[0].sections.push("unverified"); }, /source section/],
+    [copy => { copy.topics.push(copy.topics[0]); }, /blog topic/],
+    [copy => { delete copy.topics[0].relevance.zurich; }, /both customer/]
+  ]) {
+    const copy = structuredClone(blog); change(copy);
+    assert.throws(() => validateData({ ...data, blog: copy }), error);
+  }
+});
 test("built artifact is self-contained, embeds the real dataset, uses safe DOM rendering and has no unresolved markers", async () => {
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
   assert.ok(!html.includes("/*__"));
@@ -121,5 +143,19 @@ test("built artifact is self-contained, embeds the real dataset, uses safe DOM r
   assert.ok(html.includes('get("scoutTheme")'));
   const actual = JSON.parse(html.match(/<script type="application\/json" id="catalog-data">([\s\S]*?)<\/script>/)[1]);
   const expected = JSON.parse(await readFile(new URL("../data/announcements.json", import.meta.url), "utf8"));
+  const blog = JSON.parse(await readFile(new URL("../data/blog.json", import.meta.url), "utf8"));
+  const mappedSections = new Set(blog.topics.flatMap(topic => topic.sections));
+  for (const item of actual.announcements) {
+    const original = expected.announcements.find(entry => entry.id === item.id);
+    assert.deepEqual(item.sources.filter(source => source.url !== blog.url), original.sources);
+    assert.equal(item.sources.filter(source => source.url === blog.url).length, mappedSections.has(item.section) ? 1 : 0);
+  }
+  assert.ok(exportCsv(actual.announcements.filter(item => mappedSections.has(item.section)), {}, "both").includes(blog.url));
+  assert.ok(exportMarkdown(actual.announcements.filter(item => mappedSections.has(item.section)), {}, "both").includes(blog.url));
+  assert.ok(!/<iframe\b/i.test(html));
+  expected.blog = blog;
+  for (const item of expected.announcements) {
+    if (mappedSections.has(item.section)) item.sources.push({ label: "Ignite 2026 keynote blog", url: blog.url });
+  }
   assert.deepEqual(actual, expected);
 });

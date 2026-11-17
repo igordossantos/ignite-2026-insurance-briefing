@@ -46,6 +46,28 @@ export function validateData(data) {
   if (data.meta.sourceSections.some(section => !sections.has(section))) fail("source section missing from catalog");
   if ([...sections].some(section => !data.meta.sourceSections.includes(section))) fail("catalog section missing from source inventory");
   if (data.meta.sourceState === "complete" && !ids.size) fail("complete coverage cannot be empty");
+  if (data.blog !== undefined) {
+    const blog = data.blog;
+    const requiredText = (object, fields) => object && fields.every(field => typeof object[field] === "string" && object[field].trim());
+    if (!requiredText(blog, ["title", "summary", "availabilityNote", "linkScope"]) || !safeUrl(blog.url) ||
+      !Number.isFinite(Date.parse(blog.publishedAt)) || !Number.isFinite(Date.parse(blog.checkedAt))) fail("invalid blog metadata");
+    if (!Array.isArray(blog.topics) || !blog.topics.length || !Array.isArray(blog.links) || !blog.links.length) fail("blog topics and links are required");
+    const topicIds = new Set();
+    for (const topic of blog.topics) {
+      if (!requiredText(topic, ["id", "title", "summary"]) || topicIds.has(topic.id)) fail("invalid blog topic");
+      topicIds.add(topic.id);
+      if (!Array.isArray(topic.sections) || !topic.sections.length || new Set(topic.sections).size !== topic.sections.length ||
+        topic.sections.some(section => !sections.has(section))) fail("blog topic references an unknown or duplicate source section");
+      if (!requiredText(topic.relevance, ["farmers", "zurich"])) fail("blog topic requires both customer perspectives");
+      if (topic.caveat !== undefined && !requiredText(topic, ["caveat"])) fail("invalid blog caveat");
+    }
+    const urls = new Set();
+    for (const resource of blog.links) {
+      if (!requiredText(resource, ["kind", "title", "summary"]) || !safeUrl(resource.url) || urls.has(resource.url) ||
+        (resource.publishedAt !== undefined && !Number.isFinite(Date.parse(resource.publishedAt)))) fail("invalid blog resource");
+      urls.add(resource.url);
+    }
+  }
   return data;
 }
 

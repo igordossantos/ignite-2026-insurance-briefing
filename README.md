@@ -12,6 +12,14 @@ There is one card per numbered item, with an original summary, factual subfeatur
 
 Availability is conservative: multi-feature items use **Mixed availability**, Frontier remains program-gated, and future previews are not presented as available now. Contradictions in Fabric IQ, Work IQ and Windows container availability are explicitly flagged. The Cosmos DB count discrepancy and Dynamics plugin learn-more mismatch are also recorded. GA does not override separately stated preview dependencies.
 
+## Ignite blog and linked reading
+
+The [Ignite 2026 keynote blog](https://blogs.microsoft.com/blog/2026/11/17/ignite-2026-building-the-frontier-ecosystem/) adds six original topic summaries, separate potential insurance lenses and links to matching Book of News sections. Its five direct editorial destinations are included: the Ignite event site, embedded Workspaces video, Book of News and two related background articles published November 12 and October 27. Navigation, social sharing, author/tag archives and image assets are excluded; links from the background articles are not recursively cataloged.
+
+`data/blog.json` records the reviewed material, exact destinations, publication/review dates and source-section mappings. At build time, the keynote source is appended once to each mapped announcement's sources, including table view and exports. The numbered catalog remains 59 items; keynote-only points such as MAI Licensed Weights and the AI Transparency Initiative are explicitly labeled context, not fabricated numbered releases. More specific Book of News availability remains authoritative, including Foundry private-preview restrictions and Perception's per-feature exceptions. The AI Transparency Initiative is not confused with AI Readiness Initiatives.
+
+The video is an external link, not an embedded player. Earlier background articles and third-party customer outcomes are not presented as new Ignite announcements, insurer deployments or promised results.
+
 ## Discussion workflow
 
 - Browse by technology theme (including Copilot and Fabric) or insurance business story.
@@ -45,7 +53,7 @@ npm run source:check
 
 For the optional browser tests, run `npm ci` on a fresh checkout, start the local preview, then `npm run test:e2e`. These use `playwright-core` with an installed Chrome (`CHROME_PATH` overrides the Windows default); no browser is downloaded. Tests verify all real entries, exact Copilot/Fabric selection membership, detailed search, workload filtering, expansion and mobile layout. Additional edge-case tests inject synthetic data into browser responses only, never the published catalog. Set `BASE_URL` to test the deployed page.
 
-`src/page.html`, `src/styles.css`, `src/logic.mjs`, `src/app.mjs` and `data/announcements.json` generate `index.html`. The generated file has everything inlined, works offline (including by double-clicking), and is the only file deployed to Pages. Do not edit it manually.
+`src/page.html`, `src/styles.css`, `src/logic.mjs`, `src/app.mjs`, `data/announcements.json` and `data/blog.json` generate `index.html`. The generated file has everything inlined, works offline (including by double-clicking), and is the only file deployed to Pages. Do not edit it manually.
 
 ## Updating the compilation
 
@@ -65,6 +73,7 @@ For the optional browser tests, run `npm ci` on a fresh checkout, start the loca
    - `sources`: an array of `{ "label": "...", "url": "https://..." }`. At least one exact Book of News URL with a section fragment is required.
 5. Keep one card per numbered source item, in source order. Verify catalog IDs, titles and exact fragment URLs against the independent inventory and numbered contents. Update the audited test count if the source genuinely adds/removes an item. Set `complete` only after this audit; a live recheck is needed to detect source changes outside the committed snapshot.
 6. Update `meta.checkedAt` to the actual verification time and `meta.coverageNote` with scope/gaps. Rebuild, test and verify the browser; commit inventory, data and generated page together.
+7. When reviewing the keynote or its direct links, update `data/blog.json` and its actual `checkedAt`. Keep summaries original, background dates explicit and topic section references restricted to verified catalog sections. Review the rendered article's editorial links and video destination, not just site-wide navigation. Do not change product availability based only on broader keynote wording.
 
 Run `npm run source:check` for a lightweight holding-page/publication check. It is not an import or a completeness audit. Synthetic test fixtures live only under `tests/`; they are not shipped.
 
@@ -72,4 +81,4 @@ Run `npm run source:check` for a lightweight holding-page/publication check. It 
 
 The workflow builds, tests, checks for stale generated output and deploys only the single HTML file on pushes to `main`. Enable **Settings > Pages > Source: GitHub Actions**. The resulting page is public, even though it requests `noindex`; this is not access control.
 
-No analytics, third-party scripts, external fonts or external requests on page load. Source links open the public Microsoft site only when clicked. Independent discussion aid; not an official publication of Microsoft or either insurance organization.
+No analytics, third-party scripts, external fonts or external requests on page load. External source sites, including the linked video, open only when clicked. Independent discussion aid; not an official publication of Microsoft or either insurance organization.

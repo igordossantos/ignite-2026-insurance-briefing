@@ -4,13 +4,19 @@ import { chromium } from "playwright-core";
 import { fixture } from "./fixtures.mjs";
 
 const executablePath = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const browser = await chromium.launch({ executablePath, headless: true });
+const browser = await chromium.launch({
+  executablePath, headless: true,
+  args: ["--disable-gpu", "--disable-frame-rate-limit"]
+});
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:8086/";
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const actual = JSON.parse(await readFile(new URL("../data/announcements.json", import.meta.url), "utf8"));
+const blog = JSON.parse(await readFile(new URL("../data/blog.json", import.meta.url), "utf8"));
 const errors = [];
 try {
   const context = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 1440, height: 1000 } });
+  context.setDefaultTimeout(30_000);
+  context.setDefaultNavigationTimeout(30_000);
   const page = await context.newPage();
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(baseUrl);
@@ -27,14 +33,38 @@ try {
     title: item.sources[0].url, announcement: item.sources[0].url,
     label: "Read announcement (opens in new tab)", target: "_blank", rel: "noopener noreferrer", visible: true
   })));
+  const firstAnnouncementUrl = actual.announcements[0].sources[0].url;
+  // Verify the popup destination without depending on the external publisher's load time.
+  await context.route(firstAnnouncementUrl.split("#")[0], route =>
+    route.fulfill({ contentType: "text/html", body: "<!doctype html><title>Announcement destination</title>" }));
   const [announcementPage] = await Promise.all([
     context.waitForEvent("page"),
     page.locator(".announcement > a").first().click()
   ]);
   await announcementPage.waitForURL(url => url.hash === new URL(actual.announcements[0].sources[0].url).hash);
   await announcementPage.close();
+  await context.unroute(firstAnnouncementUrl.split("#")[0]);
   console.log("PASS all 59 tiles have visible exact announcement links and open details in a new tab");
   assert.match(await page.locator("#source-notice").innerText(), /59\/59 numbered/);
+  assert.equal(await page.locator("#keynote").isVisible(), true);
+  assert.equal(await page.locator("#blog-source a").getAttribute("href"), blog.url);
+  assert.deepEqual(await page.locator("#blog-links li a").evaluateAll(links => links.map(link => ({
+    url: link.href, target: link.target, rel: link.rel
+  }))), blog.links.map(link => ({ url: link.url, target: "_blank", rel: "noopener noreferrer" })));
+  assert.equal(await page.locator("#blog-topics .blog-topic").count(), blog.topics.length);
+  const mappedSections = new Set(blog.topics.flatMap(topic => topic.sections));
+  assert.deepEqual(await page.locator(".announcement").evaluateAll((cards, url) =>
+    cards.filter(card => [...card.querySelectorAll("details a")].some(link => link.href === url)).map(card => card.id), blog.url),
+  actual.announcements.filter(item => mappedSections.has(item.section)).map(item => item.id));
+  const blogTopic = page.locator("#blog-topics .blog-topic").first();
+  await blogTopic.locator("summary").click();
+  assert.match(await blogTopic.locator(".relevance").innerText(), /Farmers Insurance/);
+  assert.deepEqual(await blogTopic.locator("details ul a").evaluateAll(links => links.map(link => link.href)),
+    blog.topics[0].sections.map(section => actual.announcements.find(item => item.section === section).sources[0].url));
+  await blogTopic.locator("summary").click();
+  assert.match(await page.locator("#blog-topics").innerText(), /private preview/);
+  assert.match(await page.locator("#blog-links").innerText(), /2026-10-27/);
+  console.log("PASS six keynote topics, all five direct links, dated background and mapped announcement/export sources");
   assert.equal(await page.locator("#select-shown").isDisabled(), false);
   assert.equal(await page.locator("#stories .story").count(), actual.stories.length);
   assert.deepEqual(await page.locator("#technology-stories .story").evaluateAll(cards => cards.map(card => ({

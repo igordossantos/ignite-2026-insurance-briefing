@@ -89,6 +89,33 @@ function main() {
     entry.append(link({ label: `${section} | ${item.title}`, url: item.sources.find(source => new URL(source.url).origin === new URL(data.meta.sourceUrl).origin).url }));
     $("source-sections").append(entry);
   }
+  if (data.blog) {
+    const blog = data.blog;
+    $("keynote").hidden = false; $("keynote-nav").hidden = false;
+    $("blog-summary").textContent = blog.summary;
+    $("blog-source").append(link({ label: `${blog.title} (opens in new tab)`, url: blog.url }));
+    $("blog-checked").textContent = `Published: ${blog.publishedAt}. Reviewed: ${new Date(blog.checkedAt).toLocaleString(undefined, { timeZoneName: "short" })}.`;
+    $("blog-availability").textContent = blog.availabilityNote;
+    for (const topic of blog.topics) {
+      const card = node("article", undefined, "story blog-topic");
+      card.append(node("h3", topic.title), node("p", topic.summary));
+      if (topic.caveat) card.append(node("p", topic.caveat, "caveat"));
+      const details = node("details"), related = node("ul");
+      details.append(node("summary", "Insurance lenses & related announcements"), relevance(topic), node("h4", "Related Book of News sections"));
+      for (const section of topic.sections) {
+        const item = items.find(item => item.section === section), entry = node("li");
+        entry.append(link({ label: `${section} | ${item.title}`, url: item.sources[0].url })); related.append(entry);
+      }
+      details.append(related); card.append(details); $("blog-topics").append(card);
+    }
+    $("blog-link-scope").textContent = blog.linkScope;
+    for (const resource of blog.links) {
+      const entry = node("li");
+      entry.append(node("span", `${resource.kind}${resource.publishedAt ? ` / ${resource.publishedAt}` : ""}`, "tag"),
+        node("br"), link({ label: `${resource.title} (opens in new tab)`, url: resource.url }), node("p", resource.summary));
+      $("blog-links").append(entry);
+    }
+  }
   function groupCard(group, field) {
     const kind = field === "themes" ? "theme" : "story";
     const count = items.filter(item => item[field].includes(group.id)).length;

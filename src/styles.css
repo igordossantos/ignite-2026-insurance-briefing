@@ -104,6 +104,12 @@ p { margin: 8px 0 16px; }
 .story-section > summary { font-size: 20px; font-weight: 650; color: var(--cp-text); }
 .story-section > .story-grid { margin-top: 20px; }
 .story-section > .muted { margin-top: 16px; }
+.blog-topic p { min-height: 0; }
+#blog-topics { margin-top: 24px; }
+.resource-list { list-style: none; padding: 0; }
+.resource-list li { border-top: 1px solid var(--cp-border); padding: 16px 0; }
+.resource-list a { display: inline-block; margin-top: 8px; }
+.resource-list p { font-size: 14px; color: var(--cp-text-muted); margin-bottom: 0; }
 .perspective { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; padding: 24px 0 0; border-top: 1px solid var(--cp-border); }
 .perspective p { font-size: 14px; color: var(--cp-text-muted); }
 .catalog-section { background: var(--cp-bg-elevated); border-block: 1px solid var(--cp-border); }
@@ -152,6 +158,6 @@ html.present header nav, html.present #overview, html.present #matters, html.pre
 @media (max-width: 600px) { .wrap { padding-left: 20px; padding-right: 20px; }.hero { padding-top: 28px; }.story-grid, .executive-grid, .cards, .perspective, .source-grid, .toolbar { grid-template-columns: minmax(0, 1fr); }.search, .toolbar > button { grid-column: auto; }.toolbar { padding: 16px; }.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }.metric { padding: 12px; }header > .actions { width: 100%; }nav { gap: 8px 16px; }.section { padding-top: 28px; padding-bottom: 28px; }.selection-dock { width: calc(100% - 32px); font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print {
-  header, #overview, #matters, .toolbar, .theme-field, .results-bar .actions, .discussion, .selection-dock, #message, .check, .skip, noscript, .announcement details label { display: none !important; }
+  header, #overview, #matters, #keynote, .toolbar, .theme-field, .results-bar .actions, .discussion, .selection-dock, #message, .check, .skip, noscript, .announcement details label { display: none !important; }
   .wrap { max-width: none; padding: 0; }.hero, .section { padding: 16px 0; }h1 { font-size: 32px; letter-spacing: -1px; }h1 br { display: none; }.cards, .source-grid { display: block; }.announcement { break-inside: avoid; margin-bottom: 16px; }.catalog-section { border: 0; }body { font-size: 11pt; }a { color: var(--cp-text); }.announcement > label { display: none; }.print-note { display: block; }.announcement details { display: block; }footer { padding: 16px 0; }
 }
