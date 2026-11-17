@@ -13,7 +13,12 @@ for (const item of data.announcements) {
   }
 }
 const script = logic.replaceAll("export ", "") + "\n" + app.replace(/^import .+\r?\n/, "");
+const [farmersImage, zurichImage] = await Promise.all(
+  ["assets/farmers-insurance.jpg", "assets/zurich-insurance.png"].map(path => readFile(new URL(path, root)))
+);
 const html = page.replace("/*__STYLES__*/", () => styles)
+  .replace("/*__FARMERS_IMAGE__*/", () => `data:image/jpeg;base64,${farmersImage.toString("base64")}`)
+  .replace("/*__ZURICH_IMAGE__*/", () => `data:image/png;base64,${zurichImage.toString("base64")}`)
   .replace("/*__DATA__*/", () => JSON.stringify(data).replaceAll("<", "\\u003c"))
   .replace("/*__APP__*/", () => script.replaceAll("</script", "<\\/script"));
 await writeFile(new URL("index.html", root), html);

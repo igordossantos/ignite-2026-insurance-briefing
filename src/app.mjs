@@ -2,6 +2,7 @@ import { STATUSES, validateData, filterItems, selectGroup, restoreSelection, exp
 
 const $ = id => document.getElementById(id);
 const storageKey = "ignite-2026-insurance-discussion-v1";
+const themeStorageKey = "ignite-2026-company-theme-v1";
 const customerNames = { farmers: "Farmers Insurance", zurich: "Zurich Insurance Group" };
 let messageTimer;
 function notify(text) {
@@ -27,6 +28,22 @@ function button(text, action) {
   return element;
 }
 function main() {
+  function applyCompanyTheme(brand) {
+    document.documentElement.dataset.brand = brand;
+    document.documentElement.dataset.theme = "light";
+    $("theme").value = brand;
+  }
+  applyCompanyTheme("farmers");
+  try {
+    const savedTheme = localStorage.getItem(themeStorageKey);
+    if (savedTheme !== null) {
+      if (!["farmers", "zurich"].includes(savedTheme)) throw new Error("Unrecognized saved company theme");
+      applyCompanyTheme(savedTheme);
+    }
+  } catch (error) {
+    console.error("Could not restore company theme", error);
+    notify("Your company theme could not be restored. Farmers theme is shown; choose a theme above.");
+  }
   const data = validateData(JSON.parse($("catalog-data").textContent));
   const items = data.announcements;
   let selected = new Set(), notes = {}, undo = null, view = "cards";
@@ -295,8 +312,13 @@ function main() {
     try { await navigator.clipboard.writeText(url.href); notify("Share link copied. Only announcement IDs are included, never notes."); }
     catch (error) { console.error("Could not copy link", error); download("txt", "text/plain", url.href); notify("Clipboard access failed. The share link has been downloaded instead; notes are not included."); }
   });
-  $("theme").addEventListener("click", () => {
-    document.documentElement.dataset.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  $("theme").addEventListener("change", event => {
+    applyCompanyTheme(event.target.value);
+    try { localStorage.setItem(themeStorageKey, event.target.value); }
+    catch (error) {
+      console.error("Could not save company theme", error);
+      notify("Your company theme changed, but browser storage is unavailable. It will not be remembered after leaving.");
+    }
   });
   $("present").addEventListener("click", event => { const active = document.documentElement.classList.toggle("present"); event.target.setAttribute("aria-pressed", String(active)); });
   $("print").addEventListener("click", () => window.print());

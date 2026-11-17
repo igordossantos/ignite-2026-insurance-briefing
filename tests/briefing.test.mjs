@@ -136,6 +136,12 @@ test("built artifact is self-contained, embeds the real dataset, uses safe DOM r
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
   assert.ok(!html.includes("/*__"));
   assert.ok(!/<script[^>]+src=|<link[^>]+stylesheet/i.test(html));
+  assert.ok(!/<img[^>]+src="(?!data:)/i.test(html));
+  for (const [mime, file] of [["jpeg", "farmers-insurance.jpg"], ["png", "zurich-insurance.png"]]) {
+    const embedded = html.match(new RegExp(`src="data:image/${mime};base64,([^"]+)"`));
+    assert.ok(embedded, `Missing inline ${file}`);
+    assert.deepEqual(Buffer.from(embedded[1], "base64"), await readFile(new URL(`../assets/${file}`, import.meta.url)));
+  }
   assert.ok(html.includes('id="catalog-data"'));
   assert.ok(!html.includes("Synthetic test"));
   assert.ok(!html.includes(".innerHTML"));

@@ -30,6 +30,8 @@ The video is an external link, not an embedded player. Earlier background articl
 - **Select all shown** selects only the intersection of the current search, theme, story and availability filters.
 - Use **Keep selected only**, individual checkboxes, clear and undo to refine the discussion.
 - Switch between both organizations' perspectives or either customer individually.
+- Choose **Farmers theme** (pink) or **Zurich theme** (blue and white) in the header instead of light/dark mode. The choice is remembered in this browser, defaults to Farmers and is independent of audience filters, selected announcements and notes.
+- Company artwork comes from the supplied project images: the Farmers group/sign image and Zurich logo. Copies in `assets/` are embedded by the build, so switching palettes works offline and makes no external image requests. These are discussion-page palettes, not a claim of official brand certification.
 - Use cards or a comparison table, local notes, Markdown/CSV downloads, ID-only share links, presenter view and printing.
 - Expand card details to read subfeatures, availability/caveats and add notes. Expand/collapse-all controls apply to shown cards; a floating selection bar opens selected-only mode or discussion/export tools.
 - Share links restore the selected-only view. Unknown IDs are omitted with a visible warning.
@@ -53,7 +55,7 @@ npm run source:check
 
 For the optional browser tests, run `npm ci` on a fresh checkout, start the local preview, then `npm run test:e2e`. These use `playwright-core` with an installed Chrome (`CHROME_PATH` overrides the Windows default); no browser is downloaded. Tests verify all real entries, exact Copilot/Fabric selection membership, detailed search, workload filtering, expansion and mobile layout. Additional edge-case tests inject synthetic data into browser responses only, never the published catalog. Set `BASE_URL` to test the deployed page.
 
-`src/page.html`, `src/styles.css`, `src/logic.mjs`, `src/app.mjs`, `data/announcements.json` and `data/blog.json` generate `index.html`. The generated file has everything inlined, works offline (including by double-clicking), and is the only file deployed to Pages. Do not edit it manually.
+`src/page.html`, `src/styles.css`, `src/logic.mjs`, `src/app.mjs`, `data/announcements.json`, `data/blog.json` and the company artwork in `assets/` generate `index.html`. The generated file has everything inlined, works offline (including by double-clicking), and is the only file deployed to Pages. Do not edit it manually.
 
 ## Updating the compilation
 

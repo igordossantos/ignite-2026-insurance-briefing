@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-brand="farmers">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,14 +21,19 @@
   <header>
     <a class="brand" href="#top"><span class="mark">I26</span> Ignite / Insurance briefing</a>
     <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Priorities & catalog</a><a href="#matters">Where it may matter</a><a id="keynote-nav" href="#keynote" hidden>Keynote & links</a><a href="#sources">Sources & method</a></nav>
-    <div class="actions"><button id="present" aria-pressed="false">Presenter view</button><button id="theme">Switch theme</button><button id="print">Print</button></div>
+    <div class="actions"><label class="company-theme" for="theme">Company theme<select id="theme"><option value="farmers">Farmers theme</option><option value="zurich">Zurich theme</option></select></label><button id="present" aria-pressed="false">Presenter view</button><button id="print">Print</button></div>
   </header>
   <main id="main">
     <section class="hero" id="top"><div class="wrap">
+      <div class="hero-heading"><div>
       <p class="eyebrow">MICROSOFT IGNITE / NOVEMBER 17-20, 2026</p>
       <h1>Microsoft Ignite 2026 |<br>Data, AI & Enterprise Technology Briefing</h1>
       <p class="lede">A curated briefing for <strong>Farmers Insurance</strong> and <strong>Zurich Insurance Group</strong></p>
       <p class="muted">Every numbered Book of News item, with source links, availability evidence and potential insurance relevance. Choose a technology theme or business story to build your discussion.</p>
+      </div><div class="company-art">
+        <figure data-company="farmers"><img src="/*__FARMERS_IMAGE__*/" alt="Farmers Insurance group in pink with the company sign" width="447" height="447"><figcaption>Farmers Insurance / pink palette</figcaption></figure>
+        <figure data-company="zurich"><img src="/*__ZURICH_IMAGE__*/" alt="Zurich Insurance Group logo" width="840" height="859"><figcaption>Zurich Insurance Group / blue & white palette</figcaption></figure>
+      </div></div>
       <div class="metrics" id="metrics"></div>
       <div id="source-notice" class="notice" role="status"></div>
     </div></section>

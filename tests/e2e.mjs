@@ -14,13 +14,52 @@ const actual = JSON.parse(await readFile(new URL("../data/announcements.json", i
 const blog = JSON.parse(await readFile(new URL("../data/blog.json", import.meta.url), "utf8"));
 const errors = [];
 try {
-  const context = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 1440, height: 1000 } });
+  const context = await browser.newContext({ reducedMotion: "reduce", colorScheme: "dark", viewport: { width: 1440, height: 1000 } });
   context.setDefaultTimeout(30_000);
   context.setDefaultNavigationTimeout(30_000);
   const page = await context.newPage();
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(baseUrl);
   assert.equal(await page.locator(".announcement").count(), actual.announcements.length);
+  assert.equal(await page.locator("#theme").inputValue(), "farmers");
+  assert.deepEqual(await page.locator("#theme option").allTextContents(), ["Farmers theme", "Zurich theme"]);
+  for (const brand of ["farmers", "zurich"]) {
+    await page.locator("#theme").selectOption(brand);
+    assert.equal(await page.locator("html").getAttribute("data-brand"), brand);
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
+    const artwork = page.locator(`[data-company="${brand}"] img`);
+    assert.equal(await artwork.isVisible(), true);
+    assert.equal(await artwork.evaluate(image => image.complete && image.naturalWidth > 0), true);
+    assert.equal(await page.locator(`[data-company="${brand === "farmers" ? "zurich" : "farmers"}"]`).isVisible(), false);
+    const palette = await page.evaluate(() => {
+      const style = getComputedStyle(document.documentElement);
+      const color = key => style.getPropertyValue(`--cp-${key}`).trim();
+      const luminance = hex => {
+        const values = hex.slice(1).match(/../g).map(value => {
+          const channel = parseInt(value, 16) / 255;
+          return channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4;
+        });
+        return values[0] * .2126 + values[1] * .7152 + values[2] * .0722;
+      };
+      return {
+        accent: color("accent"), background: color("bg"),
+        contrasts: [["text", "bg"], ["text-muted", "bg"], ["accent", "surface"], ["link", "surface"], ["accent-fg", "accent"]].map(pair => {
+          const values = pair.map(key => luminance(color(key))).sort((a, b) => b - a);
+          return (values[0] + .05) / (values[1] + .05);
+        })
+      };
+    });
+    assert.equal(palette.accent, brand === "farmers" ? "#9d245b" : "#005ca9");
+    assert.equal(palette.background, brand === "farmers" ? "#fcebf4" : "#ffffff");
+    assert.ok(palette.contrasts.every(ratio => ratio >= 4.5), `${brand} text contrast must meet WCAG AA`);
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+  }
+  await page.reload();
+  assert.equal(await page.locator("#theme").inputValue(), "zurich");
+  assert.equal(await page.locator(".announcement").count(), actual.announcements.length);
+  console.log("PASS both company palettes, supplied inline artwork, AA text contrast, mobile layout and remembered choice despite dark OS preference");
   const announcementLinks = await page.locator(".announcement").evaluateAll(cards => cards.map(card => {
     const title = card.querySelector("h3 a"), announcement = card.querySelector(":scope > a");
     return {
@@ -161,6 +200,9 @@ try {
   await page.getByRole("textbox", { name: "Discussion notes: Synthetic test beta", exact: true }).fill("Private test note");
   await page.reload();
   assert.equal(await page.locator("#selection-count").innerText(), "(2)");
+  assert.equal(await page.locator("#theme").inputValue(), "zurich");
+  await page.locator("#theme").selectOption("farmers");
+  assert.equal(await page.locator("#selection-count").innerText(), "(2)");
   await page.locator("#beta summary").click();
   assert.equal(await page.getByRole("textbox", { name: "Discussion notes: Synthetic test beta", exact: true }).inputValue(), "Private test note");
   await page.locator("#audience").selectOption("farmers");
@@ -212,9 +254,8 @@ try {
   assert.equal(await page.locator(".announcement details[open]").count(), openBeforePrint);
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
-  await page.locator("#theme").click();
-  const theme = await page.locator("html").getAttribute("data-theme");
-  assert.ok(["dark", "light"].includes(theme));
+  await page.locator("#theme").selectOption("zurich");
+  assert.equal(await page.locator("html").getAttribute("data-brand"), "zurich");
   await page.locator("#present").click();
   assert.equal(await page.locator("#overview").isVisible(), false);
   assert.deepEqual(errors, []);
