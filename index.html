@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Microsoft Ignite 2026 briefing for Farmers Insurance and Zurich Insurance Group. Choose announcements by product theme or insurance story and build a discussion list.">
+  <title>Ignite 2026 | Insurance briefing</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font: 16px/1.6 "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+a { color: var(--cp-link); text-underline-offset: 4px; }
+button, input, select, textarea { font: inherit; }
+button, input, select, textarea { border: 1px solid var(--cp-border-strong); border-radius: .625rem; background: var(--cp-surface); color: var(--cp-text); }
+button { cursor: pointer; padding: 8px 12px; line-height: 1.35; }
+button:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
+button:disabled { cursor: not-allowed; color: var(--cp-text-soft); border-color: var(--cp-border); }
+button[aria-pressed="true"], .primary { background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); }
+:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 4px; }
+header { padding: 20px 32px; border-bottom: 1px solid var(--cp-border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; background: var(--cp-bg-elevated); }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 650; color: var(--cp-text); text-decoration: none; }
+.mark { background: var(--cp-accent); color: var(--cp-accent-fg); padding: 8px; border-radius: .625rem; font-size: 13px; letter-spacing: 1px; }
+nav, .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+nav { gap: 24px; } nav a { color: var(--cp-text-muted); text-decoration: none; font-size: 14px; }
+.wrap { max-width: 1280px; margin: auto; padding-left: 32px; padding-right: 32px; }
+.hero { padding-top: 64px; padding-bottom: 32px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--cp-accent); }
+h1 { font-size: clamp(40px, 5.5vw, 72px); letter-spacing: -3px; line-height: 1.08; font-weight: 650; margin: 20px 0 24px; }
+h1 span { color: var(--cp-accent); }
+h2 { font-size: clamp(25px, 3vw, 36px); letter-spacing: -1px; font-weight: 650; margin: 8px 0 24px; line-height: 1.2; }
+h3 { font-size: 18px; line-height: 1.4; margin: 0 0 12px; }
+p { margin: 8px 0 16px; }
+.lede { font-size: 21px; max-width: 840px; }
+.muted, footer { color: var(--cp-text-muted); font-size: 14px; }
+.metrics { display: flex; flex-wrap: wrap; gap: 32px; margin: 32px 0; }
+.metric strong { display: block; font-size: 32px; line-height: 1.2; font-weight: 600; }
+.metric span { font-size: 13px; color: var(--cp-text-muted); }
+.notice { padding: 20px 24px; border: 1px solid var(--cp-border); border-left: 4px solid var(--cp-accent); background: var(--cp-surface); border-radius: .625rem; font-size: 14px; }
+.notice strong { display: block; margin-bottom: 4px; }
+.section { padding-top: 48px; padding-bottom: 48px; }
+.section-heading { display: flex; justify-content: space-between; align-items: start; gap: 32px; }
+.section-heading > p { max-width: 380px; margin-top: 24px; }
+.story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.story { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 24px; }
+.story p { font-size: 14px; color: var(--cp-text-muted); min-height: 48px; }
+.story .count { color: var(--cp-accent); font: 13px Consolas, "Courier New", Courier, monospace; margin-bottom: 12px; display: block; }
+.perspective { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; padding: 24px 0 0; border-top: 1px solid var(--cp-border); }
+.perspective p { font-size: 14px; color: var(--cp-text-muted); }
+.catalog-section { background: var(--cp-bg-elevated); border-block: 1px solid var(--cp-border); }
+fieldset { margin: 0; border: 0; padding: 0; }
+legend { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.theme-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.theme-row button { border-radius: .625rem; padding: 10px 16px; }
+.toolbar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; background: var(--cp-surface); padding: 24px; border: 1px solid var(--cp-border); border-radius: 16px; }
+label { display: flex; flex-direction: column; font-size: 13px; font-weight: 600; gap: 8px; }
+input, select, textarea { padding: 10px 12px; width: 100%; min-width: 0; }
+.search { grid-column: span 2; }.toolbar > button { align-self: end; min-height: 44px; }
+.results-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
+.results-bar p { font-size: 14px; margin: 0; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.announcement { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 24px; }
+.announcement.selected { border-color: var(--cp-accent); }
+.card-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.tag { display: inline-block; font-size: 12px; padding: 2px 8px; border: 1px solid var(--cp-border); border-radius: .625rem; color: var(--cp-text-muted); }
+.status { background: var(--cp-accent-soft); color: var(--cp-accent); border-color: var(--cp-accent); }
+.announcement h3 { font-size: 22px; }.announcement p { font-size: 14px; }
+.print-note { display: none; white-space: pre-wrap; overflow-wrap: anywhere; }
+.relevance { border-left: 2px solid var(--cp-accent); padding-left: 16px; margin: 20px 0; }
+.check { flex-direction: row; align-items: center; gap: 8px; margin: 16px 0; }.check input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
+details { border-top: 1px solid var(--cp-border); padding-top: 12px; margin-top: 16px; }
+summary { cursor: pointer; font-size: 14px; font-weight: 600; }textarea { min-height: 88px; resize: vertical; font-weight: 400; }
+.empty { text-align: center; padding: 48px 24px; border: 1px dashed var(--cp-border-strong); border-radius: 16px; }
+.empty p { max-width: 700px; margin: 12px auto 24px; color: var(--cp-text-muted); }
+.discussion { border: 1px solid var(--cp-border-strong); border-radius: 16px; padding: 24px; margin-top: 32px; background: var(--cp-surface); }
+.discussion h3 span { color: var(--cp-accent); }
+.source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }.method { padding-left: 20px; font-size: 14px; }.method li { margin-bottom: 12px; }
+.table-wrap { overflow-x: auto; }table { width: 100%; border-collapse: collapse; background: var(--cp-surface); font-size: 14px; }th, td { padding: 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--cp-border); }th { background: var(--cp-surface-soft); }td:first-child { min-width: 240px; }
+footer { border-top: 1px solid var(--cp-border); padding-top: 24px; padding-bottom: 32px; font-size: 12px; }
+#message { position: fixed; bottom: 20px; right: 20px; max-width: min(440px, 90vw); padding: 16px 24px; background: var(--cp-surface); color: var(--cp-text); border: 2px solid var(--cp-accent); border-radius: .625rem; z-index: 20; }
+.skip { position: absolute; top: -100px; left: 16px; padding: 8px; background: var(--cp-surface); z-index: 30; }.skip:focus { top: 8px; }
+html.present header nav, html.present #overview, html.present footer { display: none; }html.present .hero { padding-top: 32px; }html.present h1 { font-size: 44px; }html.present h1 br { display: none; }
+@media (max-width: 900px) { header { padding: 16px 24px; }nav { order: 3; width: 100%; }.story-grid { grid-template-columns: repeat(2, 1fr); }.toolbar { grid-template-columns: 1fr 1fr; }.section-heading { display: block; }.section-heading > p { max-width: none; margin-top: 0; } }
+@media (max-width: 600px) { .wrap { padding-left: 20px; padding-right: 20px; }.hero { padding-top: 40px; }h1 { letter-spacing: -2px; }.story-grid, .cards, .perspective, .source-grid, .toolbar { grid-template-columns: 1fr; }.search { grid-column: auto; }.toolbar { padding: 16px; }.metrics { gap: 24px; }header > .actions { width: 100%; }nav { gap: 16px; }.section { padding-top: 32px; padding-bottom: 32px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media print {
+  header, #overview, .toolbar, .theme-field, .results-bar .actions, .discussion, #message, .check, .skip, noscript { display: none !important; }
+  .wrap { max-width: none; padding: 0; }.hero, .section { padding: 16px 0; }h1 { font-size: 32px; letter-spacing: -1px; }h1 br { display: none; }.cards, .source-grid { display: block; }.announcement { break-inside: avoid; margin-bottom: 16px; }.catalog-section { border: 0; }body { font-size: 11pt; }a { color: var(--cp-text); }.announcement > label { display: none; }.print-note { display: block; }.announcement details { display: block; }footer { padding: 16px 0; }
+}
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to briefing</a>
+  <header>
+    <a class="brand" href="#top"><span class="mark">I26</span> Ignite / Insurance briefing</a>
+    <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Announcements</a><a href="#sources">Sources & method</a></nav>
+    <div class="actions"><button id="present" aria-pressed="false">Presenter view</button><button id="theme">Switch theme</button><button id="print">Print</button></div>
+  </header>
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <p class="eyebrow">MICROSOFT IGNITE / NOVEMBER 17-20, 2026</p>
+      <h1>The news.<br>The insurance story.<br><span>Your discussion.</span></h1>
+      <p class="lede">A source-linked briefing for <strong>Farmers Insurance</strong> and <strong>Zurich Insurance Group</strong>.</p>
+      <p class="muted">Explore the Book of News by technology theme or business story. Select a whole theme, refine the list, and take the conversation with you.</p>
+      <div class="metrics" id="metrics"></div>
+      <div id="source-notice" class="notice" role="status"></div>
+    </section>
+    <section class="section wrap" id="overview">
+      <div class="section-heading"><div><p class="eyebrow">01 / FRAME THE CONVERSATION</p><h2>Start with a story</h2></div><p class="muted">Insurance lenses, not claims about either company's systems or priorities.</p></div>
+      <div id="stories" class="story-grid"></div>
+      <div class="perspective">
+        <div><h3>Farmers Insurance</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
+        <div><h3>Zurich Insurance Group</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
+      </div>
+    </section>
+    <section class="section catalog-section" id="catalog">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="eyebrow">02 / BUILD YOUR BRIEFING</p><h2>Priorities & announcement catalog</h2></div><p class="muted">Theme + story filters intersect. Bulk theme selection includes every matching catalog item, regardless of other filters.</p></div>
+        <fieldset class="theme-field"><legend>Technology theme</legend><div class="theme-row" id="themes"></div></fieldset>
+        <form id="filters" class="toolbar" role="search">
+          <label class="search">Search announcements<input id="query" type="search" placeholder="Search news, products or insurance use cases" autocomplete="off"></label>
+          <label>Business story<select id="story"><option value="">All stories</option></select></label>
+          <label>Availability<select id="status"><option value="">All statuses</option></select></label>
+          <label>Customer perspective<select id="audience"><option value="both">Both organizations</option><option value="farmers">Farmers Insurance</option><option value="zurich">Zurich Insurance Group</option></select></label>
+          <label>Sort<select id="sort"><option value="source">Book of News order</option><option value="title">Title A-Z</option><option value="workload">Workload</option></select></label>
+          <button type="reset">Reset filters</button>
+        </form>
+        <div class="results-bar">
+          <p id="result-count" role="status" aria-live="polite"></p>
+          <div class="actions">
+            <button id="select-shown">Select all shown</button><button id="select-theme">Select entire theme</button><button id="select-story">Select entire story</button>
+            <button id="cards-view" aria-pressed="true">Cards</button><button id="table-view" aria-pressed="false">Table</button>
+          </div>
+        </div>
+        <div id="empty" class="empty" hidden><h3 id="empty-title"></h3><p id="empty-text"></p><a id="empty-source" target="_blank" rel="noopener noreferrer">Open the official Book of News &rarr;</a></div>
+        <div id="cards" class="cards"></div>
+        <div id="table" class="table-wrap" role="region" aria-label="Announcement comparison" tabindex="0" hidden></div>
+        <section class="discussion" aria-labelledby="discussion-title">
+          <div><h3 id="discussion-title">Your discussion list <span id="selection-count"></span></h3><p class="muted">Selections and notes stay in this browser. Shared links contain IDs only, never notes.</p></div>
+          <div class="actions"><button id="selected-only" aria-pressed="false">Keep selected only</button><button id="clear">Clear selection</button><button id="undo" disabled>Undo</button><button id="export-md">Download Markdown</button><button id="export-csv">Download CSV</button><button id="share">Copy share link</button></div>
+        </section>
+      </div>
+    </section>
+    <section class="section wrap" id="sources">
+      <p class="eyebrow">03 / EVIDENCE BEFORE ENTHUSIASM</p><h2>Sources & methodology</h2>
+      <div class="source-grid">
+        <div><h3>Primary source</h3><p><a id="source-link" target="_blank" rel="noopener noreferrer">Microsoft Ignite 2026 Book of News</a></p><p id="checked" class="muted"></p><p id="coverage"></p><details><summary>Source section coverage</summary><ul id="source-sections"></ul></details></div>
+        <div><h3>How to read this briefing</h3><ul class="method"><li>Only the 2026 Book of News is in scope. No FabCon or prior-year announcements are substituted.</li><li>Every entry requires a source section link, an original summary and the source's availability evidence. Unspecified availability remains "Not specified".</li><li>Items may belong to multiple themes and stories. Selecting overlapping groups never duplicates an announcement.</li><li>Customer relevance and next steps are editorial suggestions, not Microsoft product claims or knowledge of customer deployments.</li><li>GA does not mean licensed, approved for regulated data, or suitable without validation. Preview is not a production commitment.</li></ul></div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap"><p>Independent discussion aid. Not an official publication of Microsoft, Farmers Insurance or Zurich Insurance Group. No ROI, performance, licensing or compliance outcomes are promised.</p><p>No analytics, external assets, API keys or backend. Avoid entering sensitive or customer-confidential information in notes. Printing includes the currently shown announcements and their notes.</p></footer>
+  <div id="message" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="notice">JavaScript is required for catalog filtering and selection. Visit <a href="https://news.microsoft.com/events/ignite/2026/book-of-news/">the official Book of News</a> for source information.</p></noscript>
+  <script type="application/json" id="catalog-data">{"meta":{"event":"Microsoft Ignite 2026","dates":"November 17-20, 2026","sourceUrl":"https://news.microsoft.com/events/ignite/2026/book-of-news/","checkedAt":"2026-11-17T18:18:03Z","sourceState":"pending","coverageNote":"The official Book of News URL currently displays a holding page. It says the Book of News will be available after the November 17 keynote. No announcement entries were accessible when checked. This briefing is not a complete Ignite news compilation yet.","sourceSections":[]},"themes":[{"id":"copilot","name":"Copilot","description":"Workplace assistance and Copilot experiences."},{"id":"fabric","name":"Fabric","description":"Analytics, OneLake, Power BI and governed data."},{"id":"agents","name":"Agents & AI","description":"Building, operating and governing AI agents."},{"id":"security","name":"Security & governance","description":"Identity, protection, compliance and responsible access."},{"id":"azure","name":"Azure & infrastructure","description":"Cloud platforms, databases, infrastructure and operations."},{"id":"developers","name":"Developers & apps","description":"Developer tooling, application platforms and business apps."},{"id":"windows","name":"Windows & workplace","description":"Devices, collaboration and workplace management."}],"stories":[{"id":"claims","name":"Claims & customer service","description":"Explore adjuster assistance, claims knowledge and service workflows."},{"id":"underwriting","name":"Underwriting & risk","description":"Explore evidence gathering, portfolio insights and risk analysis."},{"id":"data","name":"Trusted data foundation","description":"Explore governed analytics, shared definitions and data quality."},{"id":"trust","name":"Security, compliance & trust","description":"Explore access controls, auditability and human oversight."},{"id":"productivity","name":"Employee & developer productivity","description":"Explore knowledge work, development and operational assistance."},{"id":"modernization","name":"Platform modernization","description":"Explore resilient platforms, observability and cloud operations."}],"announcements":[]}</script>
+  <script type="module">const STATUSES = ["GA", "Public preview", "Private preview", "Preview", "Coming soon", "Not specified"];
+
+function validateData(data) {
+  const fail = message => { throw new Error(`Invalid catalog: ${message}`); };
+  if (!data?.meta || !Array.isArray(data.announcements)) fail("metadata and announcements are required");
+  if (!["pending", "partial", "complete"].includes(data.meta.sourceState)) fail("unknown source state");
+  if (!Number.isFinite(Date.parse(data.meta.checkedAt))) fail("checkedAt must be a date");
+  if (!data.meta.coverageNote || !Array.isArray(data.meta.sourceSections)) fail("coverage evidence is required");
+  const safeUrl = url => {
+    try { return new URL(url).protocol === "https:"; } catch { return false; }
+  };
+  if (!safeUrl(data.meta.sourceUrl)) fail("source URL must use HTTPS");
+  const taxonomy = (entries, label) => {
+    if (!Array.isArray(entries) || !entries.length) fail(`${label} must not be empty`);
+    const ids = new Set();
+    for (const entry of entries) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.id) || !entry.name || !entry.description || ids.has(entry.id)) fail(`invalid ${label} entry`);
+      ids.add(entry.id);
+    }
+    return ids;
+  };
+  const themes = taxonomy(data.themes, "themes"), stories = taxonomy(data.stories, "stories");
+  const ids = new Set(), sections = new Set();
+  for (const item of data.announcements) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.id) || ids.has(item.id)) fail("duplicate or invalid announcement ID");
+    ids.add(item.id);
+    for (const field of ["title", "summary", "workload", "section", "availabilityEvidence", "nextStep"]) {
+      if (typeof item[field] !== "string" || !item[field].trim()) fail(`${item.id}: ${field} is required`);
+    }
+    if (!STATUSES.includes(item.status)) fail(`${item.id}: invalid availability`);
+    for (const [field, values] of [["themes", themes], ["stories", stories]]) {
+      if (!Array.isArray(item[field]) || !item[field].length || item[field].some(id => !values.has(id))) fail(`${item.id}: invalid ${field}`);
+    }
+    if (!item.relevance || ["farmers", "zurich"].some(key => typeof item.relevance[key] !== "string" || !item.relevance[key].trim())) fail(`${item.id}: both customer perspectives are required`);
+    if (!Array.isArray(item.sources) || !item.sources.length || item.sources.some(source => !source.label || !safeUrl(source.url))) fail(`${item.id}: valid sources are required`);
+    if (!item.sources.some(source => {
+      const url = new URL(source.url), book = new URL(data.meta.sourceUrl);
+      return url.origin === book.origin && url.pathname === book.pathname && url.hash.length > 1;
+    })) fail(`${item.id}: an exact Book of News section link is required`);
+    sections.add(item.section);
+  }
+  if (data.meta.sourceState === "pending" && ids.size) fail("pending sources cannot contain announcements");
+  if (new Set(data.meta.sourceSections).size !== data.meta.sourceSections.length) fail("duplicate source sections");
+  if (data.meta.sourceSections.some(section => !sections.has(section))) fail("source section missing from catalog");
+  if ([...sections].some(section => !data.meta.sourceSections.includes(section))) fail("catalog section missing from source inventory");
+  if (data.meta.sourceState === "complete" && !ids.size) fail("complete coverage cannot be empty");
+  return data;
+}
+
+function filterItems(items, filters, selected = new Set()) {
+  const query = (filters.query || "").trim().toLocaleLowerCase();
+  return items.filter(item =>
+    (!filters.theme || item.themes.includes(filters.theme)) &&
+    (!filters.story || item.stories.includes(filters.story)) &&
+    (!filters.status || item.status === filters.status) &&
+    (!filters.selectedOnly || selected.has(item.id)) &&
+    (!query || [item.title, item.summary, item.workload, item.section, ...item.themes, ...item.stories,
+      item.relevance.farmers, item.relevance.zurich].join(" ").toLocaleLowerCase().includes(query))
+  ).sort((a, b) => filters.sort === "title" ? a.title.localeCompare(b.title) :
+    filters.sort === "workload" ? a.workload.localeCompare(b.workload) || a.title.localeCompare(b.title) : 0);
+}
+
+function selectGroup(items, selected, field, id) {
+  if (!["themes", "stories"].includes(field)) throw new Error("Unknown selection group");
+  return new Set([...selected, ...items.filter(item => item[field].includes(id)).map(item => item.id)]);
+}
+
+function restoreSelection(raw, items) {
+  const valid = new Set(items.map(item => item.id));
+  return new Set((Array.isArray(raw) ? raw : []).filter(id => valid.has(id)));
+}
+
+function csvCell(value) {
+  let text = String(value ?? "");
+  if (/^[\s]*[=+\-@]/.test(text)) text = "'" + text;
+  return `"${text.replaceAll('"', '""')}"`;
+}
+
+function exportCsv(items, notes, audience) {
+  const customers = audience === "both" ? ["farmers", "zurich"] : [audience];
+  const rows = [["Title", "Workload", "Themes", "Stories", "Availability", "Summary",
+    ...customers.map(key => key === "farmers" ? "Potential relevance: Farmers Insurance" : "Potential relevance: Zurich Insurance Group"), "Next step", "Sources", "Notes"]];
+  for (const item of items) rows.push([item.title, item.workload, item.themes.join("; "), item.stories.join("; "), item.status,
+    item.summary, ...customers.map(key => item.relevance[key]), item.nextStep, item.sources.map(s => s.url).join("; "), notes[item.id] || ""]);
+  return rows.map(row => row.map(csvCell).join(",")).join("\r\n");
+}
+
+function exportMarkdown(items, notes, audience) {
+  const plain = value => String(value).replace(/[\\`*_[\]<>#|]/g, "\\$&");
+  const lines = ["# Microsoft Ignite 2026 | Insurance discussion list", "",
+    "Suggested use cases only; not statements about either organization's environment.", ""];
+  for (const item of items) {
+    lines.push(`## ${plain(item.title)}`, "", `${plain(item.workload)} | ${plain(item.status)}`,
+      "", plain(item.summary), "", `Themes: ${item.themes.map(plain).join(", ")}`, `Stories: ${item.stories.map(plain).join(", ")}`, "");
+    if (audience !== "zurich") lines.push(`Potential relevance for Farmers Insurance: ${plain(item.relevance.farmers)}`, "");
+    if (audience !== "farmers") lines.push(`Potential relevance for Zurich Insurance Group: ${plain(item.relevance.zurich)}`, "");
+    lines.push(`Suggested next step: ${plain(item.nextStep)}`, "", ...item.sources.map(s => `Source: ${s.url}`), "");
+    if (notes[item.id]) lines.push(`Discussion notes: ${plain(notes[item.id])}`, "");
+  }
+  return lines.join("\n");
+}
+
+
+const $ = id => document.getElementById(id);
+const storageKey = "ignite-2026-insurance-discussion-v1";
+const customerNames = { farmers: "Farmers Insurance", zurich: "Zurich Insurance Group" };
+let messageTimer;
+function notify(text) {
+  $("message").textContent = text;
+  $("message").hidden = false;
+  clearTimeout(messageTimer);
+  messageTimer = setTimeout(() => { $("message").hidden = true; }, 9000);
+}
+function node(tag, text, className) {
+  const element = document.createElement(tag);
+  if (text !== undefined) element.textContent = text;
+  if (className) element.className = className;
+  return element;
+}
+function link(source) {
+  const anchor = node("a", source.label);
+  anchor.href = source.url; anchor.target = "_blank"; anchor.rel = "noopener noreferrer";
+  return anchor;
+}
+function button(text, action) {
+  const element = node("button", text);
+  element.type = "button"; element.addEventListener("click", action);
+  return element;
+}
+function main() {
+  const data = validateData(JSON.parse($("catalog-data").textContent));
+  const items = data.announcements;
+  let selected = new Set(), notes = {}, undo = null, view = "cards";
+  const filters = { query: "", theme: "", story: "", status: "", audience: "both", sort: "source", selectedOnly: false };
+  function persist() {
+    try { localStorage.setItem(storageKey, JSON.stringify({ selected: [...selected], notes })); }
+    catch (error) { console.error("Could not save discussion", error); notify("Browser storage is unavailable or full. Changes are not saved; download your discussion list before leaving."); }
+  }
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (saved) {
+      if (typeof saved !== "object" || !Array.isArray(saved.selected) || !saved.notes || typeof saved.notes !== "object") throw new Error("Unrecognized saved discussion");
+      selected = restoreSelection(saved.selected, items);
+      notes = Object.fromEntries(items.filter(item => typeof saved.notes[item.id] === "string").map(item => [item.id, saved.notes[item.id]]));
+    }
+  } catch (error) { console.error("Could not restore discussion", error); notify("Saved discussion could not be read. Browser storage may be disabled or the saved data may be invalid."); }
+  function applySharedSelection(updateView = false) {
+    const hash = new URLSearchParams(location.hash.slice(1));
+    if (!hash.has("selected")) return;
+    const incoming = hash.get("selected").split(",").filter(Boolean);
+    selected = restoreSelection(incoming, items); filters.selectedOnly = true;
+    if (new Set(incoming).size !== selected.size) notify("Some shared announcements are not in this catalog and were omitted.");
+    persist();
+    if (updateView) {
+      Object.assign(filters, { query: "", theme: "", story: "", status: "", audience: "both", sort: "source" });
+      $("filters").reset();
+      filters.selectedOnly = true;
+      view = "cards"; undo = null; render();
+    }
+  }
+  applySharedSelection();
+  window.addEventListener("hashchange", () => applySharedSelection(true));
+  function changeSelection(next) {
+    undo = new Set(selected); selected = next; persist(); render();
+  }
+  function selectEntireGroup(field, id) {
+    changeSelection(selectGroup(items, selected, field, id));
+    notify(`Selected all announcements in ${field === "themes" ? "this theme" : "this story"}. Other selections were kept.`);
+  }
+  function selectedItems() { return items.filter(item => selected.has(item.id)); }
+  const nameOf = (field, id) => data[field].find(entry => entry.id === id).name;
+  const visible = () => filterItems(items, filters, selected);
+
+  const sourceNotice = $("source-notice");
+  sourceNotice.append(node("strong", data.meta.sourceState === "pending" ? "Awaiting the official announcement catalog" :
+    data.meta.sourceState === "partial" ? "Partial coverage - compilation in progress" : "Book of News coverage compiled"));
+  sourceNotice.append(node("span", data.meta.coverageNote), node("p", `Source checked: ${new Date(data.meta.checkedAt).toLocaleString(undefined, { timeZoneName: "short" })}`));
+  for (const [value, label] of [[items.length, "verified announcement entries"], [new Set(items.flatMap(item => item.themes)).size, "themes with news"], [data.meta.sourceSections.length, "source sections cataloged"]]) {
+    const metric = node("div", undefined, "metric");
+    metric.append(node("strong", String(value)), node("span", label)); $("metrics").append(metric);
+  }
+  $("source-link").href = data.meta.sourceUrl;
+  $("empty-source").href = data.meta.sourceUrl;
+  $("checked").textContent = `Last checked: ${new Date(data.meta.checkedAt).toLocaleString(undefined, { timeZoneName: "short" })}.`;
+  $("coverage").textContent = data.meta.coverageNote;
+  if (!data.meta.sourceSections.length) $("source-sections").append(node("li", "No announcement sections accessible at the source check."));
+  for (const section of data.meta.sourceSections) $("source-sections").append(node("li", `${section} - ${items.filter(item => item.section === section).length} announcement(s)`));
+  for (const story of data.stories) {
+    const count = items.filter(item => item.stories.includes(story.id)).length;
+    const card = node("article", undefined, "story");
+    const browse = button("Browse story", () => { filters.story = story.id; $("story").value = story.id; filters.selectedOnly = false; render(); $("catalog").scrollIntoView(); });
+    const select = button("Select story", () => selectEntireGroup("stories", story.id));
+    select.disabled = count === 0;
+    card.append(node("span", `${String(count).padStart(2, "0")} ANNOUNCEMENTS`, "count"), node("h3", story.name), node("p", story.description), browse, document.createTextNode(" "), select);
+    $("stories").append(card);
+    const option = node("option", story.name); option.value = story.id; $("story").append(option);
+  }
+  for (const status of STATUSES) { const option = node("option", status); option.value = status; $("status").append(option); }
+  const themeButtons = new Map();
+  for (const theme of [{ id: "", name: "All themes" }, ...data.themes]) {
+    const count = theme.id ? items.filter(item => item.themes.includes(theme.id)).length : items.length;
+    const control = button(`${theme.name} (${count})`, () => { filters.theme = theme.id; render(); });
+    control.dataset.theme = theme.id;
+    themeButtons.set(theme.id, control); $("themes").append(control);
+  }
+  function checkbox(item) {
+    const label = node("label", undefined, "check");
+    const input = node("input"); input.type = "checkbox"; input.checked = selected.has(item.id); input.id = `select-${item.id}`;
+    input.setAttribute("aria-label", `Select for discussion: ${item.title}`);
+    input.addEventListener("change", () => {
+      const next = new Set(selected);
+      if (input.checked) next.add(item.id); else next.delete(item.id);
+      changeSelection(next);
+    });
+    label.append(input, document.createTextNode("Select for discussion")); return label;
+  }
+  function relevance(item) {
+    const section = node("div", undefined, "relevance");
+    for (const key of ["farmers", "zurich"]) {
+      if (filters.audience !== "both" && filters.audience !== key) continue;
+      const paragraph = node("p");
+      paragraph.append(node("strong", `Potential relevance for ${customerNames[key]}: `), document.createTextNode(item.relevance[key]));
+      section.append(paragraph);
+    }
+    return section;
+  }
+  function card(item) {
+    const article = node("article", undefined, `announcement${selected.has(item.id) ? " selected" : ""}`);
+    article.id = item.id;
+    const meta = node("div", undefined, "card-meta");
+    meta.append(node("span", item.workload, "tag"), node("span", item.status, "tag status"));
+    for (const id of item.themes) meta.append(node("span", nameOf("themes", id), "tag"));
+    article.append(meta, node("h3", item.title), node("p", item.summary), relevance(item));
+    const next = node("p"); next.append(node("strong", "Suggested next step: "), document.createTextNode(item.nextStep)); article.append(next);
+    const details = node("details");
+    details.append(node("summary", "Availability evidence & sources"), node("p", item.availabilityEvidence),
+      node("p", `Book of News section: ${item.section}`), node("p", `Stories: ${item.stories.map(id => nameOf("stories", id)).join("; ")}`));
+    const sources = node("ul");
+    for (const source of item.sources) { const li = node("li"); li.append(link(source)); sources.append(li); }
+    details.append(sources);
+    const noteLabel = node("label", "Discussion notes (saved only in this browser)");
+    const textarea = node("textarea"); textarea.value = notes[item.id] || ""; textarea.maxLength = 10000;
+    textarea.setAttribute("aria-label", `Discussion notes: ${item.title}`);
+    const printNote = node("p", notes[item.id] ? `Notes: ${notes[item.id]}` : "", "print-note");
+    textarea.addEventListener("input", () => { notes[item.id] = textarea.value; printNote.textContent = textarea.value ? `Notes: ${textarea.value}` : ""; persist(); });
+    noteLabel.append(textarea);
+    article.append(details, checkbox(item), noteLabel, printNote);
+    return article;
+  }
+  function renderTable(shown) {
+    const table = node("table"), head = node("thead"), row = node("tr");
+    for (const title of ["Announcement / selection", "Theme & story", "Availability", "Potential relevance / next step", "Sources / notes"]) {
+      const th = node("th", title); th.scope = "col"; row.append(th);
+    }
+    head.append(row); table.append(head);
+    const body = node("tbody");
+    for (const item of shown) {
+      const tr = node("tr"), title = node("td"), tags = node("td"), status = node("td", `${item.status}: ${item.availabilityEvidence}`), potential = node("td"), sources = node("td");
+      title.append(node("strong", item.title), node("p", item.summary), checkbox(item));
+      tags.textContent = [...item.themes.map(id => nameOf("themes", id)), ...item.stories.map(id => nameOf("stories", id))].join("; ");
+      potential.append(relevance(item), node("p", item.nextStep));
+      for (const source of item.sources) sources.append(link(source), node("br"));
+      sources.append(node("p", notes[item.id] ? `Notes: ${notes[item.id]}` : "No discussion notes. Use Cards to edit notes."));
+      tr.append(title, tags, status, potential, sources); body.append(tr);
+    }
+    table.append(body); $("table").replaceChildren(table);
+  }
+  function render() {
+    const focusedId = document.activeElement.id;
+    const shown = visible();
+    for (const [id, control] of themeButtons) control.setAttribute("aria-pressed", String(filters.theme === id));
+    $("result-count").textContent = `${shown.length} of ${items.length} announcements${filters.selectedOnly ? " | Discussion list only" : ""}`;
+    $("selection-count").textContent = `(${selected.size})`;
+    $("selected-only").setAttribute("aria-pressed", String(filters.selectedOnly));
+    $("select-shown").disabled = shown.length === 0;
+    $("select-theme").disabled = !filters.theme || !items.some(item => item.themes.includes(filters.theme));
+    $("select-story").disabled = !filters.story || !items.some(item => item.stories.includes(filters.story));
+    $("undo").disabled = undo === null;
+    for (const id of ["clear", "export-md", "export-csv", "share"]) $(id).disabled = selected.size === 0;
+    $("cards-view").setAttribute("aria-pressed", String(view === "cards"));
+    $("table-view").setAttribute("aria-pressed", String(view === "table"));
+    $("cards").hidden = view !== "cards" || !shown.length;
+    $("table").hidden = view !== "table" || !shown.length;
+    $("empty").hidden = shown.length > 0;
+    $("empty-title").textContent = !items.length ? "No verified announcements available yet" : "No announcements match this view";
+    $("empty-text").textContent = !items.length ? (data.meta.sourceState === "pending" ?
+      "The source is still a holding page. Theme and story selection are ready, but no older news or sample announcements have been added to this briefing." :
+      "No announcement entries have been verified in this catalog. Review the coverage note and official source for current information.") :
+      filters.selectedOnly ? "Your discussion list has no items matching these filters. Turn off Keep selected only or reset filters to browse all announcements." : "Try another theme or story, or reset filters to see all announcements.";
+    $("empty-source").hidden = items.length > 0;
+    if (view === "cards") { $("cards").replaceChildren(...shown.map(card)); $("table").replaceChildren(); }
+    else { $("cards").replaceChildren(); renderTable(shown); }
+    if (focusedId.startsWith("select-")) $(focusedId)?.focus();
+  }
+  for (const id of ["query", "story", "status", "audience", "sort"]) {
+    $(id).addEventListener(id === "query" ? "input" : "change", event => { filters[id] = event.target.value; render(); });
+  }
+  $("filters").addEventListener("submit", event => event.preventDefault());
+  $("filters").addEventListener("reset", () => {
+    Object.assign(filters, { query: "", story: "", status: "", audience: "both", sort: "source", theme: "", selectedOnly: false });
+    render();
+  });
+  $("select-shown").addEventListener("click", () => changeSelection(new Set([...selected, ...visible().map(item => item.id)])));
+  $("select-theme").addEventListener("click", () => selectEntireGroup("themes", filters.theme));
+  $("select-story").addEventListener("click", () => selectEntireGroup("stories", filters.story));
+  $("clear").addEventListener("click", () => changeSelection(new Set()));
+  $("undo").addEventListener("click", () => { if (undo) { selected = undo; undo = null; persist(); render(); } });
+  $("selected-only").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); });
+  for (const mode of ["cards", "table"]) $(`${mode}-view`).addEventListener("click", () => { view = mode; render(); });
+  function download(extension, mime, content) {
+    const url = URL.createObjectURL(new Blob([content], { type: mime }));
+    const anchor = node("a"); anchor.href = url; anchor.download = `ignite-2026-discussion.${extension}`;
+    document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+    notify(`Downloaded ${selected.size} selected announcements. Discussion notes are included; review before sharing.`);
+  }
+  $("export-md").addEventListener("click", () => download("md", "text/markdown;charset=utf-8", exportMarkdown(selectedItems(), notes, filters.audience)));
+  $("export-csv").addEventListener("click", () => download("csv", "text/csv;charset=utf-8", "\uFEFF" + exportCsv(selectedItems(), notes, filters.audience)));
+  $("share").addEventListener("click", async () => {
+    const url = new URL(location.href); url.hash = new URLSearchParams({ selected: [...selected].join(",") }).toString();
+    try { await navigator.clipboard.writeText(url.href); notify("Share link copied. Only announcement IDs are included, never notes."); }
+    catch (error) { console.error("Could not copy link", error); download("txt", "text/plain", url.href); notify("Clipboard access failed. The share link has been downloaded instead; notes are not included."); }
+  });
+  $("theme").addEventListener("click", () => {
+    document.documentElement.dataset.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  });
+  $("present").addEventListener("click", event => { const active = document.documentElement.classList.toggle("present"); event.target.setAttribute("aria-pressed", String(active)); });
+  $("print").addEventListener("click", () => window.print());
+  let previouslyClosed = [];
+  window.addEventListener("beforeprint", () => {
+    previouslyClosed = [...document.querySelectorAll(".announcement details:not([open])")];
+    for (const detail of previouslyClosed) detail.open = true;
+  });
+  window.addEventListener("afterprint", () => { for (const detail of previouslyClosed) detail.open = false; });
+  document.addEventListener("keydown", event => {
+    if (event.key === "/" && !event.ctrlKey && !event.metaKey && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) {
+      event.preventDefault(); $("query").focus();
+    }
+  });
+  render();
+}
+try { main(); }
+catch (error) {
+  console.error("Briefing could not load", error);
+  $("source-notice").textContent = "The briefing could not load because its catalog is invalid. No results can be trusted until the data is corrected. Please use the official Book of News.";
+  $("source-notice").setAttribute("role", "alert");
+}
+</script>
+</body>
+</html>

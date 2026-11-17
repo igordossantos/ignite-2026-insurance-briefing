@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "event": "Microsoft Ignite 2026",
+    "dates": "November 17-20, 2026",
+    "sourceUrl": "https://news.microsoft.com/events/ignite/2026/book-of-news/",
+    "checkedAt": "2026-11-17T18:18:03Z",
+    "sourceState": "pending",
+    "coverageNote": "The official Book of News URL currently displays a holding page. It says the Book of News will be available after the November 17 keynote. No announcement entries were accessible when checked. This briefing is not a complete Ignite news compilation yet.",
+    "sourceSections": []
+  },
+  "themes": [
+    { "id": "copilot", "name": "Copilot", "description": "Workplace assistance and Copilot experiences." },
+    { "id": "fabric", "name": "Fabric", "description": "Analytics, OneLake, Power BI and governed data." },
+    { "id": "agents", "name": "Agents & AI", "description": "Building, operating and governing AI agents." },
+    { "id": "security", "name": "Security & governance", "description": "Identity, protection, compliance and responsible access." },
+    { "id": "azure", "name": "Azure & infrastructure", "description": "Cloud platforms, databases, infrastructure and operations." },
+    { "id": "developers", "name": "Developers & apps", "description": "Developer tooling, application platforms and business apps." },
+    { "id": "windows", "name": "Windows & workplace", "description": "Devices, collaboration and workplace management." }
+  ],
+  "stories": [
+    { "id": "claims", "name": "Claims & customer service", "description": "Explore adjuster assistance, claims knowledge and service workflows." },
+    { "id": "underwriting", "name": "Underwriting & risk", "description": "Explore evidence gathering, portfolio insights and risk analysis." },
+    { "id": "data", "name": "Trusted data foundation", "description": "Explore governed analytics, shared definitions and data quality." },
+    { "id": "trust", "name": "Security, compliance & trust", "description": "Explore access controls, auditability and human oversight." },
+    { "id": "productivity", "name": "Employee & developer productivity", "description": "Explore knowledge work, development and operational assistance." },
+    { "id": "modernization", "name": "Platform modernization", "description": "Explore resilient platforms, observability and cloud operations." }
+  ],
+  "announcements": []
+}

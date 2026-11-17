@@ -1,0 +1,106 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { chromium } from "playwright-core";
+import { fixture } from "./fixtures.mjs";
+
+const executablePath = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+const browser = await chromium.launch({ executablePath, headless: true });
+const baseUrl = process.env.BASE_URL || "http://127.0.0.1:8086/";
+const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const errors = [];
+try {
+  const context = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 1440, height: 1000 } });
+  const page = await context.newPage();
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto(baseUrl);
+  assert.match(await page.locator("#result-count").innerText(), /0 of 0/);
+  assert.ok(await page.locator("#select-shown").isDisabled());
+  await page.locator('button[data-theme="fabric"]').click();
+  assert.equal(await page.locator('button[data-theme="fabric"]').getAttribute("aria-pressed"), "true");
+  await page.getByRole("button", { name: "Reset filters", exact: true }).click();
+  assert.equal(await page.locator('button[data-theme=""]').getAttribute("aria-pressed"), "true");
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
+  console.log("PASS real pending catalog, theme/reset and mobile layout");
+
+  const synthetic = html.replace(/(<script type="application\/json" id="catalog-data">)[\s\S]*?(<\/script>)/,
+    (_, open, close) => open + JSON.stringify(fixture()).replaceAll("<", "\\u003c") + close);
+  await page.route(baseUrl, route => route.fulfill({ contentType: "text/html", body: synthetic }));
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.reload();
+  assert.equal(await page.locator(".announcement").count(), 3);
+  await page.locator('button[data-theme="copilot"]').click();
+  await page.locator("#query").fill("beta");
+  assert.equal(await page.locator(".announcement").count(), 1);
+  await page.locator("#select-theme").click();
+  assert.equal(await page.locator("#selection-count").innerText(), "(2)");
+  await page.locator('button[data-theme="fabric"]').click();
+  await page.locator("#select-theme").click();
+  assert.equal(await page.locator("#selection-count").innerText(), "(3)");
+  await page.getByRole("button", { name: "Reset filters", exact: true }).click();
+  await page.locator("#clear").click();
+  await page.locator("#undo").click();
+  assert.equal(await page.locator("#selection-count").innerText(), "(3)");
+  console.log("PASS filtered bulk-theme selection, overlapping groups, clear and undo");
+
+  await page.locator("#clear").click();
+  await page.locator("#story").selectOption("claims");
+  await page.locator("#query").fill("beta");
+  await page.locator("#select-story").click();
+  assert.equal(await page.locator("#selection-count").innerText(), "(2)");
+  await page.getByRole("button", { name: "Reset filters", exact: true }).click();
+  await page.locator("#selected-only").click();
+  assert.equal(await page.locator(".announcement").count(), 2);
+  await page.getByRole("textbox", { name: "Discussion notes: Synthetic test beta", exact: true }).fill("Private test note");
+  await page.reload();
+  assert.equal(await page.locator("#selection-count").innerText(), "(2)");
+  assert.equal(await page.getByRole("textbox", { name: "Discussion notes: Synthetic test beta", exact: true }).inputValue(), "Private test note");
+  await page.locator("#audience").selectOption("farmers");
+  assert.ok(!(await page.locator(".announcement .relevance").first().innerText()).includes("Zurich"));
+  await page.locator("#table-view").click();
+  assert.equal(await page.locator("#table tbody tr").count(), 3);
+  assert.match(await page.locator("#table").innerText(), /Private test note/);
+  await page.locator("#selected-only").click();
+  assert.equal(await page.locator("#table tbody tr").count(), 2);
+  console.log("PASS story selection independent of search, persisted notes/selections, customer perspective and table");
+
+  const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#export-csv").click()]);
+  const stream = await download.createReadStream();
+  const chunks = [];
+  for await (const chunk of stream) chunks.push(chunk);
+  const csv = Buffer.concat(chunks).toString("utf8");
+  assert.match(csv, /Private test note/);
+  assert.match(csv, /Synthetic test alpha/);
+  assert.ok(!csv.includes("Synthetic test gamma"));
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.locator("#share").click();
+  const share = await page.evaluate(() => navigator.clipboard.readText());
+  assert.ok(!share.includes("Private"));
+  assert.match(share, /selected=alpha%2Cbeta/);
+  await page.unroute(baseUrl);
+  await page.route("**/*", route => {
+    if (new URL(route.request().url()).origin === new URL(baseUrl).origin) return route.fulfill({ contentType: "text/html", body: synthetic });
+    return route.continue();
+  });
+  await page.goto(share);
+  await page.locator("#cards .announcement").first().waitFor();
+  assert.equal(await page.locator(".announcement").count(), 2);
+  assert.equal(await page.locator("#selected-only").getAttribute("aria-pressed"), "true");
+  console.log("PASS CSV download contents, ID-only share link and restored selected-only view");
+
+  await page.emulateMedia({ media: "print" });
+  assert.equal(await page.locator(".toolbar").isVisible(), false);
+  assert.equal(await page.locator(".print-note").filter({ hasText: "Private test note" }).isVisible(), true);
+  await page.emulateMedia({ media: "screen" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
+  await page.locator("#theme").click();
+  const theme = await page.locator("html").getAttribute("data-theme");
+  assert.ok(["dark", "light"].includes(theme));
+  await page.locator("#present").click();
+  assert.equal(await page.locator("#overview").isVisible(), false);
+  assert.deepEqual(errors, []);
+  console.log("PASS print notes, populated mobile layout, theme/presenter controls and no browser errors");
+} finally {
+  await browser.close();
+}

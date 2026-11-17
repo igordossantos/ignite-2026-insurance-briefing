@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Microsoft Ignite 2026 briefing for Farmers Insurance and Zurich Insurance Group. Choose announcements by product theme or insurance story and build a discussion list.">
+  <title>Ignite 2026 | Insurance briefing</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>/*__STYLES__*/</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to briefing</a>
+  <header>
+    <a class="brand" href="#top"><span class="mark">I26</span> Ignite / Insurance briefing</a>
+    <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Announcements</a><a href="#sources">Sources & method</a></nav>
+    <div class="actions"><button id="present" aria-pressed="false">Presenter view</button><button id="theme">Switch theme</button><button id="print">Print</button></div>
+  </header>
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <p class="eyebrow">MICROSOFT IGNITE / NOVEMBER 17-20, 2026</p>
+      <h1>The news.<br>The insurance story.<br><span>Your discussion.</span></h1>
+      <p class="lede">A source-linked briefing for <strong>Farmers Insurance</strong> and <strong>Zurich Insurance Group</strong>.</p>
+      <p class="muted">Explore the Book of News by technology theme or business story. Select a whole theme, refine the list, and take the conversation with you.</p>
+      <div class="metrics" id="metrics"></div>
+      <div id="source-notice" class="notice" role="status"></div>
+    </section>
+    <section class="section wrap" id="overview">
+      <div class="section-heading"><div><p class="eyebrow">01 / FRAME THE CONVERSATION</p><h2>Start with a story</h2></div><p class="muted">Insurance lenses, not claims about either company's systems or priorities.</p></div>
+      <div id="stories" class="story-grid"></div>
+      <div class="perspective">
+        <div><h3>Farmers Insurance</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
+        <div><h3>Zurich Insurance Group</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
+      </div>
+    </section>
+    <section class="section catalog-section" id="catalog">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="eyebrow">02 / BUILD YOUR BRIEFING</p><h2>Priorities & announcement catalog</h2></div><p class="muted">Theme + story filters intersect. Bulk theme selection includes every matching catalog item, regardless of other filters.</p></div>
+        <fieldset class="theme-field"><legend>Technology theme</legend><div class="theme-row" id="themes"></div></fieldset>
+        <form id="filters" class="toolbar" role="search">
+          <label class="search">Search announcements<input id="query" type="search" placeholder="Search news, products or insurance use cases" autocomplete="off"></label>
+          <label>Business story<select id="story"><option value="">All stories</option></select></label>
+          <label>Availability<select id="status"><option value="">All statuses</option></select></label>
+          <label>Customer perspective<select id="audience"><option value="both">Both organizations</option><option value="farmers">Farmers Insurance</option><option value="zurich">Zurich Insurance Group</option></select></label>
+          <label>Sort<select id="sort"><option value="source">Book of News order</option><option value="title">Title A-Z</option><option value="workload">Workload</option></select></label>
+          <button type="reset">Reset filters</button>
+        </form>
+        <div class="results-bar">
+          <p id="result-count" role="status" aria-live="polite"></p>
+          <div class="actions">
+            <button id="select-shown">Select all shown</button><button id="select-theme">Select entire theme</button><button id="select-story">Select entire story</button>
+            <button id="cards-view" aria-pressed="true">Cards</button><button id="table-view" aria-pressed="false">Table</button>
+          </div>
+        </div>
+        <div id="empty" class="empty" hidden><h3 id="empty-title"></h3><p id="empty-text"></p><a id="empty-source" target="_blank" rel="noopener noreferrer">Open the official Book of News &rarr;</a></div>
+        <div id="cards" class="cards"></div>
+        <div id="table" class="table-wrap" role="region" aria-label="Announcement comparison" tabindex="0" hidden></div>
+        <section class="discussion" aria-labelledby="discussion-title">
+          <div><h3 id="discussion-title">Your discussion list <span id="selection-count"></span></h3><p class="muted">Selections and notes stay in this browser. Shared links contain IDs only, never notes.</p></div>
+          <div class="actions"><button id="selected-only" aria-pressed="false">Keep selected only</button><button id="clear">Clear selection</button><button id="undo" disabled>Undo</button><button id="export-md">Download Markdown</button><button id="export-csv">Download CSV</button><button id="share">Copy share link</button></div>
+        </section>
+      </div>
+    </section>
+    <section class="section wrap" id="sources">
+      <p class="eyebrow">03 / EVIDENCE BEFORE ENTHUSIASM</p><h2>Sources & methodology</h2>
+      <div class="source-grid">
+        <div><h3>Primary source</h3><p><a id="source-link" target="_blank" rel="noopener noreferrer">Microsoft Ignite 2026 Book of News</a></p><p id="checked" class="muted"></p><p id="coverage"></p><details><summary>Source section coverage</summary><ul id="source-sections"></ul></details></div>
+        <div><h3>How to read this briefing</h3><ul class="method"><li>Only the 2026 Book of News is in scope. No FabCon or prior-year announcements are substituted.</li><li>Every entry requires a source section link, an original summary and the source's availability evidence. Unspecified availability remains "Not specified".</li><li>Items may belong to multiple themes and stories. Selecting overlapping groups never duplicates an announcement.</li><li>Customer relevance and next steps are editorial suggestions, not Microsoft product claims or knowledge of customer deployments.</li><li>GA does not mean licensed, approved for regulated data, or suitable without validation. Preview is not a production commitment.</li></ul></div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap"><p>Independent discussion aid. Not an official publication of Microsoft, Farmers Insurance or Zurich Insurance Group. No ROI, performance, licensing or compliance outcomes are promised.</p><p>No analytics, external assets, API keys or backend. Avoid entering sensitive or customer-confidential information in notes. Printing includes the currently shown announcements and their notes.</p></footer>
+  <div id="message" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="notice">JavaScript is required for catalog filtering and selection. Visit <a href="https://news.microsoft.com/events/ignite/2026/book-of-news/">the official Book of News</a> for source information.</p></noscript>
+  <script type="application/json" id="catalog-data">/*__DATA__*/</script>
+  <script type="module">/*__APP__*/</script>
+</body>
+</html>
