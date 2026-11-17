@@ -104,11 +104,28 @@ function main() {
       const topic = readThemeLink(location.search, data.themes).topic;
       $("filters").reset();
       filters.theme = topic; filters.selectedOnly = true;
-      view = "cards"; undo = null; render();
+      view = "cards"; undo = null; render(); revealSection($("catalog"), true);
     }
   }
   applySharedSelection();
-  window.addEventListener("hashchange", () => applySharedSelection(true));
+  window.addEventListener("hashchange", () => {
+    applySharedSelection(true);
+    revealSection(document.getElementById(location.hash.slice(1)), true);
+  });
+  function revealSection(target, scroll = false) {
+    if (!target || target.hidden) return;
+    const disclosure = target.querySelector(":scope > details.section-disclosure, :scope > .wrap > details.section-disclosure");
+    if (disclosure) disclosure.open = true;
+    for (let ancestor = target; ancestor; ancestor = ancestor.parentElement) {
+      if (ancestor.tagName === "DETAILS") ancestor.open = true;
+    }
+    if (scroll) target.scrollIntoView();
+  }
+  document.addEventListener("click", event => {
+    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !(event.target instanceof Element)) return;
+    const anchor = event.target.closest('a[href^="#"]');
+    if (anchor) revealSection(document.getElementById(anchor.hash.slice(1)), true);
+  });
   function changeSelection(next) {
     undo = new Set(selected); selected = next; persist(); render();
   }
@@ -172,7 +189,7 @@ function main() {
     const browse = button(`Browse ${kind}`, () => {
       filters[kind] = group.id;
       if (kind === "story") $("story").value = group.id;
-      filters.selectedOnly = false; render(); $("catalog").scrollIntoView();
+      filters.selectedOnly = false; render(); revealSection($("catalog"), true);
     });
     const select = button(`Select ${kind}`, () => selectEntireGroup(field, group.id));
     select.disabled = count === 0;
@@ -324,7 +341,7 @@ function main() {
   $("clear").addEventListener("click", () => changeSelection(new Set()));
   $("undo").addEventListener("click", () => { if (undo) { selected = undo; undo = null; persist(); render(); } });
   $("selected-only").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); });
-  $("dock-selected").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); $("catalog").scrollIntoView(); });
+  $("dock-selected").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); revealSection($("catalog"), true); });
   for (const [id, open] of [["expand-all", true], ["collapse-all", false]]) {
     $(id).addEventListener("click", () => {
       for (const item of visible()) { if (open) expanded.add(item.id); else expanded.delete(item.id); }
@@ -365,7 +382,7 @@ function main() {
   $("print").addEventListener("click", () => window.print());
   let previouslyClosed = [];
   window.addEventListener("beforeprint", () => {
-    previouslyClosed = [...document.querySelectorAll(".announcement details:not([open])")];
+    previouslyClosed = [...document.querySelectorAll(".section-disclosure:not([open]), .announcement details:not([open])")];
     for (const detail of previouslyClosed) detail.open = true;
   });
   window.addEventListener("afterprint", () => { for (const detail of previouslyClosed) detail.open = false; });
@@ -375,6 +392,7 @@ function main() {
     }
   });
   render();
+  revealSection(document.getElementById(location.hash.slice(1)), true);
 }
 try { main(); }
 catch (error) {

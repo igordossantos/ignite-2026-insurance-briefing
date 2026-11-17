@@ -59,6 +59,45 @@ try {
   assert.equal(await page.locator("#theme").inputValue(), "blue");
   assert.equal(await page.locator(".announcement").count(), actual.announcements.length);
   console.log("PASS no company names or artwork, neutral palettes/perspectives, AA text contrast, mobile layout and remembered palette");
+  assert.deepEqual(await page.locator("main > section").evaluateAll(sections => sections.map(section => section.id)),
+    ["top", "keynote", "overview", "matters", "catalog", "sources"]);
+  const disclosures = page.locator(".section-disclosure, details.story-section");
+  const expectedSections = [
+    ["top", true], ["keynote", true], ["overview", false], ["matters", true],
+    ["insurance-stories", false], ["technology-story-section", false],
+    ["catalog", true], ["discussion", true], ["sources", true]
+  ];
+  assert.deepEqual(await disclosures.evaluateAll(elements => elements.map(disclosure => ({
+    id: disclosure.id || disclosure.closest("section").id,
+    open: disclosure.open,
+    href: disclosure.querySelector(":scope > summary .section-link").getAttribute("href")
+  }))), expectedSections.map(([id, open]) => ({ id, open, href: `#${id}` })));
+  for (const [index, [, open]] of expectedSections.entries()) {
+    const summary = disclosures.nth(index).locator(":scope > summary");
+    await summary.focus();
+    await page.keyboard.press("Enter");
+    assert.equal(await disclosures.nth(index).getAttribute("open"), open ? null : "");
+    await page.keyboard.press("Space");
+    assert.equal(await disclosures.nth(index).getAttribute("open"), open ? "" : null);
+  }
+  for (const [index, [id]] of expectedSections.entries()) {
+    await page.goto(new URL(`?theme=blue#${id}`, baseUrl).href);
+    assert.equal(await disclosures.nth(index).getAttribute("open"), "");
+    assert.equal(await page.locator(`.section-link[href="#${id}"]`).isVisible(), true);
+    assert.equal(await page.locator("#theme").inputValue(), "blue");
+  }
+  await page.locator("#sources > details > summary").click();
+  await page.locator('.section-link[href="#sources"]').click();
+  assert.equal(await page.locator("#sources > details").getAttribute("open"), "", "A permalink must reopen its target even when the fragment has not changed");
+  await page.goto(baseUrl);
+  await page.locator("#matters > details > summary").click();
+  await page.evaluate(() => { location.hash = "technology-story-section"; });
+  await page.locator("#technology-stories").waitFor({ state: "visible" });
+  assert.equal(await page.locator("#matters > details").getAttribute("open"), "");
+  assert.equal(await page.locator("#insurance-stories").getAttribute("open"), null);
+  await page.goto(baseUrl);
+  const catalogDisclosure = page.locator("#catalog > .wrap > details.section-disclosure");
+  console.log("PASS requested section order, collapsed defaults, keyboard toggles, all nine direct links and reopening collapsed ancestors");
   const announcementLinks = await page.locator(".announcement").evaluateAll(cards => cards.map(card => {
     const title = card.querySelector("h3 a"), announcement = card.querySelector(":scope > a");
     return {
@@ -112,19 +151,24 @@ try {
     count: `${String(actual.announcements.filter(item => item.themes.includes(theme.id)).length).padStart(2, "0")} ANNOUNCEMENTS`
   })));
   await page.locator("#insurance-stories > summary").click();
+  assert.equal(await page.locator("#stories").isVisible(), true);
+  assert.equal(await page.locator("#technology-stories").isVisible(), false);
+  await page.locator("#technology-story-section > summary").click();
+  assert.equal(await page.locator("#technology-stories").isVisible(), true);
+  await page.locator("#insurance-stories > summary").click();
   assert.equal(await page.locator("#stories").isVisible(), false);
   assert.equal(await page.locator("#technology-stories").isVisible(), true);
   await page.locator("#technology-story-section > summary").click();
   assert.equal(await page.locator("#technology-stories").isVisible(), false);
-  await page.locator("#insurance-stories > summary").click();
-  assert.equal(await page.locator("#stories").isVisible(), true);
-  assert.equal(await page.locator("#technology-stories").isVisible(), false);
   await page.locator("#technology-story-section > summary").focus();
   await page.keyboard.press("Enter");
   assert.equal(await page.locator("#technology-stories").isVisible(), true);
+  await catalogDisclosure.locator(":scope > summary").click();
+  assert.equal(await catalogDisclosure.getAttribute("open"), null);
   for (const theme of actual.themes) {
     const story = page.locator("#technology-stories .story").filter({ has: page.getByRole("heading", { name: theme.name, exact: true }) });
     await story.getByRole("button", { name: "Browse theme", exact: true }).click();
+    assert.equal(await catalogDisclosure.getAttribute("open"), "");
     assert.deepEqual(await page.locator(".announcement").evaluateAll(cards => cards.map(card => card.id)),
       actual.announcements.filter(item => item.themes.includes(theme.id)).map(item => item.id));
     assert.equal(await page.locator(`button[data-theme="${theme.id}"]`).getAttribute("aria-pressed"), "true");
@@ -267,6 +311,11 @@ try {
   assert.equal(await page.locator("#table tbody tr").count(), 2);
   console.log("PASS story selection independent of search, persisted notes/selections, customer perspective and table");
 
+  await page.locator("#discussion > details > summary").click();
+  await catalogDisclosure.locator(":scope > summary").click();
+  await page.locator('#selection-dock a[href="#discussion"]').click();
+  assert.equal(await catalogDisclosure.getAttribute("open"), "");
+  assert.equal(await page.locator("#discussion > details").getAttribute("open"), "");
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#export-csv").click()]);
   const stream = await download.createReadStream();
   const chunks = [];
@@ -316,14 +365,21 @@ try {
   console.log("PASS CSV download contents, private-note-free theme/selection links and restored selected-only view");
 
   const openBeforePrint = await page.locator(".announcement details[open]").count();
+  await catalogDisclosure.locator(":scope > summary").click();
+  const sectionsBeforePrint = await disclosures.evaluateAll(elements => elements.map(element => element.open));
   await page.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
+  assert.equal(await catalogDisclosure.getAttribute("open"), "");
   assert.equal(await page.locator(".announcement details[open]").count(), 2);
   await page.emulateMedia({ media: "print" });
   assert.equal(await page.locator(".toolbar").isVisible(), false);
+  assert.equal(await page.locator("#cards").isVisible(), true);
   assert.equal(await page.locator(".print-note").filter({ hasText: "Private test note" }).isVisible(), true);
   await page.emulateMedia({ media: "screen" });
   await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
   assert.equal(await page.locator(".announcement details[open]").count(), openBeforePrint);
+  assert.deepEqual(await disclosures.evaluateAll(elements => elements.map(element => element.open)), sectionsBeforePrint);
+  await page.locator('nav a[href="#catalog"]').click();
+  assert.equal(await catalogDisclosure.getAttribute("open"), "");
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
   await page.locator("#theme").selectOption("blue");

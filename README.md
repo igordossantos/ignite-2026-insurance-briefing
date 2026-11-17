@@ -23,7 +23,10 @@ The video is an external link, not an embedded player. Earlier background articl
 ## Discussion workflow
 
 - Browse by technology theme (including Copilot and Fabric) or insurance business story.
-- **Start with an Insurance Industry story** preserves the insurance-story grid and customer perspectives. **Start with a technology story** provides one card per catalog theme, with matching counts, browsing and whole-theme selection. Both sections start expanded and collapse independently using the arrow on the left of each heading.
+- The page order is introduction, **Ignite blog**, **Executive overview**, **Start with a story**, **Priorities & announcement catalog**, and **Sources & methodology**.
+- Every section, including discussion tools, can be expanded or collapsed using its heading's arrow or keyboard. **Executive overview** starts collapsed. The two **Start with a story** disclosures sit immediately above the catalog and also start collapsed; each opens independently. Other main sections start expanded.
+- **Start with an Insurance Industry story** preserves the insurance-story grid and customer perspectives. **Start with a technology story** provides one card per catalog theme, with matching counts, browsing and whole-theme selection.
+- Every section heading has a **#** permalink. Direct links automatically expand the target section and any collapsed parent. Story browsing and discussion shortcuts reopen the catalog when needed. Printing temporarily expands the catalog and restores its previous state afterward.
 - Click any announcement title or its visible **Read announcement** link to open that item's exact Book of News section in a new tab. Source links remain available inside expanded details and in table view.
 - Filter by workload, availability and audience; search includes detailed subfeatures and availability evidence.
 - **Select entire theme/story** adds every matching catalog announcement, independent of other active filters. Existing selections are kept and overlapping groups are deduplicated.
@@ -50,6 +53,8 @@ The theme/story labels and potential customer perspectives are editorial lenses,
 - [Pink theme, Fabric announcements](https://igordossantos.github.io/ignite-2026-insurance-briefing/?theme=pink&topic=fabric#catalog)
 
 `theme` accepts `blue` or `pink`; optional `topic` accepts a technology-theme ID from the catalog. Without `topic`, all technology themes are shown. Invalid values produce a visible warning and fall back to the saved/default color or all announcement themes. Existing `#selected=...` discussion links remain supported; notes never enter shared URLs.
+
+Section fragments can be combined with theme parameters: `#keynote`, `#overview`, `#matters`, `#insurance-stories`, `#technology-story-section`, `#catalog`, `#discussion`, and `#sources` (or `#top` for the introduction). For example, [Blue theme, Executive overview](https://igordossantos.github.io/ignite-2026-insurance-briefing/?theme=blue#overview) opens the otherwise-collapsed overview.
 
 ## Build and preview
 

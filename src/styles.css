@@ -133,8 +133,6 @@ p { margin: 8px 0 16px; }
 .notice strong { display: block; margin-bottom: 4px; }
 .notice p { margin-bottom: 0; color: var(--cp-text-muted); }
 .section { padding-top: 36px; padding-bottom: 36px; }
-.section-heading { display: flex; justify-content: space-between; align-items: start; gap: 32px; }
-.section-heading > p { max-width: 380px; margin-top: 24px; }
 .executive-grid { list-style: none; counter-reset: theme; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0; margin: 24px 0; }
 .executive-grid li { counter-increment: theme; padding: 20px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; }
 .executive-grid li::before { content: "0" counter(theme); color: var(--cp-accent); font: 700 13px Consolas, "Courier New", Courier, monospace; }
@@ -186,6 +184,14 @@ input, select, textarea { padding: 10px 12px; width: 100%; min-width: 0; }
 .check { flex-direction: row; align-items: center; gap: 8px; margin: 16px 0; }.check input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
 details { border-top: 1px solid var(--cp-border); padding-top: 12px; margin-top: 16px; }
 summary { cursor: pointer; font-size: 14px; font-weight: 600; }textarea { min-height: 88px; resize: vertical; font-weight: 400; }
+.section-disclosure { border: 0; padding: 0; margin: 0; min-width: 0; }
+.section-disclosure > summary { font-size: clamp(25px, 3vw, 32px); line-height: 1.2; color: var(--cp-text); }
+.section-disclosure > summary > h1, .section-disclosure > summary > h2, .section-disclosure > summary > h3 { display: inline; margin: 0; }
+.hero .section-disclosure > summary { font-size: clamp(30px, 3.5vw, 44px); }
+.discussion .section-disclosure > summary { font-size: 18px; }
+.section-disclosure > summary::marker, .story-section > summary::marker { color: var(--cp-accent); }
+.section-content { padding-top: 20px; }
+.section-link { float: right; font-size: 14px; font-weight: 600; margin-left: 8px; padding: 4px 8px; color: var(--cp-link); }
 details ul { font-size: 14px; }details label { margin-top: 16px; }
 .empty { text-align: center; padding: 48px 24px; border: 1px dashed var(--cp-border-strong); border-radius: 16px; }
 .empty p { max-width: 700px; margin: 12px auto 24px; color: var(--cp-text-muted); }
@@ -200,10 +206,10 @@ footer { border-top: 1px solid var(--cp-border); padding-top: 24px; padding-bott
 .skip { position: absolute; top: -100px; left: 16px; padding: 8px; background: var(--cp-surface); z-index: 30; }.skip:focus { top: 8px; }
 html.present header nav, html.present #overview, html.present #matters, html.present footer { display: none; }html.present .hero { padding-top: 24px; }
 @media (max-width: 1100px) { header { position: static; }nav { order: 3; width: 100%; }html { scroll-padding-top: 24px; } }
-@media (max-width: 900px) { .story-grid, .executive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }.section-heading { display: block; }.section-heading > p { max-width: none; margin-top: 0; } }
+@media (max-width: 900px) { .story-grid, .executive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .wrap { padding-left: 20px; padding-right: 20px; }.hero { padding-top: 28px; }.story-grid, .executive-grid, .cards, .perspective, .source-grid, .toolbar { grid-template-columns: minmax(0, 1fr); }.search, .toolbar > button { grid-column: auto; }.toolbar { padding: 16px; }.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }.metric { padding: 12px; }header > .actions { width: 100%; }nav { gap: 8px 16px; }.section { padding-top: 28px; padding-bottom: 28px; }.selection-dock { width: calc(100% - 32px); font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print {
-  header, #overview, #matters, #keynote, .toolbar, .theme-field, .theme-sharing, .results-bar .actions, .discussion, .selection-dock, #message, .check, .skip, noscript, .announcement details label { display: none !important; }
+  header, #overview, #matters, #keynote, .section-link, .toolbar, .theme-field, .theme-sharing, .results-bar .actions, .discussion, .selection-dock, #message, .check, .skip, noscript, .announcement details label { display: none !important; }
   .wrap { max-width: none; padding: 0; }.hero, .section { padding: 16px 0; }h1 { font-size: 32px; letter-spacing: -1px; }h1 br { display: none; }.cards, .source-grid { display: block; }.announcement { break-inside: avoid; margin-bottom: 16px; }.catalog-section { border: 0; }body { font-size: 11pt; }a { color: var(--cp-text); }.announcement > label { display: none; }.print-note { display: block; }.announcement details { display: block; }footer { padding: 16px 0; }
 }

@@ -149,8 +149,6 @@ p { margin: 8px 0 16px; }
 .notice strong { display: block; margin-bottom: 4px; }
 .notice p { margin-bottom: 0; color: var(--cp-text-muted); }
 .section { padding-top: 36px; padding-bottom: 36px; }
-.section-heading { display: flex; justify-content: space-between; align-items: start; gap: 32px; }
-.section-heading > p { max-width: 380px; margin-top: 24px; }
 .executive-grid { list-style: none; counter-reset: theme; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0; margin: 24px 0; }
 .executive-grid li { counter-increment: theme; padding: 20px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; }
 .executive-grid li::before { content: "0" counter(theme); color: var(--cp-accent); font: 700 13px Consolas, "Courier New", Courier, monospace; }
@@ -202,6 +200,14 @@ input, select, textarea { padding: 10px 12px; width: 100%; min-width: 0; }
 .check { flex-direction: row; align-items: center; gap: 8px; margin: 16px 0; }.check input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
 details { border-top: 1px solid var(--cp-border); padding-top: 12px; margin-top: 16px; }
 summary { cursor: pointer; font-size: 14px; font-weight: 600; }textarea { min-height: 88px; resize: vertical; font-weight: 400; }
+.section-disclosure { border: 0; padding: 0; margin: 0; min-width: 0; }
+.section-disclosure > summary { font-size: clamp(25px, 3vw, 32px); line-height: 1.2; color: var(--cp-text); }
+.section-disclosure > summary > h1, .section-disclosure > summary > h2, .section-disclosure > summary > h3 { display: inline; margin: 0; }
+.hero .section-disclosure > summary { font-size: clamp(30px, 3.5vw, 44px); }
+.discussion .section-disclosure > summary { font-size: 18px; }
+.section-disclosure > summary::marker, .story-section > summary::marker { color: var(--cp-accent); }
+.section-content { padding-top: 20px; }
+.section-link { float: right; font-size: 14px; font-weight: 600; margin-left: 8px; padding: 4px 8px; color: var(--cp-link); }
 details ul { font-size: 14px; }details label { margin-top: 16px; }
 .empty { text-align: center; padding: 48px 24px; border: 1px dashed var(--cp-border-strong); border-radius: 16px; }
 .empty p { max-width: 700px; margin: 12px auto 24px; color: var(--cp-text-muted); }
@@ -216,11 +222,11 @@ footer { border-top: 1px solid var(--cp-border); padding-top: 24px; padding-bott
 .skip { position: absolute; top: -100px; left: 16px; padding: 8px; background: var(--cp-surface); z-index: 30; }.skip:focus { top: 8px; }
 html.present header nav, html.present #overview, html.present #matters, html.present footer { display: none; }html.present .hero { padding-top: 24px; }
 @media (max-width: 1100px) { header { position: static; }nav { order: 3; width: 100%; }html { scroll-padding-top: 24px; } }
-@media (max-width: 900px) { .story-grid, .executive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }.section-heading { display: block; }.section-heading > p { max-width: none; margin-top: 0; } }
+@media (max-width: 900px) { .story-grid, .executive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .wrap { padding-left: 20px; padding-right: 20px; }.hero { padding-top: 28px; }.story-grid, .executive-grid, .cards, .perspective, .source-grid, .toolbar { grid-template-columns: minmax(0, 1fr); }.search, .toolbar > button { grid-column: auto; }.toolbar { padding: 16px; }.metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }.metric { padding: 12px; }header > .actions { width: 100%; }nav { gap: 8px 16px; }.section { padding-top: 28px; padding-bottom: 28px; }.selection-dock { width: calc(100% - 32px); font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print {
-  header, #overview, #matters, #keynote, .toolbar, .theme-field, .theme-sharing, .results-bar .actions, .discussion, .selection-dock, #message, .check, .skip, noscript, .announcement details label { display: none !important; }
+  header, #overview, #matters, #keynote, .section-link, .toolbar, .theme-field, .theme-sharing, .results-bar .actions, .discussion, .selection-dock, #message, .check, .skip, noscript, .announcement details label { display: none !important; }
   .wrap { max-width: none; padding: 0; }.hero, .section { padding: 16px 0; }h1 { font-size: 32px; letter-spacing: -1px; }h1 br { display: none; }.cards, .source-grid { display: block; }.announcement { break-inside: avoid; margin-bottom: 16px; }.catalog-section { border: 0; }body { font-size: 11pt; }a { color: var(--cp-text); }.announcement > label { display: none; }.print-note { display: block; }.announcement details { display: block; }footer { padding: 16px 0; }
 }
 </style>
@@ -229,20 +235,42 @@ html.present header nav, html.present #overview, html.present #matters, html.pre
   <a class="skip" href="#main">Skip to briefing</a>
   <header>
     <a class="brand" href="#top"><span class="mark">I26</span> Ignite / Insurance briefing</a>
-    <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Priorities & catalog</a><a href="#matters">Where it may matter</a><a id="keynote-nav" href="#keynote" hidden>Keynote & links</a><a href="#sources">Sources & method</a></nav>
+    <nav aria-label="Main navigation"><a id="keynote-nav" href="#keynote" hidden>Ignite blog</a><a href="#overview">Overview</a><a href="#matters">Start with a story</a><a href="#catalog">Priorities & catalog</a><a href="#sources">Sources & method</a></nav>
     <div class="actions"><label class="palette-control" for="theme">Color theme<select id="theme"><option value="pink">Pink theme</option><option value="blue">Blue theme</option></select></label><button id="present" aria-pressed="false">Presenter view</button><button id="print">Print</button></div>
   </header>
   <main id="main">
     <section class="hero" id="top"><div class="wrap">
       <p class="eyebrow">MICROSOFT IGNITE / NOVEMBER 17-20, 2026</p>
-      <h1>Microsoft Ignite 2026 |<br>Data, AI & Enterprise Technology Briefing</h1>
+      <details class="section-disclosure" open>
+      <summary><h1>Microsoft Ignite 2026 |<br>Data, AI & Enterprise Technology Briefing <a class="section-link" href="#top" aria-label="Link to briefing introduction">#</a></h1></summary>
+      <div class="section-content">
       <p class="lede">A curated briefing for the <strong>insurance industry</strong></p>
       <p class="muted">Every numbered Book of News item, with source links, availability evidence and potential insurance relevance. Choose a technology theme or business story to build your discussion.</p>
       <div class="metrics" id="metrics"></div>
       <div id="source-notice" class="notice" role="status"></div>
+      </div>
+      </details>
     </div></section>
+    <section class="section wrap" id="keynote" hidden>
+      <p class="eyebrow">01 / KEYNOTE CONTEXT & FURTHER READING</p>
+      <details class="section-disclosure" open>
+      <summary><h2>Ignite blog: building the frontier ecosystem <a class="section-link" href="#keynote" aria-label="Link to Ignite blog">#</a></h2></summary>
+      <div class="section-content">
+      <p id="blog-summary" class="intro"></p>
+      <p id="blog-source"></p><p id="blog-checked" class="muted"></p>
+      <p id="blog-availability" class="notice"></p>
+      <div id="blog-topics" class="story-grid"></div>
+      <h3 class="subhead">Links from the Ignite blog</h3>
+      <p id="blog-link-scope" class="muted"></p>
+      <ul id="blog-links" class="resource-list"></ul>
+      </div>
+      </details>
+    </section>
     <section class="section wrap" id="overview">
-      <p class="eyebrow">01 / FRAME THE CONVERSATION</p><h2>Executive overview</h2>
+      <p class="eyebrow">02 / FRAME THE CONVERSATION</p>
+      <details class="section-disclosure">
+      <summary><h2>Executive overview <a class="section-link" href="#overview" aria-label="Link to Executive overview">#</a></h2></summary>
+      <div class="section-content">
       <p class="intro">Ignite's recurring story is the move from AI assistance to governed, operational agents. Trusted context, measurable quality and explicit control boundaries matter as much as the model. Six themes connect the announcements:</p>
       <ol class="executive-grid">
         <li><h3>Copilot moves from answers to work</h3><p>Autopilot, Workspaces and Code extend assistance into persistent work and app creation. Frontier access and future release windows still apply.</p></li>
@@ -255,10 +283,38 @@ html.present header nav, html.present #overview, html.present #matters, html.pre
       <h3 class="subhead">How to read availability</h3>
       <p class="muted">One card represents one numbered source item, not one independently released feature. <strong>Mixed availability</strong> means the details matter. Future dates and contradictory source wording are called out rather than promoted to GA.</p>
       <ul class="legend"><li><strong>GA</strong> &mdash; explicitly generally available</li><li><strong>Preview</strong> &mdash; access and release type vary</li><li><strong>Frontier</strong> &mdash; program-gated access</li><li><strong>Mixed</strong> &mdash; read per-feature evidence</li><li><strong>Future / rolling out</strong> &mdash; not a universal availability claim</li></ul>
+      </div>
+      </details>
+    </section>
+    <section class="section wrap" id="matters">
+      <p class="eyebrow">03 / START WITH A STORY</p>
+      <details class="section-disclosure" open>
+      <summary><h2>Where it may matter <a class="section-link" href="#matters" aria-label="Link to Start with a story">#</a></h2></summary>
+      <div class="section-content">
+      <p class="intro">These are discussion lenses, not claims about any organization's systems, strategy or deployments. Select a story to gather its announcements across product boundaries.</p>
+      <details class="story-section" id="insurance-stories">
+        <summary>Start with an Insurance Industry story <a class="section-link" href="#insurance-stories" aria-label="Link to Insurance Industry stories">#</a></summary>
+        <div id="stories" class="story-grid"></div>
+        <div class="perspective">
+          <div><h3>Claims & service</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
+          <div><h3>Risk & governance</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
+        </div>
+      </details>
+      <details class="story-section" id="technology-story-section">
+        <summary>Start with a technology story <a class="section-link" href="#technology-story-section" aria-label="Link to technology stories">#</a></summary>
+        <p class="muted">Explore the same technology themes used in the announcement catalog. Browse a theme or select all its announcements for discussion.</p>
+        <div id="technology-stories" class="story-grid"></div>
+      </details>
+      </div>
+      </details>
     </section>
     <section class="section catalog-section" id="catalog">
       <div class="wrap">
-        <div class="section-heading"><div><p class="eyebrow">02 / BUILD YOUR BRIEFING</p><h2>Priorities & announcement catalog</h2></div><p class="muted">Theme + story filters intersect. Bulk theme selection includes every matching catalog item, regardless of other filters.</p></div>
+        <p class="eyebrow">04 / BUILD YOUR BRIEFING</p>
+        <details class="section-disclosure" open>
+        <summary><h2>Priorities & announcement catalog <a class="section-link" href="#catalog" aria-label="Link to Priorities and announcement catalog">#</a></h2></summary>
+        <div class="section-content">
+        <p class="muted">Theme + story filters intersect. Bulk theme selection includes every matching catalog item, regardless of other filters.</p>
         <p class="intro">Select <strong>Copilot</strong> or <strong>Fabric</strong>, then <strong>Select entire theme</strong> to add all its announcements. Or start with a business story. Selections are deduplicated and can be exported with your discussion notes.</p>
         <fieldset class="theme-field"><legend>Technology theme</legend><div class="theme-row" id="themes"></div></fieldset>
         <p class="theme-sharing"><button id="share-theme">Copy theme link</button> <span class="muted">Share the color and technology theme without selections, notes or other filters.</span></p>
@@ -283,44 +339,29 @@ html.present header nav, html.present #overview, html.present #matters, html.pre
         <div id="cards" class="cards"></div>
         <div id="table" class="table-wrap" role="region" aria-label="Announcement comparison" tabindex="0" hidden></div>
         <section class="discussion" id="discussion" aria-labelledby="discussion-title">
-          <div><h3 id="discussion-title">Your discussion list <span id="selection-count"></span></h3><p class="muted">Selections and notes stay in this browser. Shared discussion links contain theme choices and announcement IDs, never notes.</p></div>
+          <details class="section-disclosure" open>
+          <summary><h3 id="discussion-title">Your discussion list <span id="selection-count"></span> <a class="section-link" href="#discussion" aria-label="Link to discussion tools and exports">#</a></h3></summary>
+          <div class="section-content">
+          <p class="muted">Selections and notes stay in this browser. Shared discussion links contain theme choices and announcement IDs, never notes.</p>
           <div class="actions"><button id="selected-only" aria-pressed="false">Keep selected only</button><button id="clear">Clear selection</button><button id="undo" disabled>Undo</button><button id="export-md">Download Markdown</button><button id="export-csv">Download CSV</button><button id="share">Copy share link</button></div>
+          </div>
+          </details>
         </section>
+        </div>
+        </details>
       </div>
     </section>
-    <section class="section wrap" id="matters">
-      <p class="eyebrow">03 / START WITH A STORY</p><h2>Where it may matter</h2>
-      <p class="intro">These are discussion lenses, not claims about any organization's systems, strategy or deployments. Select a story to gather its announcements across product boundaries.</p>
-      <details class="story-section" id="insurance-stories" open>
-        <summary>Start with an Insurance Industry story</summary>
-        <div id="stories" class="story-grid"></div>
-        <div class="perspective">
-          <div><h3>Claims & service</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
-          <div><h3>Risk & governance</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
-        </div>
-      </details>
-      <details class="story-section" id="technology-story-section" open>
-        <summary>Start with a technology story</summary>
-        <p class="muted">Explore the same technology themes used in the announcement catalog. Browse a theme or select all its announcements for discussion.</p>
-        <div id="technology-stories" class="story-grid"></div>
-      </details>
-    </section>
-    <section class="section wrap" id="keynote" hidden>
-      <p class="eyebrow">04 / KEYNOTE CONTEXT & FURTHER READING</p><h2>Ignite blog: building the frontier ecosystem</h2>
-      <p id="blog-summary" class="intro"></p>
-      <p id="blog-source"></p><p id="blog-checked" class="muted"></p>
-      <p id="blog-availability" class="notice"></p>
-      <div id="blog-topics" class="story-grid"></div>
-      <h3 class="subhead">Links from the Ignite blog</h3>
-      <p id="blog-link-scope" class="muted"></p>
-      <ul id="blog-links" class="resource-list"></ul>
-    </section>
     <section class="section wrap" id="sources">
-      <p class="eyebrow">05 / EVIDENCE BEFORE ENTHUSIASM</p><h2>Sources & methodology</h2>
+      <p class="eyebrow">05 / EVIDENCE BEFORE ENTHUSIASM</p>
+      <details class="section-disclosure" open>
+      <summary><h2>Sources & methodology <a class="section-link" href="#sources" aria-label="Link to Sources and methodology">#</a></h2></summary>
+      <div class="section-content">
       <div class="source-grid">
         <div><h3>Primary source</h3><p><a id="source-link" target="_blank" rel="noopener noreferrer">Microsoft Ignite 2026 Book of News</a></p><p id="checked" class="muted"></p><p id="coverage"></p><details><summary>Source section coverage</summary><ul id="source-sections"></ul></details></div>
         <div><h3>How to read this briefing</h3><ul class="method"><li>The 59 numbered announcements come from the 2026 Book of News. The Ignite keynote blog and its directly related articles add separately labeled context, not additional announcement counts. No FabCon or prior-year announcements are substituted.</li><li>Coverage is audited against every numbered contents entry. Original summaries/highlights retain key subfeatures; no source article is reproduced in full.</li><li>Every entry includes the exact source section and availability evidence. Overlapping source stories remain separate numbered items, not separate claimed product releases.</li><li>Specific per-feature status takes precedence over broad or contradictory introductory wording. Caveats are visible in the affected cards and exports.</li><li>Items may belong to multiple themes and stories. Selecting overlapping groups never duplicates an announcement.</li><li>Customer relevance and next steps are editorial suggestions, not Microsoft product claims or knowledge of customer deployments.</li><li>GA does not mean licensed, approved for regulated data, or suitable without validation. Preview is not a production commitment.</li></ul></div>
       </div>
+      </div>
+      </details>
     </section>
   </main>
   <aside id="selection-dock" class="selection-dock" aria-label="Discussion selection shortcuts" hidden><strong id="dock-count"></strong><button id="dock-selected" aria-pressed="false">Keep selected only</button><a href="#discussion">Discussion tools & exports</a></aside>
@@ -577,11 +618,28 @@ function main() {
       const topic = readThemeLink(location.search, data.themes).topic;
       $("filters").reset();
       filters.theme = topic; filters.selectedOnly = true;
-      view = "cards"; undo = null; render();
+      view = "cards"; undo = null; render(); revealSection($("catalog"), true);
     }
   }
   applySharedSelection();
-  window.addEventListener("hashchange", () => applySharedSelection(true));
+  window.addEventListener("hashchange", () => {
+    applySharedSelection(true);
+    revealSection(document.getElementById(location.hash.slice(1)), true);
+  });
+  function revealSection(target, scroll = false) {
+    if (!target || target.hidden) return;
+    const disclosure = target.querySelector(":scope > details.section-disclosure, :scope > .wrap > details.section-disclosure");
+    if (disclosure) disclosure.open = true;
+    for (let ancestor = target; ancestor; ancestor = ancestor.parentElement) {
+      if (ancestor.tagName === "DETAILS") ancestor.open = true;
+    }
+    if (scroll) target.scrollIntoView();
+  }
+  document.addEventListener("click", event => {
+    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !(event.target instanceof Element)) return;
+    const anchor = event.target.closest('a[href^="#"]');
+    if (anchor) revealSection(document.getElementById(anchor.hash.slice(1)), true);
+  });
   function changeSelection(next) {
     undo = new Set(selected); selected = next; persist(); render();
   }
@@ -645,7 +703,7 @@ function main() {
     const browse = button(`Browse ${kind}`, () => {
       filters[kind] = group.id;
       if (kind === "story") $("story").value = group.id;
-      filters.selectedOnly = false; render(); $("catalog").scrollIntoView();
+      filters.selectedOnly = false; render(); revealSection($("catalog"), true);
     });
     const select = button(`Select ${kind}`, () => selectEntireGroup(field, group.id));
     select.disabled = count === 0;
@@ -797,7 +855,7 @@ function main() {
   $("clear").addEventListener("click", () => changeSelection(new Set()));
   $("undo").addEventListener("click", () => { if (undo) { selected = undo; undo = null; persist(); render(); } });
   $("selected-only").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); });
-  $("dock-selected").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); $("catalog").scrollIntoView(); });
+  $("dock-selected").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); revealSection($("catalog"), true); });
   for (const [id, open] of [["expand-all", true], ["collapse-all", false]]) {
     $(id).addEventListener("click", () => {
       for (const item of visible()) { if (open) expanded.add(item.id); else expanded.delete(item.id); }
@@ -838,7 +896,7 @@ function main() {
   $("print").addEventListener("click", () => window.print());
   let previouslyClosed = [];
   window.addEventListener("beforeprint", () => {
-    previouslyClosed = [...document.querySelectorAll(".announcement details:not([open])")];
+    previouslyClosed = [...document.querySelectorAll(".section-disclosure:not([open]), .announcement details:not([open])")];
     for (const detail of previouslyClosed) detail.open = true;
   });
   window.addEventListener("afterprint", () => { for (const detail of previouslyClosed) detail.open = false; });
@@ -848,6 +906,7 @@ function main() {
     }
   });
   render();
+  revealSection(document.getElementById(location.hash.slice(1)), true);
 }
 try { main(); }
 catch (error) {
