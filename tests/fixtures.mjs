@@ -1,6 +1,7 @@
 export function fixture() {
   const item = (id, themes, stories) => ({
     id, title: `Synthetic test ${id}`, summary: "Test-only factual summary.",
+    details: ["Synthetic detailed feature for testing."],
     workload: "Test workload", section: `1.1.${id}`, themes, stories,
     status: "Not specified", availabilityEvidence: "The test source does not specify availability.",
     relevance: { farmers: "Consider a test claims discussion.", zurich: "Consider a test risk discussion." },

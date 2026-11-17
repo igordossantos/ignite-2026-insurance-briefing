@@ -30,7 +30,8 @@ function main() {
   const data = validateData(JSON.parse($("catalog-data").textContent));
   const items = data.announcements;
   let selected = new Set(), notes = {}, undo = null, view = "cards";
-  const filters = { query: "", theme: "", story: "", status: "", audience: "both", sort: "source", selectedOnly: false };
+  const expanded = new Set();
+  const filters = { query: "", theme: "", story: "", workload: "", status: "", audience: "both", sort: "source", selectedOnly: false };
   function persist() {
     try { localStorage.setItem(storageKey, JSON.stringify({ selected: [...selected], notes })); }
     catch (error) { console.error("Could not save discussion", error); notify("Browser storage is unavailable or full. Changes are not saved; download your discussion list before leaving."); }
@@ -51,7 +52,7 @@ function main() {
     if (new Set(incoming).size !== selected.size) notify("Some shared announcements are not in this catalog and were omitted.");
     persist();
     if (updateView) {
-      Object.assign(filters, { query: "", theme: "", story: "", status: "", audience: "both", sort: "source" });
+      Object.assign(filters, { query: "", theme: "", story: "", workload: "", status: "", audience: "both", sort: "source" });
       $("filters").reset();
       filters.selectedOnly = true;
       view = "cards"; undo = null; render();
@@ -72,9 +73,9 @@ function main() {
 
   const sourceNotice = $("source-notice");
   sourceNotice.append(node("strong", data.meta.sourceState === "pending" ? "Awaiting the official announcement catalog" :
-    data.meta.sourceState === "partial" ? "Partial coverage - compilation in progress" : "Book of News coverage compiled"));
+    data.meta.sourceState === "partial" ? "Partial coverage - compilation in progress" : `${items.length}/${data.meta.sourceSections.length} numbered Book of News items compiled`));
   sourceNotice.append(node("span", data.meta.coverageNote), node("p", `Source checked: ${new Date(data.meta.checkedAt).toLocaleString(undefined, { timeZoneName: "short" })}`));
-  for (const [value, label] of [[items.length, "verified announcement entries"], [new Set(items.flatMap(item => item.themes)).size, "themes with news"], [data.meta.sourceSections.length, "source sections cataloged"]]) {
+  for (const [value, label] of [[items.length, "source-linked announcements"], [new Set(items.map(item => item.workload)).size, "source workloads"], [new Set(items.flatMap(item => item.themes)).size, "technology themes"], [data.stories.length, "insurance discussion stories"]]) {
     const metric = node("div", undefined, "metric");
     metric.append(node("strong", String(value)), node("span", label)); $("metrics").append(metric);
   }
@@ -83,7 +84,11 @@ function main() {
   $("checked").textContent = `Last checked: ${new Date(data.meta.checkedAt).toLocaleString(undefined, { timeZoneName: "short" })}.`;
   $("coverage").textContent = data.meta.coverageNote;
   if (!data.meta.sourceSections.length) $("source-sections").append(node("li", "No announcement sections accessible at the source check."));
-  for (const section of data.meta.sourceSections) $("source-sections").append(node("li", `${section} - ${items.filter(item => item.section === section).length} announcement(s)`));
+  for (const section of data.meta.sourceSections) {
+    const entry = node("li"), item = items.find(item => item.section === section);
+    entry.append(link({ label: `${section} | ${item.title}`, url: item.sources.find(source => new URL(source.url).origin === new URL(data.meta.sourceUrl).origin).url }));
+    $("source-sections").append(entry);
+  }
   for (const story of data.stories) {
     const count = items.filter(item => item.stories.includes(story.id)).length;
     const card = node("article", undefined, "story");
@@ -95,6 +100,10 @@ function main() {
     const option = node("option", story.name); option.value = story.id; $("story").append(option);
   }
   for (const status of STATUSES) { const option = node("option", status); option.value = status; $("status").append(option); }
+  for (const workload of [...new Set(items.map(item => item.workload))]) {
+    const option = node("option", `${workload} (${items.filter(item => item.workload === workload).length})`);
+    option.value = workload; $("workload").append(option);
+  }
   const themeButtons = new Map();
   for (const theme of [{ id: "", name: "All themes" }, ...data.themes]) {
     const count = theme.id ? items.filter(item => item.themes.includes(theme.id)).length : items.length;
@@ -127,13 +136,26 @@ function main() {
     const article = node("article", undefined, `announcement${selected.has(item.id) ? " selected" : ""}`);
     article.id = item.id;
     const meta = node("div", undefined, "card-meta");
-    meta.append(node("span", item.workload, "tag"), node("span", item.status, "tag status"));
+    const status = node("span", item.status, "tag status"); status.dataset.status = item.status;
+    meta.append(node("span", `${item.section} / ${item.workload}`, "tag"), status);
+    if (item.discrepancy) meta.append(node("span", "Source caveat", "tag caveat-flag"));
     for (const id of item.themes) meta.append(node("span", nameOf("themes", id), "tag"));
-    article.append(meta, node("h3", item.title), node("p", item.summary), relevance(item));
+    article.append(meta, node("h3", item.title), node("p", item.summary), link(item.sources[0]), relevance(item));
     const next = node("p"); next.append(node("strong", "Suggested next step: "), document.createTextNode(item.nextStep)); article.append(next);
     const details = node("details");
-    details.append(node("summary", "Availability evidence & sources"), node("p", item.availabilityEvidence),
+    details.open = expanded.has(item.id);
+    details.addEventListener("toggle", () => {
+      if (!details.isConnected) return;
+      if (details.open) expanded.add(item.id); else expanded.delete(item.id);
+    });
+    const highlights = node("ul", undefined, "highlights");
+    for (const detail of item.details) highlights.append(node("li", detail));
+    details.append(node("summary", "Highlights, availability & discussion notes"), highlights, node("h4", "Availability evidence"), node("p", item.availabilityEvidence),
       node("p", `Book of News section: ${item.section}`), node("p", `Stories: ${item.stories.map(id => nameOf("stories", id)).join("; ")}`));
+    if (item.discrepancy) {
+      const caveat = node("p", undefined, "caveat");
+      caveat.append(node("strong", "Source caveat: "), document.createTextNode(item.discrepancy)); details.append(caveat);
+    }
     const sources = node("ul");
     for (const source of item.sources) { const li = node("li"); li.append(link(source)); sources.append(li); }
     details.append(sources);
@@ -143,7 +165,8 @@ function main() {
     const printNote = node("p", notes[item.id] ? `Notes: ${notes[item.id]}` : "", "print-note");
     textarea.addEventListener("input", () => { notes[item.id] = textarea.value; printNote.textContent = textarea.value ? `Notes: ${textarea.value}` : ""; persist(); });
     noteLabel.append(textarea);
-    article.append(details, checkbox(item), noteLabel, printNote);
+    details.append(noteLabel);
+    article.append(checkbox(item), details, printNote);
     return article;
   }
   function renderTable(shown) {
@@ -155,7 +178,8 @@ function main() {
     const body = node("tbody");
     for (const item of shown) {
       const tr = node("tr"), title = node("td"), tags = node("td"), status = node("td", `${item.status}: ${item.availabilityEvidence}`), potential = node("td"), sources = node("td");
-      title.append(node("strong", item.title), node("p", item.summary), checkbox(item));
+      title.append(node("span", `${item.section} / ${item.workload}`, "tag"), node("p", item.title), node("p", item.summary), checkbox(item));
+      if (item.discrepancy) status.append(node("p", `Source caveat: ${item.discrepancy}`, "caveat"));
       tags.textContent = [...item.themes.map(id => nameOf("themes", id)), ...item.stories.map(id => nameOf("stories", id))].join("; ");
       potential.append(relevance(item), node("p", item.nextStep));
       for (const source of item.sources) sources.append(link(source), node("br"));
@@ -171,6 +195,10 @@ function main() {
     $("result-count").textContent = `${shown.length} of ${items.length} announcements${filters.selectedOnly ? " | Discussion list only" : ""}`;
     $("selection-count").textContent = `(${selected.size})`;
     $("selected-only").setAttribute("aria-pressed", String(filters.selectedOnly));
+    $("dock-selected").setAttribute("aria-pressed", String(filters.selectedOnly));
+    $("selection-dock").hidden = selected.size === 0;
+    $("dock-count").textContent = `${selected.size} selected`;
+    for (const id of ["expand-all", "collapse-all"]) $(id).disabled = view !== "cards" || !shown.length;
     $("select-shown").disabled = shown.length === 0;
     $("select-theme").disabled = !filters.theme || !items.some(item => item.themes.includes(filters.theme));
     $("select-story").disabled = !filters.story || !items.some(item => item.stories.includes(filters.story));
@@ -191,12 +219,12 @@ function main() {
     else { $("cards").replaceChildren(); renderTable(shown); }
     if (focusedId.startsWith("select-")) $(focusedId)?.focus();
   }
-  for (const id of ["query", "story", "status", "audience", "sort"]) {
+  for (const id of ["query", "story", "workload", "status", "audience", "sort"]) {
     $(id).addEventListener(id === "query" ? "input" : "change", event => { filters[id] = event.target.value; render(); });
   }
   $("filters").addEventListener("submit", event => event.preventDefault());
   $("filters").addEventListener("reset", () => {
-    Object.assign(filters, { query: "", story: "", status: "", audience: "both", sort: "source", theme: "", selectedOnly: false });
+    Object.assign(filters, { query: "", story: "", workload: "", status: "", audience: "both", sort: "source", theme: "", selectedOnly: false });
     render();
   });
   $("select-shown").addEventListener("click", () => changeSelection(new Set([...selected, ...visible().map(item => item.id)])));
@@ -205,6 +233,13 @@ function main() {
   $("clear").addEventListener("click", () => changeSelection(new Set()));
   $("undo").addEventListener("click", () => { if (undo) { selected = undo; undo = null; persist(); render(); } });
   $("selected-only").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); });
+  $("dock-selected").addEventListener("click", () => { filters.selectedOnly = !filters.selectedOnly; render(); $("catalog").scrollIntoView(); });
+  for (const [id, open] of [["expand-all", true], ["collapse-all", false]]) {
+    $(id).addEventListener("click", () => {
+      for (const item of visible()) { if (open) expanded.add(item.id); else expanded.delete(item.id); }
+      for (const detail of document.querySelectorAll(".announcement details")) detail.open = open;
+    });
+  }
   for (const mode of ["cards", "table"]) $(`${mode}-view`).addEventListener("click", () => { view = mode; render(); });
   function download(extension, mime, content) {
     const url = URL.createObjectURL(new Blob([content], { type: mime }));

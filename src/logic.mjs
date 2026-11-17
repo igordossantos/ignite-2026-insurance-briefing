@@ -1,4 +1,4 @@
-export const STATUSES = ["GA", "Public preview", "Private preview", "Preview", "Coming soon", "Not specified"];
+export const STATUSES = ["GA", "Mixed availability", "Public preview", "Private preview", "Preview", "Frontier", "Rolling out", "Preview coming soon", "Coming soon", "Not specified"];
 
 export function validateData(data) {
   const fail = message => { throw new Error(`Invalid catalog: ${message}`); };
@@ -28,6 +28,8 @@ export function validateData(data) {
       if (typeof item[field] !== "string" || !item[field].trim()) fail(`${item.id}: ${field} is required`);
     }
     if (!STATUSES.includes(item.status)) fail(`${item.id}: invalid availability`);
+    if (!Array.isArray(item.details) || !item.details.length || item.details.some(detail => typeof detail !== "string" || !detail.trim())) fail(`${item.id}: factual highlights are required`);
+    if (item.discrepancy !== undefined && (typeof item.discrepancy !== "string" || !item.discrepancy.trim())) fail(`${item.id}: invalid source caveat`);
     for (const [field, values] of [["themes", themes], ["stories", stories]]) {
       if (!Array.isArray(item[field]) || !item[field].length || item[field].some(id => !values.has(id))) fail(`${item.id}: invalid ${field}`);
     }
@@ -52,9 +54,10 @@ export function filterItems(items, filters, selected = new Set()) {
   return items.filter(item =>
     (!filters.theme || item.themes.includes(filters.theme)) &&
     (!filters.story || item.stories.includes(filters.story)) &&
+    (!filters.workload || item.workload === filters.workload) &&
     (!filters.status || item.status === filters.status) &&
     (!filters.selectedOnly || selected.has(item.id)) &&
-    (!query || [item.title, item.summary, item.workload, item.section, ...item.themes, ...item.stories,
+    (!query || [item.title, item.summary, ...item.details, item.availabilityEvidence, item.discrepancy || "", item.nextStep, item.workload, item.section, ...item.themes, ...item.stories,
       item.relevance.farmers, item.relevance.zurich].join(" ").toLocaleLowerCase().includes(query))
   ).sort((a, b) => filters.sort === "title" ? a.title.localeCompare(b.title) :
     filters.sort === "workload" ? a.workload.localeCompare(b.workload) || a.title.localeCompare(b.title) : 0);
@@ -78,10 +81,10 @@ export function csvCell(value) {
 
 export function exportCsv(items, notes, audience) {
   const customers = audience === "both" ? ["farmers", "zurich"] : [audience];
-  const rows = [["Title", "Workload", "Themes", "Stories", "Availability", "Summary",
+  const rows = [["Source section", "Title", "Workload", "Themes", "Stories", "Availability", "Availability evidence", "Source caveat", "Summary", "Highlights",
     ...customers.map(key => key === "farmers" ? "Potential relevance: Farmers Insurance" : "Potential relevance: Zurich Insurance Group"), "Next step", "Sources", "Notes"]];
-  for (const item of items) rows.push([item.title, item.workload, item.themes.join("; "), item.stories.join("; "), item.status,
-    item.summary, ...customers.map(key => item.relevance[key]), item.nextStep, item.sources.map(s => s.url).join("; "), notes[item.id] || ""]);
+  for (const item of items) rows.push([item.section, item.title, item.workload, item.themes.join("; "), item.stories.join("; "), item.status,
+    item.availabilityEvidence, item.discrepancy || "", item.summary, item.details.join("\n"), ...customers.map(key => item.relevance[key]), item.nextStep, item.sources.map(s => s.url).join("; "), notes[item.id] || ""]);
   return rows.map(row => row.map(csvCell).join(",")).join("\r\n");
 }
 
@@ -91,7 +94,10 @@ export function exportMarkdown(items, notes, audience) {
     "Suggested use cases only; not statements about either organization's environment.", ""];
   for (const item of items) {
     lines.push(`## ${plain(item.title)}`, "", `${plain(item.workload)} | ${plain(item.status)}`,
-      "", plain(item.summary), "", `Themes: ${item.themes.map(plain).join(", ")}`, `Stories: ${item.stories.map(plain).join(", ")}`, "");
+      "", `Book of News section: ${plain(item.section)}`, "", plain(item.summary), "",
+      ...item.details.map(detail => `- ${plain(detail)}`), "", `Availability evidence: ${plain(item.availabilityEvidence)}`, "");
+    if (item.discrepancy) lines.push(`Source caveat: ${plain(item.discrepancy)}`, "");
+    lines.push(`Themes: ${item.themes.map(plain).join(", ")}`, `Stories: ${item.stories.map(plain).join(", ")}`, "");
     if (audience !== "zurich") lines.push(`Potential relevance for Farmers Insurance: ${plain(item.relevance.farmers)}`, "");
     if (audience !== "farmers") lines.push(`Potential relevance for Zurich Insurance Group: ${plain(item.relevance.zurich)}`, "");
     lines.push(`Suggested next step: ${plain(item.nextStep)}`, "", ...item.sources.map(s => `Source: ${s.url}`), "");

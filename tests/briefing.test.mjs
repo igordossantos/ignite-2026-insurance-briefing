@@ -5,9 +5,36 @@ import { validateData, filterItems, selectGroup, restoreSelection, exportCsv, ex
 import { sourceState } from "../tools/check-source.mjs";
 import { fixture } from "./fixtures.mjs";
 
-test("the published data is valid and does not invent news while the source is pending", async () => {
+test("the complete catalog matches every independently captured numbered source and contents entry", async () => {
   const data = validateData(JSON.parse(await readFile(new URL("../data/announcements.json", import.meta.url), "utf8")));
-  if (data.meta.sourceState === "pending") assert.equal(data.announcements.length, 0);
+  const inventory = JSON.parse(await readFile(new URL("../data/source-inventory.json", import.meta.url), "utf8"));
+  assert.equal(data.meta.sourceState, "complete");
+  assert.equal(inventory.sections.length, 59);
+  assert.deepEqual(data.meta.sourceSections, inventory.sections.map(item => item.number));
+  assert.deepEqual([...inventory.numberedContents].sort(), [...data.meta.sourceSections].sort());
+  assert.equal(new Set(data.announcements.map(item => item.section)).size, inventory.sections.length);
+  assert.equal(new Set(inventory.sections.map(item => item.id)).size, inventory.sections.length);
+  assert.equal(data.announcements.length, inventory.sections.length);
+  for (const [index, section] of inventory.sections.entries()) {
+    const item = data.announcements[index];
+    assert.equal(item.section, section.number);
+    assert.equal(item.id, section.id);
+    assert.equal(item.title, section.title);
+    assert.ok(item.sources.some(source => source.url === inventory.sourceUrl + "#" + section.id));
+  }
+});
+test("mixed, future and program-gated availability is preserved in the real catalog and exports", async () => {
+  const { announcements } = JSON.parse(await readFile(new URL("../data/announcements.json", import.meta.url), "utf8"));
+  for (const [section, status] of [["1.3.1", "Mixed availability"], ["1.3.7", "Preview"], ["4.1.2", "Frontier"], ["6.4.1", "Mixed availability"], ["7.4.2", "Preview coming soon"], ["8.1.6", "Mixed availability"]]) {
+    assert.equal(announcements.find(item => item.section === section).status, status);
+  }
+  const fabric = announcements.find(item => item.section === "6.4.1");
+  const markdown = exportMarkdown([fabric], {}, "both"), csv = exportCsv([fabric], {}, "both");
+  for (const output of [markdown, csv]) {
+    assert.ok(output.includes(fabric.availabilityEvidence));
+    assert.ok(output.includes(fabric.discrepancy));
+    assert.ok(output.includes(fabric.details[0]));
+  }
 });
 test("bulk theme selection selects every member, keeps existing selections and deduplicates overlaps", () => {
   const { announcements } = fixture();
@@ -25,6 +52,10 @@ test("combined filters intersect, include customer relevance and selected-only m
   assert.equal(filterItems(announcements, { query: "RISK", theme: "fabric" }).length, 2);
   assert.deepEqual(filterItems(announcements, { selectedOnly: true }, new Set(["gamma"])).map(i => i.id), ["gamma"]);
   assert.equal(filterItems(announcements, { theme: "fabric", story: "claims", status: "GA" }).length, 0);
+  announcements[0].details = ["A distinctive subfeature keyword"];
+  announcements[1].workload = "Another workload";
+  assert.deepEqual(filterItems(announcements, { query: "SUBFEATURE", workload: "Test workload" }).map(i => i.id), ["alpha"]);
+  assert.equal(filterItems(announcements, { query: "subfeature", workload: "Another workload" }).length, 0);
 });
 test("share selections are deduplicated and reject unknown IDs or malformed saved data", () => {
   const { announcements } = fixture();
@@ -71,6 +102,8 @@ test("invalid sources, missing customer perspective, and unknown tags fail valid
   assert.throws(() => validateData(noCustomer), /perspectives/);
   const noTheme = fixture(); noTheme.announcements[0].themes = ["unmapped"];
   assert.throws(() => validateData(noTheme), /themes/);
+  const noHighlights = fixture(); noHighlights.announcements[0].details = [];
+  assert.throws(() => validateData(noHighlights), /highlights/);
 });
 test("source check recognizes the holding page but never equates missing holding text with complete coverage", () => {
   assert.equal(sourceState("<h1>Microsoft Ignite 2026</h1><p>The Book of News will be available after the keynote.</p>"), "pending");

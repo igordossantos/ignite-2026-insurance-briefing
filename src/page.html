@@ -20,33 +20,42 @@
   <a class="skip" href="#main">Skip to briefing</a>
   <header>
     <a class="brand" href="#top"><span class="mark">I26</span> Ignite / Insurance briefing</a>
-    <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Announcements</a><a href="#sources">Sources & method</a></nav>
+    <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#catalog">Priorities & catalog</a><a href="#matters">Where it may matter</a><a href="#sources">Sources & method</a></nav>
     <div class="actions"><button id="present" aria-pressed="false">Presenter view</button><button id="theme">Switch theme</button><button id="print">Print</button></div>
   </header>
   <main id="main">
-    <section class="hero wrap" id="top">
+    <section class="hero" id="top"><div class="wrap">
       <p class="eyebrow">MICROSOFT IGNITE / NOVEMBER 17-20, 2026</p>
-      <h1>The news.<br>The insurance story.<br><span>Your discussion.</span></h1>
-      <p class="lede">A source-linked briefing for <strong>Farmers Insurance</strong> and <strong>Zurich Insurance Group</strong>.</p>
-      <p class="muted">Explore the Book of News by technology theme or business story. Select a whole theme, refine the list, and take the conversation with you.</p>
+      <h1>Microsoft Ignite 2026 |<br>Data, AI & Enterprise Technology Briefing</h1>
+      <p class="lede">A curated briefing for <strong>Farmers Insurance</strong> and <strong>Zurich Insurance Group</strong></p>
+      <p class="muted">Every numbered Book of News item, with source links, availability evidence and potential insurance relevance. Choose a technology theme or business story to build your discussion.</p>
       <div class="metrics" id="metrics"></div>
       <div id="source-notice" class="notice" role="status"></div>
-    </section>
+    </div></section>
     <section class="section wrap" id="overview">
-      <div class="section-heading"><div><p class="eyebrow">01 / FRAME THE CONVERSATION</p><h2>Start with a story</h2></div><p class="muted">Insurance lenses, not claims about either company's systems or priorities.</p></div>
-      <div id="stories" class="story-grid"></div>
-      <div class="perspective">
-        <div><h3>Farmers Insurance</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
-        <div><h3>Zurich Insurance Group</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
-      </div>
+      <p class="eyebrow">01 / FRAME THE CONVERSATION</p><h2>Executive overview</h2>
+      <p class="intro">Ignite's recurring story is the move from AI assistance to governed, operational agents. Trusted context, measurable quality and explicit control boundaries matter as much as the model. Six themes connect the announcements:</p>
+      <ol class="executive-grid">
+        <li><h3>Copilot moves from answers to work</h3><p>Autopilot, Workspaces and Code extend assistance into persistent work and app creation. Frontier access and future release windows still apply.</p></li>
+        <li><h3>Enterprise context becomes reusable</h3><p>Microsoft IQ connects work context, business metrics, documents and the web. Individual integrations have different availability and licensing dependencies.</p></li>
+        <li><h3>From reports to applications</h3><p>Rayfin and Fabric apps reach GA. Power BI Pro app creation and Fabric HorizonDB remain preview, connecting analysis with controlled business actions.</p></li>
+        <li><h3>Agents need an operating model</h3><p>Agent 365, Entra, Defender, Intune and Purview extend visibility, identity, data protection and cost controls across cloud and local agents.</p></li>
+        <li><h3>Modernization meets resilience</h3><p>Azure Catalyst, database updates, Cobalt 200 and Chaos Studio address modernization and recovery. Preview operations agents add assistance, not blanket autonomy.</p></li>
+        <li><h3>Measure, improve, repeat</h3><p>Foundry connects evaluation, production insights, optimization and training. Success criteria and human approval remain essential before deploying a change.</p></li>
+      </ol>
+      <h3 class="subhead">How to read availability</h3>
+      <p class="muted">One card represents one numbered source item, not one independently released feature. <strong>Mixed availability</strong> means the details matter. Future dates and contradictory source wording are called out rather than promoted to GA.</p>
+      <ul class="legend"><li><strong>GA</strong> &mdash; explicitly generally available</li><li><strong>Preview</strong> &mdash; access and release type vary</li><li><strong>Frontier</strong> &mdash; program-gated access</li><li><strong>Mixed</strong> &mdash; read per-feature evidence</li><li><strong>Future / rolling out</strong> &mdash; not a universal availability claim</li></ul>
     </section>
     <section class="section catalog-section" id="catalog">
       <div class="wrap">
         <div class="section-heading"><div><p class="eyebrow">02 / BUILD YOUR BRIEFING</p><h2>Priorities & announcement catalog</h2></div><p class="muted">Theme + story filters intersect. Bulk theme selection includes every matching catalog item, regardless of other filters.</p></div>
+        <p class="intro">Select <strong>Copilot</strong> or <strong>Fabric</strong>, then <strong>Select entire theme</strong> to add all its announcements. Or start with a business story. Selections are deduplicated and can be exported with your discussion notes.</p>
         <fieldset class="theme-field"><legend>Technology theme</legend><div class="theme-row" id="themes"></div></fieldset>
         <form id="filters" class="toolbar" role="search">
           <label class="search">Search announcements<input id="query" type="search" placeholder="Search news, products or insurance use cases" autocomplete="off"></label>
           <label>Business story<select id="story"><option value="">All stories</option></select></label>
+          <label>Workload<select id="workload"><option value="">All workloads</option></select></label>
           <label>Availability<select id="status"><option value="">All statuses</option></select></label>
           <label>Customer perspective<select id="audience"><option value="both">Both organizations</option><option value="farmers">Farmers Insurance</option><option value="zurich">Zurich Insurance Group</option></select></label>
           <label>Sort<select id="sort"><option value="source">Book of News order</option><option value="title">Title A-Z</option><option value="workload">Workload</option></select></label>
@@ -57,25 +66,36 @@
           <div class="actions">
             <button id="select-shown">Select all shown</button><button id="select-theme">Select entire theme</button><button id="select-story">Select entire story</button>
             <button id="cards-view" aria-pressed="true">Cards</button><button id="table-view" aria-pressed="false">Table</button>
+            <button id="expand-all">Expand details</button><button id="collapse-all">Collapse details</button>
           </div>
         </div>
         <div id="empty" class="empty" hidden><h3 id="empty-title"></h3><p id="empty-text"></p><a id="empty-source" target="_blank" rel="noopener noreferrer">Open the official Book of News &rarr;</a></div>
         <div id="cards" class="cards"></div>
         <div id="table" class="table-wrap" role="region" aria-label="Announcement comparison" tabindex="0" hidden></div>
-        <section class="discussion" aria-labelledby="discussion-title">
+        <section class="discussion" id="discussion" aria-labelledby="discussion-title">
           <div><h3 id="discussion-title">Your discussion list <span id="selection-count"></span></h3><p class="muted">Selections and notes stay in this browser. Shared links contain IDs only, never notes.</p></div>
           <div class="actions"><button id="selected-only" aria-pressed="false">Keep selected only</button><button id="clear">Clear selection</button><button id="undo" disabled>Undo</button><button id="export-md">Download Markdown</button><button id="export-csv">Download CSV</button><button id="share">Copy share link</button></div>
         </section>
       </div>
     </section>
+    <section class="section wrap" id="matters">
+      <p class="eyebrow">03 / START WITH AN INSURANCE STORY</p><h2>Where it may matter</h2>
+      <p class="intro">These are discussion lenses, not claims about either organization's systems, strategy or deployments. Select a story to gather its announcements across product boundaries.</p>
+      <div id="stories" class="story-grid"></div>
+      <div class="perspective">
+        <div><h3>Farmers Insurance</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
+        <div><h3>Zurich Insurance Group</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
+      </div>
+    </section>
     <section class="section wrap" id="sources">
-      <p class="eyebrow">03 / EVIDENCE BEFORE ENTHUSIASM</p><h2>Sources & methodology</h2>
+      <p class="eyebrow">04 / EVIDENCE BEFORE ENTHUSIASM</p><h2>Sources & methodology</h2>
       <div class="source-grid">
         <div><h3>Primary source</h3><p><a id="source-link" target="_blank" rel="noopener noreferrer">Microsoft Ignite 2026 Book of News</a></p><p id="checked" class="muted"></p><p id="coverage"></p><details><summary>Source section coverage</summary><ul id="source-sections"></ul></details></div>
-        <div><h3>How to read this briefing</h3><ul class="method"><li>Only the 2026 Book of News is in scope. No FabCon or prior-year announcements are substituted.</li><li>Every entry requires a source section link, an original summary and the source's availability evidence. Unspecified availability remains "Not specified".</li><li>Items may belong to multiple themes and stories. Selecting overlapping groups never duplicates an announcement.</li><li>Customer relevance and next steps are editorial suggestions, not Microsoft product claims or knowledge of customer deployments.</li><li>GA does not mean licensed, approved for regulated data, or suitable without validation. Preview is not a production commitment.</li></ul></div>
+        <div><h3>How to read this briefing</h3><ul class="method"><li>Only the 2026 Book of News is in scope. No FabCon or prior-year announcements are substituted.</li><li>Coverage is audited against every numbered contents entry. Original summaries/highlights retain key subfeatures; no source article is reproduced in full.</li><li>Every entry includes the exact source section and availability evidence. Overlapping source stories remain separate numbered items, not separate claimed product releases.</li><li>Specific per-feature status takes precedence over broad or contradictory introductory wording. Caveats are visible in the affected cards and exports.</li><li>Items may belong to multiple themes and stories. Selecting overlapping groups never duplicates an announcement.</li><li>Customer relevance and next steps are editorial suggestions, not Microsoft product claims or knowledge of customer deployments.</li><li>GA does not mean licensed, approved for regulated data, or suitable without validation. Preview is not a production commitment.</li></ul></div>
       </div>
     </section>
   </main>
+  <aside id="selection-dock" class="selection-dock" aria-label="Discussion selection shortcuts" hidden><strong id="dock-count"></strong><button id="dock-selected" aria-pressed="false">Keep selected only</button><a href="#discussion">Discussion tools & exports</a></aside>
   <footer class="wrap"><p>Independent discussion aid. Not an official publication of Microsoft, Farmers Insurance or Zurich Insurance Group. No ROI, performance, licensing or compliance outcomes are promised.</p><p>No analytics, external assets, API keys or backend. Avoid entering sensitive or customer-confidential information in notes. Printing includes the currently shown announcements and their notes.</p></footer>
   <div id="message" role="status" aria-live="polite" hidden></div>
   <noscript><p class="notice">JavaScript is required for catalog filtering and selection. Visit <a href="https://news.microsoft.com/events/ignite/2026/book-of-news/">the official Book of News</a> for source information.</p></noscript>

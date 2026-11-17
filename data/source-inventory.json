@@ -1,0 +1,480 @@
+{
+  "sourceUrl": "https://news.microsoft.com/events/ignite/2026/book-of-news/",
+  "checkedAt": "2026-11-17T18:48:45.271Z",
+  "numberedContents": [
+    "1.1.1",
+    "1.1.2",
+    "1.1.3",
+    "1.2.1",
+    "1.2.2",
+    "1.2.3",
+    "1.2.4",
+    "1.3.1",
+    "1.3.2",
+    "1.3.3",
+    "1.3.4",
+    "1.3.5",
+    "1.3.6",
+    "1.3.7",
+    "1.3.8",
+    "1.3.9",
+    "1.3.10",
+    "2.1.1",
+    "2.2.1",
+    "2.2.2",
+    "3.1.1",
+    "4.1.1",
+    "4.1.2",
+    "4.1.3",
+    "4.1.4",
+    "4.1.5",
+    "4.1.6",
+    "4.1.7",
+    "4.1.8",
+    "4.1.9",
+    "4.1.10",
+    "5.1.1",
+    "6.1.1",
+    "6.2.1",
+    "6.3.1",
+    "6.4.1",
+    "6.5.1",
+    "6.6.1",
+    "6.7.1",
+    "7.1.1",
+    "7.1.2",
+    "7.1.3",
+    "7.1.4",
+    "7.2.1",
+    "7.3.1",
+    "7.3.2",
+    "7.3.3",
+    "7.3.4",
+    "7.4.1",
+    "7.4.2",
+    "7.5.1",
+    "7.6.1",
+    "7.7.1",
+    "8.1.1",
+    "8.1.2",
+    "8.1.3",
+    "8.1.4",
+    "8.1.5",
+    "8.1.6"
+  ],
+  "sections": [
+    {
+      "number": "1.1.1",
+      "id": "azure-chaos-studio-workspaces-aks-extension-now-generally-available",
+      "sourceId": "442",
+      "title": "Azure Chaos Studio Workspaces, AKS extension now generally available",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.1.2",
+      "id": "azure-expands-confidential-computing-for-protecting-highly-sensitive-data",
+      "sourceId": "443",
+      "title": "Azure expands confidential computing for protecting highly sensitive data",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.1.3",
+      "id": "built-for-the-agentic-ai-era-azure-cobalt-200-virtual-machines-are-now-generally-available",
+      "sourceId": "444",
+      "title": "Built for the agentic AI era, Azure Cobalt 200 virtual machines are now generally available",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.2.1",
+      "id": "azure-expands-agentic-operations-with-new-monitoring-ai-capabilities",
+      "sourceId": "446",
+      "title": "Azure expands agentic operations with new monitoring, AI capabilities",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.2.2",
+      "id": "azure-infrastructure-foundation-for-production-ai-applications-and-agents",
+      "sourceId": "447",
+      "title": "Azure infrastructure foundation for production AI applications and agents",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.2.3",
+      "id": "introducing-azure-catalyst",
+      "sourceId": "448",
+      "title": "Introducing Azure Catalyst",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.2.4",
+      "id": "introducing-windows-server-2028",
+      "sourceId": "449",
+      "title": "Introducing Windows Server 2028",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.1",
+      "id": "azure-cosmos-db-improves-development-retrieval-and-data-protection",
+      "sourceId": "451",
+      "title": "Azure Cosmos DB improves development, retrieval and data protection",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.2",
+      "id": "azure-documentdb-expands-developer-tools-sovereignty-and-security",
+      "sourceId": "452",
+      "title": "Azure DocumentDB expands developer tools, sovereignty and security",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.3",
+      "id": "azure-horizondb-generally-available-for-mission-critical-applications",
+      "sourceId": "453",
+      "title": "Azure HorizonDB generally available for mission-critical applications",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.4",
+      "id": "azure-managed-redis-previews-redis-8-and-an-agent-kit",
+      "sourceId": "454",
+      "title": "Azure Managed Redis previews Redis 8 and an agent kit",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.5",
+      "id": "azure-sql-expands-modernization-resiliency-and-local-development-options",
+      "sourceId": "455",
+      "title": "Azure SQL expands modernization, resiliency and local development options",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.6",
+      "id": "database-hub-in-fabric-generally-available-sql-and-postgresql-database-agents-in-preview",
+      "sourceId": "456",
+      "title": "Database Hub in Fabric generally available; SQL and PostgreSQL database agents in preview",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.7",
+      "id": "microsoft-fabric-horizondb-brings-postgresql-to-fabric-in-preview",
+      "sourceId": "457",
+      "title": "Microsoft Fabric HorizonDB brings PostgreSQL to Fabric in preview",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.8",
+      "id": "postgresql-on-azure-simplifies-migration-and-expands-modernization-options",
+      "sourceId": "458",
+      "title": "PostgreSQL on Azure simplifies migration and expands modernization options",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.9",
+      "id": "power-bi-introduces-custom-data-app-creation-in-preview",
+      "sourceId": "459",
+      "title": "Power BI introduces custom data app creation in preview",
+      "chapter": "Azure"
+    },
+    {
+      "number": "1.3.10",
+      "id": "rayfin-and-fabric-apps-reach-general-availability",
+      "sourceId": "460",
+      "title": "Rayfin and Fabric apps reach general availability",
+      "chapter": "Azure"
+    },
+    {
+      "number": "2.1.1",
+      "id": "turning-production-experience-into-better-agents",
+      "sourceId": "465",
+      "title": "Turning production experience into better agents",
+      "chapter": "Microsoft Foundry"
+    },
+    {
+      "number": "2.2.1",
+      "id": "microsoft-decision-1-1-now-generally-available",
+      "sourceId": "467",
+      "title": "Microsoft-Decision-1.1 now generally available",
+      "chapter": "Microsoft Foundry"
+    },
+    {
+      "number": "2.2.2",
+      "id": "microsoft-foundry-adds-new-ai-models-for-coding-images-security",
+      "sourceId": "468",
+      "title": "Microsoft Foundry adds new AI models for coding, images, security",
+      "chapter": "Microsoft Foundry"
+    },
+    {
+      "number": "3.1.1",
+      "id": "microsoft-copilot-sdk-2-0-improves-security-and-scale-for-ai-apps",
+      "sourceId": "473",
+      "title": "Microsoft Copilot SDK 2.0 improves security and scale for AI apps",
+      "chapter": "GitHub"
+    },
+    {
+      "number": "4.1.1",
+      "id": "agent-365-turns-ai-spend-into-business-value-with-finops-for-ai",
+      "sourceId": "478",
+      "title": "Agent 365 turns AI spend into business value with FinOps for AI",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.2",
+      "id": "autopilot-is-rolling-out-to-frontier-customers",
+      "sourceId": "479",
+      "title": "Autopilot is rolling out to Frontier customers",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.3",
+      "id": "copilot-managed-runtime-is-now-generally-available-with-new-capabilities",
+      "sourceId": "480",
+      "title": "Copilot Managed Runtime is now generally available, with new capabilities",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.4",
+      "id": "copilot-workspaces-helps-teams-work-together-with-copilot",
+      "sourceId": "481",
+      "title": "Copilot Workspaces helps teams work together with Copilot",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.5",
+      "id": "dynamics-365-crm-and-erp-plugins-now-available-in-copilot",
+      "sourceId": "482",
+      "title": "Dynamics 365 CRM and ERP plugins now available in Copilot",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.6",
+      "id": "easily-build-secure-apps-with-copilot-code",
+      "sourceId": "483",
+      "title": "Easily build secure apps with Copilot Code",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.7",
+      "id": "home-in-the-microsoft-copilot-app",
+      "sourceId": "484",
+      "title": "Home in the Microsoft Copilot app",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.8",
+      "id": "microsoft-expands-dynamics-365-activate-to-support-agentic-erp-migration",
+      "sourceId": "485",
+      "title": "Microsoft expands Dynamics 365 Activate to support agentic ERP migration",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.9",
+      "id": "microsoft-salesforce-announce-salesforce-in-copilot-teams-and-fabric",
+      "sourceId": "486",
+      "title": "Microsoft, Salesforce announce Salesforce in Copilot, Teams and Fabric",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "4.1.10",
+      "id": "today-helps-people-prioritize-and-act-on-what-matters",
+      "sourceId": "487",
+      "title": "Today helps people prioritize and act on what matters",
+      "chapter": "Microsoft Copilot"
+    },
+    {
+      "number": "5.1.1",
+      "id": "edge-for-business-adds-governed-ai-workflows-stronger-security",
+      "sourceId": "492",
+      "title": "Edge for Business adds governed AI workflows, stronger security",
+      "chapter": "Microsoft Edge"
+    },
+    {
+      "number": "6.1.1",
+      "id": "introducing-microsoft-iq-the-platform-for-enterprise-ai",
+      "sourceId": "497",
+      "title": "Introducing Microsoft IQ, the platform for enterprise AI",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "6.2.1",
+      "id": "microsoft-iq-connects-agents-to-the-expertise-of-your-business",
+      "sourceId": "499",
+      "title": "Microsoft IQ connects agents to the expertise of your business",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "6.3.1",
+      "id": "foundry-iq-brings-unstructured-data-to-applications-and-agents",
+      "sourceId": "501",
+      "title": "Foundry IQ brings unstructured data to applications and agents",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "6.4.1",
+      "id": "bring-trusted-business-context-to-more-experiences-with-fabric-iq",
+      "sourceId": "503",
+      "title": "Bring trusted business context to more experiences with Fabric IQ",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "6.5.1",
+      "id": "web-iq-now-generally-available-to-azure-customers",
+      "sourceId": "505",
+      "title": "Web IQ now generally available to Azure customers",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "6.6.1",
+      "id": "work-iq-expands-context-actions-and-controls-for-copilot-and-agents",
+      "sourceId": "507",
+      "title": "Work IQ expands context, actions and controls for Copilot and agents",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "6.7.1",
+      "id": "continuous-improvement-helps-agents-and-models-learn-in-production",
+      "sourceId": "509",
+      "title": "Continuous improvement helps agents and models learn in production",
+      "chapter": "Microsoft IQ"
+    },
+    {
+      "number": "7.1.1",
+      "id": "dynamic-agent-risk-within-agent-365-in-preview",
+      "sourceId": "514",
+      "title": "Dynamic Agent Risk within Agent 365 in preview",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.1.2",
+      "id": "management-insights-now-default-for-microsoft-agents",
+      "sourceId": "515",
+      "title": "Management insights now default for Microsoft agents",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.1.3",
+      "id": "microsoft-agent-365-expands-governance-for-agents-and-their-tools",
+      "sourceId": "516",
+      "title": "Microsoft Agent 365 expands governance for agents and their tools",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.1.4",
+      "id": "new-microsoft-agent-365-capabilities-help-maximize-value-of-ai-investments",
+      "sourceId": "517",
+      "title": "New Microsoft Agent 365 capabilities help maximize value of AI investments",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.2.1",
+      "id": "codename-mdash-a-new-agentic-code-security-system-available-in-preview",
+      "sourceId": "519",
+      "title": "Codename MDASH, a new agentic code security system, available in preview",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.3.1",
+      "id": "integrated-security-operations-center-now-generally-available-vulnerability-shielding-in-preview",
+      "sourceId": "521",
+      "title": "Integrated Security Operations Center now generally available, vulnerability shielding in preview",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.3.2",
+      "id": "microsoft-defender-extends-runtime-protection-for-local-ai-agents",
+      "sourceId": "522",
+      "title": "Microsoft Defender extends runtime protection for local AI agents",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.3.3",
+      "id": "microsoft-threat-intelligence-adds-zero-day-and-emerging-threat-insights",
+      "sourceId": "523",
+      "title": "Microsoft threat intelligence adds zero-day and emerging threat insights",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.3.4",
+      "id": "new-investments-to-reduce-on-premises-security-risk",
+      "sourceId": "524",
+      "title": "New investments to reduce on-premises security risk",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.4.1",
+      "id": "microsoft-entra-expands-secure-identity-and-access-for-agentic-ai-era",
+      "sourceId": "526",
+      "title": "Microsoft Entra expands secure identity and access for agentic AI era",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.4.2",
+      "id": "ai-readiness-initiatives-to-strengthen-security-foundations",
+      "sourceId": "527",
+      "title": "AI Readiness Initiatives to strengthen security foundations",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.5.1",
+      "id": "microsoft-intune-helps-secure-ai-adoption-and-reduce-endpoint-risk",
+      "sourceId": "529",
+      "title": "Microsoft Intune helps secure AI adoption and reduce endpoint risk",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.6.1",
+      "id": "new-capabilities-now-available-for-microsoft-perception",
+      "sourceId": "531",
+      "title": "New capabilities now available for Microsoft Perception",
+      "chapter": "Security"
+    },
+    {
+      "number": "7.7.1",
+      "id": "microsoft-purview-helps-accelerate-copilot-deployment-and-secure-agent-interactions",
+      "sourceId": "533",
+      "title": "Microsoft Purview helps accelerate Copilot deployment and secure agent interactions",
+      "chapter": "Security"
+    },
+    {
+      "number": "8.1.1",
+      "id": "copilot-on-windows-improvements-across-file-operations-pc-diagnostics-and-in-search",
+      "sourceId": "538",
+      "title": "Copilot on Windows improvements across file operations, PC diagnostics and in search",
+      "chapter": "Windows"
+    },
+    {
+      "number": "8.1.2",
+      "id": "new-capabilities-in-windows-365-across-direct-stream-windows-365-admin-assistant-and-more",
+      "sourceId": "539",
+      "title": "New capabilities in Windows 365 across Direct Stream, Windows 365 admin assistant and more",
+      "chapter": "Windows"
+    },
+    {
+      "number": "8.1.3",
+      "id": "new-windows-and-microsoft-intune-capabilities",
+      "sourceId": "540",
+      "title": "New Windows and Microsoft Intune capabilities",
+      "chapter": "Windows"
+    },
+    {
+      "number": "8.1.4",
+      "id": "windows-365-for-agents-scales-to-microsoft-foundry-introduces-persistent-cloud-pcs",
+      "sourceId": "541",
+      "title": "Windows 365 for Agents scales to Microsoft Foundry, introduces persistent Cloud PCs",
+      "chapter": "Windows"
+    },
+    {
+      "number": "8.1.5",
+      "id": "windows-expands-local-and-hybrid-capabilities",
+      "sourceId": "542",
+      "title": "Windows expands local and hybrid capabilities",
+      "chapter": "Windows"
+    },
+    {
+      "number": "8.1.6",
+      "id": "windows-introduces-controls-that-help-isolate-and-govern-ai-agents",
+      "sourceId": "543",
+      "title": "Windows introduces controls that help isolate and govern AI agents",
+      "chapter": "Windows"
+    }
+  ]
+}
