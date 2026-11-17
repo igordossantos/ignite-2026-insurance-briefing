@@ -117,6 +117,9 @@ p { margin: 8px 0 16px; }
 .story { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 20px; }
 .story p { font-size: 14px; color: var(--cp-text-muted); min-height: 48px; }
 .story .count { color: var(--cp-accent); font: 13px Consolas, "Courier New", Courier, monospace; margin-bottom: 12px; display: block; }
+.story-section > summary { font-size: 20px; font-weight: 650; color: var(--cp-text); }
+.story-section > .story-grid { margin-top: 20px; }
+.story-section > .muted { margin-top: 16px; }
 .perspective { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; padding: 24px 0 0; border-top: 1px solid var(--cp-border); }
 .perspective p { font-size: 14px; color: var(--cp-text-muted); }
 .catalog-section { background: var(--cp-bg-elevated); border-block: 1px solid var(--cp-border); }
@@ -233,13 +236,21 @@ html.present header nav, html.present #overview, html.present #matters, html.pre
       </div>
     </section>
     <section class="section wrap" id="matters">
-      <p class="eyebrow">03 / START WITH AN INSURANCE STORY</p><h2>Where it may matter</h2>
+      <p class="eyebrow">03 / START WITH A STORY</p><h2>Where it may matter</h2>
       <p class="intro">These are discussion lenses, not claims about either organization's systems, strategy or deployments. Select a story to gather its announcements across product boundaries.</p>
-      <div id="stories" class="story-grid"></div>
-      <div class="perspective">
-        <div><h3>Farmers Insurance</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
-        <div><h3>Zurich Insurance Group</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
-      </div>
+      <details class="story-section" id="insurance-stories" open>
+        <summary>Start with an Insurance Industry story</summary>
+        <div id="stories" class="story-grid"></div>
+        <div class="perspective">
+          <div><h3>Farmers Insurance</h3><p>Potential discussion lenses: claims and service workflows, knowledge assistance, governed analytics and employee productivity.</p></div>
+          <div><h3>Zurich Insurance Group</h3><p>Potential discussion lenses: risk and underwriting insights, shared data definitions, cross-market governance and operational resilience.</p></div>
+        </div>
+      </details>
+      <details class="story-section" id="technology-story-section" open>
+        <summary>Start with a technology story</summary>
+        <p class="muted">Explore the same technology themes used in the announcement catalog. Browse a theme or select all its announcements for discussion.</p>
+        <div id="technology-stories" class="story-grid"></div>
+      </details>
     </section>
     <section class="section wrap" id="sources">
       <p class="eyebrow">04 / EVIDENCE BEFORE ENTHUSIASM</p><h2>Sources & methodology</h2>
@@ -452,16 +463,25 @@ function main() {
     entry.append(link({ label: `${section} | ${item.title}`, url: item.sources.find(source => new URL(source.url).origin === new URL(data.meta.sourceUrl).origin).url }));
     $("source-sections").append(entry);
   }
-  for (const story of data.stories) {
-    const count = items.filter(item => item.stories.includes(story.id)).length;
+  function groupCard(group, field) {
+    const kind = field === "themes" ? "theme" : "story";
+    const count = items.filter(item => item[field].includes(group.id)).length;
     const card = node("article", undefined, "story");
-    const browse = button("Browse story", () => { filters.story = story.id; $("story").value = story.id; filters.selectedOnly = false; render(); $("catalog").scrollIntoView(); });
-    const select = button("Select story", () => selectEntireGroup("stories", story.id));
+    const browse = button(`Browse ${kind}`, () => {
+      filters[kind] = group.id;
+      if (kind === "story") $("story").value = group.id;
+      filters.selectedOnly = false; render(); $("catalog").scrollIntoView();
+    });
+    const select = button(`Select ${kind}`, () => selectEntireGroup(field, group.id));
     select.disabled = count === 0;
-    card.append(node("span", `${String(count).padStart(2, "0")} ANNOUNCEMENTS`, "count"), node("h3", story.name), node("p", story.description), browse, document.createTextNode(" "), select);
-    $("stories").append(card);
+    card.append(node("span", `${String(count).padStart(2, "0")} ANNOUNCEMENTS`, "count"), node("h3", group.name), node("p", group.description), browse, document.createTextNode(" "), select);
+    return card;
+  }
+  for (const story of data.stories) {
+    $("stories").append(groupCard(story, "stories"));
     const option = node("option", story.name); option.value = story.id; $("story").append(option);
   }
+  for (const theme of data.themes) $("technology-stories").append(groupCard(theme, "themes"));
   for (const status of STATUSES) { const option = node("option", status); option.value = status; $("status").append(option); }
   for (const workload of [...new Set(items.map(item => item.workload))]) {
     const option = node("option", `${workload} (${items.filter(item => item.workload === workload).length})`);

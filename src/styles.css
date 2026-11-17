@@ -101,6 +101,9 @@ p { margin: 8px 0 16px; }
 .story { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 20px; }
 .story p { font-size: 14px; color: var(--cp-text-muted); min-height: 48px; }
 .story .count { color: var(--cp-accent); font: 13px Consolas, "Courier New", Courier, monospace; margin-bottom: 12px; display: block; }
+.story-section > summary { font-size: 20px; font-weight: 650; color: var(--cp-text); }
+.story-section > .story-grid { margin-top: 20px; }
+.story-section > .muted { margin-top: 16px; }
 .perspective { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; padding: 24px 0 0; border-top: 1px solid var(--cp-border); }
 .perspective p { font-size: 14px; color: var(--cp-text-muted); }
 .catalog-section { background: var(--cp-bg-elevated); border-block: 1px solid var(--cp-border); }

@@ -36,14 +36,43 @@ try {
   console.log("PASS all 59 tiles have visible exact announcement links and open details in a new tab");
   assert.match(await page.locator("#source-notice").innerText(), /59\/59 numbered/);
   assert.equal(await page.locator("#select-shown").isDisabled(), false);
+  assert.equal(await page.locator("#stories .story").count(), actual.stories.length);
+  assert.deepEqual(await page.locator("#technology-stories .story").evaluateAll(cards => cards.map(card => ({
+    name: card.querySelector("h3").textContent, count: card.querySelector(".count").textContent
+  }))), actual.themes.map(theme => ({
+    name: theme.name,
+    count: `${String(actual.announcements.filter(item => item.themes.includes(theme.id)).length).padStart(2, "0")} ANNOUNCEMENTS`
+  })));
+  await page.locator("#insurance-stories > summary").click();
+  assert.equal(await page.locator("#stories").isVisible(), false);
+  assert.equal(await page.locator("#technology-stories").isVisible(), true);
+  await page.locator("#technology-story-section > summary").click();
+  assert.equal(await page.locator("#technology-stories").isVisible(), false);
+  await page.locator("#insurance-stories > summary").click();
+  assert.equal(await page.locator("#stories").isVisible(), true);
+  assert.equal(await page.locator("#technology-stories").isVisible(), false);
+  await page.locator("#technology-story-section > summary").focus();
+  await page.keyboard.press("Enter");
+  assert.equal(await page.locator("#technology-stories").isVisible(), true);
+  for (const theme of actual.themes) {
+    const story = page.locator("#technology-stories .story").filter({ has: page.getByRole("heading", { name: theme.name, exact: true }) });
+    await story.getByRole("button", { name: "Browse theme", exact: true }).click();
+    assert.deepEqual(await page.locator(".announcement").evaluateAll(cards => cards.map(card => card.id)),
+      actual.announcements.filter(item => item.themes.includes(theme.id)).map(item => item.id));
+    assert.equal(await page.locator(`button[data-theme="${theme.id}"]`).getAttribute("aria-pressed"), "true");
+  }
+  await page.getByRole("button", { name: "Reset filters", exact: true }).click();
+  console.log("PASS independent story-section collapse, keyboard expansion and exact browsing for every technology theme");
   await page.locator('button[data-theme="copilot"]').click();
   await page.locator("#query").fill("no-such-announcement");
   assert.equal(await page.locator(".announcement").count(), 0);
-  await page.locator("#select-theme").click();
+  await page.locator("#technology-stories .story").filter({ has: page.getByRole("heading", { name: "Copilot", exact: true }) })
+    .getByRole("button", { name: "Select theme", exact: true }).click();
   const expected = new Set(actual.announcements.filter(item => item.themes.includes("copilot")).map(item => item.id));
   assert.equal(await page.locator("#selection-count").innerText(), `(${expected.size})`);
   await page.locator('button[data-theme="fabric"]').click();
-  await page.locator("#select-theme").click();
+  await page.locator("#technology-stories .story").filter({ has: page.getByRole("heading", { name: "Fabric", exact: true }) })
+    .getByRole("button", { name: "Select theme", exact: true }).click();
   for (const item of actual.announcements.filter(item => item.themes.includes("fabric"))) expected.add(item.id);
   assert.equal(await page.locator("#selection-count").innerText(), `(${expected.size})`);
   assert.equal(await page.locator('button[data-theme="fabric"]').getAttribute("aria-pressed"), "true");

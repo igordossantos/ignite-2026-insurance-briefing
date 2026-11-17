@@ -89,16 +89,25 @@ function main() {
     entry.append(link({ label: `${section} | ${item.title}`, url: item.sources.find(source => new URL(source.url).origin === new URL(data.meta.sourceUrl).origin).url }));
     $("source-sections").append(entry);
   }
-  for (const story of data.stories) {
-    const count = items.filter(item => item.stories.includes(story.id)).length;
+  function groupCard(group, field) {
+    const kind = field === "themes" ? "theme" : "story";
+    const count = items.filter(item => item[field].includes(group.id)).length;
     const card = node("article", undefined, "story");
-    const browse = button("Browse story", () => { filters.story = story.id; $("story").value = story.id; filters.selectedOnly = false; render(); $("catalog").scrollIntoView(); });
-    const select = button("Select story", () => selectEntireGroup("stories", story.id));
+    const browse = button(`Browse ${kind}`, () => {
+      filters[kind] = group.id;
+      if (kind === "story") $("story").value = group.id;
+      filters.selectedOnly = false; render(); $("catalog").scrollIntoView();
+    });
+    const select = button(`Select ${kind}`, () => selectEntireGroup(field, group.id));
     select.disabled = count === 0;
-    card.append(node("span", `${String(count).padStart(2, "0")} ANNOUNCEMENTS`, "count"), node("h3", story.name), node("p", story.description), browse, document.createTextNode(" "), select);
-    $("stories").append(card);
+    card.append(node("span", `${String(count).padStart(2, "0")} ANNOUNCEMENTS`, "count"), node("h3", group.name), node("p", group.description), browse, document.createTextNode(" "), select);
+    return card;
+  }
+  for (const story of data.stories) {
+    $("stories").append(groupCard(story, "stories"));
     const option = node("option", story.name); option.value = story.id; $("story").append(option);
   }
+  for (const theme of data.themes) $("technology-stories").append(groupCard(theme, "themes"));
   for (const status of STATUSES) { const option = node("option", status); option.value = status; $("status").append(option); }
   for (const workload of [...new Set(items.map(item => item.workload))]) {
     const option = node("option", `${workload} (${items.filter(item => item.workload === workload).length})`);

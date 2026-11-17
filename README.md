@@ -15,6 +15,7 @@ Availability is conservative: multi-feature items use **Mixed availability**, Fr
 ## Discussion workflow
 
 - Browse by technology theme (including Copilot and Fabric) or insurance business story.
+- **Start with an Insurance Industry story** preserves the insurance-story grid and customer perspectives. **Start with a technology story** provides one card per catalog theme, with matching counts, browsing and whole-theme selection. Both sections start expanded and collapse independently using the arrow on the left of each heading.
 - Click any announcement title or its visible **Read announcement** link to open that item's exact Book of News section in a new tab. Source links remain available inside expanded details and in table view.
 - Filter by workload, availability and audience; search includes detailed subfeatures and availability evidence.
 - **Select entire theme/story** adds every matching catalog announcement, independent of other active filters. Existing selections are kept and overlapping groups are deduplicated.
